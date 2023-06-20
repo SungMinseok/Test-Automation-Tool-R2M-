@@ -7,6 +7,10 @@ if not os.path.isdir(path_screenshot):
     os.mkdir(path_screenshot)
 ######################
 
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
+
+
 
 from ctypes import resize
 from pandas.core.frame import DataFrame
@@ -33,59 +37,58 @@ import time
 from datetime import datetime
 import pandas as pd
 
-import clipboard as cb
 import pyperclip as pc
 
 import gc
 from tqdm import tqdm
 
-import xlwings as xw
+#import xlwings as xw
 
 
-with open("info.txt") as infoFile:
-    infoTxt = infoFile.read().splitlines()
+# with open("info.txt") as infoFile:
+#     infoTxt = infoFile.read().splitlines()
 
-#infoTxt[0] : 개발모드/알파모드 확인
-#infoTxt[0] : 알파모드 앱사이즈 세팅 확인
-if infoTxt[0]== "0" :
-    devMode = 0
+# #infoTxt[0] : 개발모드/알파모드 확인
+# #infoTxt[0] : 알파모드 앱사이즈 세팅 확인
+# if infoTxt[0]== "0" :
+#     devMode = 0
 
-    with open("info_appsize.txt") as infoAppsizeFile:
-        infoAppsizeTxt = infoAppsizeFile.read() 
-    infoAppsizeFile.close()
+#     with open("info_appsize.txt") as infoAppsizeFile:
+#         infoAppsizeTxt = infoAppsizeFile.read() 
+#     infoAppsizeFile.close()
 
-    if infoAppsizeTxt== "0" :
-        with open("appsize.txt") as f:
-            appPos = f.read().splitlines()
-        #print("A")
-    else :
-        with open("appsize_"+infoAppsizeTxt+".txt") as f:
-            appPos = f.read().splitlines()
+#     if infoAppsizeTxt== "0" :
+#         with open("appsize.txt") as f:
+#             appPos = f.read().splitlines()
+#         #print("A")
+#     else :
+#         with open("appsize_"+infoAppsizeTxt+".txt") as f:
+#             appPos = f.read().splitlines()
 
-        #print("B")
+#         #print("B")
 
-elif infoTxt[0]== "1" : 
-    devMode =1
+# elif infoTxt[0]== "1" : 
+#     devMode =1
     
-    with open("appsize_dev.txt") as f:
-        appPos = f.read().splitlines()
+#     with open("appsize_dev.txt") as f:
+#         appPos = f.read().splitlines()
 
 def getBoxPos(x,y,w,h):
     return [x*appW+appX,y*appH+appY,w*appW,h*appH]
 
-infoFile.close()
+# #infoFile.close()
 
-# with open("appsize.txt") as f:
-#     appPos = f.read().splitlines()
+# # with open("appsize.txt") as f:
+# #     appPos = f.read().splitlines()
 
-appX = int(appPos[0])
-appY = int(appPos[1])
-appW = int(appPos[2])
-appH = int(appPos[3])
+# appX = int(appPos[0])
+# appY = int(appPos[1])
+# appW = int(appPos[2])
+# appH = int(appPos[3])
 
-f.close()
+# f.close()
 
-
+appX, appY, appW, appH = 0,0,0,0
 #region mouse position
 menuPos0=[0.773,0.043]
 menuPos1=[0.82,0.043]
@@ -1061,51 +1064,51 @@ def getCsvFile(fileName):
     
     return df_temp
     
-def getXlFile(fileName):
-    global df_item
-    global df_tran
-    global df_serv
-    global df_cache
-    #df_temp = pd.read_excel(fileName,engine="openpyxl")
-    #df_temp = df_temp.reset_index(drop=True)
+# def getXlFile(fileName):
+#     global df_item
+#     global df_tran
+#     global df_serv
+#     global df_cache
+#     #df_temp = pd.read_excel(fileName,engine="openpyxl")
+#     #df_temp = df_temp.reset_index(drop=True)
 
-    current_time = datetime.datetime.now()
-    current_time_with_ms = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-    print(current_time_with_ms)
+#     current_time = datetime.datetime.now()
+#     current_time_with_ms = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+#     print(current_time_with_ms)
 
-    #df_item = pd.read_excel(fileName,engine="openpyxl",usecols=[0,1,2,3])
-    if "아이템" in fileName :
-        for i in tqdm(range(1)):
-            app = xw.App(visible=False)
+#     #df_item = pd.read_excel(fileName,engine="openpyxl",usecols=[0,1,2,3])
+#     if "아이템" in fileName :
+#         for i in tqdm(range(1)):
+#             app = xw.App(visible=False)
             
-            temp_book = app.books.add()
-            temp_book = xw.Book(fileName)
-            sheet = temp_book.sheets[0]
+#             temp_book = app.books.add()
+#             temp_book = xw.Book(fileName)
+#             sheet = temp_book.sheets[0]
 
-            #col ="A:B"
-            #df_item = sheet.used_range.options(pd.DataFrame,index=False,columns = col).value
-            df_item = sheet.used_range.options(pd.DataFrame,index=False).value
-            df_item["mID"] = df_item["mID"].astype(int)
-            #df_item = df_item.reset_index(drop=True)
-            app.quit()
-            print(df_item)
+#             #col ="A:B"
+#             #df_item = sheet.used_range.options(pd.DataFrame,index=False,columns = col).value
+#             df_item = sheet.used_range.options(pd.DataFrame,index=False).value
+#             df_item["mID"] = df_item["mID"].astype(int)
+#             #df_item = df_item.reset_index(drop=True)
+#             app.quit()
+#             print(df_item)
         
-        #for chunk in tqdm(pd.read_excel(fileName,chunksize = 1000)):
-        #    print("4")
-        #df_temp = df_temp.reset_index(drop=True)
-        #df_item = df_temp.copy()
-    # elif "transform" in fileName :
-    #     df_tran = df_temp.copy()
-    # elif "servant" in fileName :
-    #     df_serv = df_temp.copy()
-    # elif "cache" in fileName :
-    #     df_cache = df_temp.copy()
-        #df_cache.set_index("mData", inplace = True)
+#         #for chunk in tqdm(pd.read_excel(fileName,chunksize = 1000)):
+#         #    print("4")
+#         #df_temp = df_temp.reset_index(drop=True)
+#         #df_item = df_temp.copy()
+#     # elif "transform" in fileName :
+#     #     df_tran = df_temp.copy()
+#     # elif "servant" in fileName :
+#     #     df_serv = df_temp.copy()
+#     # elif "cache" in fileName :
+#     #     df_cache = df_temp.copy()
+#         #df_cache.set_index("mData", inplace = True)
 
-    current_time = datetime.datetime.now()
-    current_time_with_ms = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-    print(current_time_with_ms)
-    print(f"success, get xl file : {fileName}")
+#     current_time = datetime.datetime.now()
+#     current_time_with_ms = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+#     print(current_time_with_ms)
+#     print(f"success, get xl file : {fileName}")
     
     #return df_temp
 # def findValInDataFrame(df : DataFrame, refCol : str, refVal : str, targetCol : str): #데이터 프레임, 참조할 열, 참조할 값, 찾을 값이 있는 열
@@ -1207,5 +1210,5 @@ def 최신파일찾고열기():
     else:
         print(f"'{target_file}' 파일을 찾을 수 없습니다.")
 
-if __name__ == "__main__" : 
-    최신파일찾고열기()
+# if __name__ == "__main__" : 
+#     최신파일찾고열기()
