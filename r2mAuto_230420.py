@@ -5507,7 +5507,7 @@ class Ui_MainWindow(object):
                 print("noVal in item Cache")
                 pass
             try :
-                getattr(self, f'input_custom_cmd_{i}').setText(ms.DF값불러오기(ms.df_cache,"key",f'cmdCache{i}',"value0"))
+                getattr(self, f'input_custom_cmd_{i}').setText(str(ms.DF값불러오기(ms.df_cache,"key",f'cmdCache{i}',"value0")))
             except :
                 print("noVal in cmd Cache")
                 pass
