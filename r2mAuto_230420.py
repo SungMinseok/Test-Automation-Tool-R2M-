@@ -5399,6 +5399,10 @@ class Ui_MainWindow(object):
 #region 복붙시작 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 #region Main UI
+        global abs_path 
+        abs_path = os.getcwd() +  os.path.basename(os.getcwd())
+
+
         self.statusLabel = QtWidgets.QLabel(self.statusbar)
 
         MainWindow.setGeometry(1470,28,400,400)
@@ -5792,8 +5796,9 @@ class Ui_MainWindow(object):
     
 
     def applyItemBookMarkList(self) :
-     
-        with open("./data/items/itemBookMarkList.txt",encoding='UTF-8') as f:
+        file_path = os.path.join(abs_path, 'data/items/itemBookMarkList.txt')
+        #print(abs_path)
+        with open(file_path,encoding='UTF-8') as f:
             #lines = f.readlines()
             lines = f.read().splitlines()
         f.close()

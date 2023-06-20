@@ -1,7 +1,7 @@
 key,value0,value1,value2
 itemCache0,1,1,0
 itemCache1,2,2,0
-itemCache2,,,0
+itemCache2,3,4,0
 itemCache3,,,0
 itemCache4,,,0
 itemCache5,,,0
@@ -12,9 +12,9 @@ itemCache9,,,0
 itemCache10,,,0
 itemCache11,,,0
 cmdCache0,,0.0,0
-cmdCache1,,0.0,0
-cmdCache2,,0.0,0
-cmdCache3,,0.0,0
+cmdCache1,a,0.0,0
+cmdCache2,a 1,0.0,0
+cmdCache3,2,0.0,0
 cmdCache4,,0.0,0
 cmdCache5,,0.0,0
 cmdCache6,,0.0,0
