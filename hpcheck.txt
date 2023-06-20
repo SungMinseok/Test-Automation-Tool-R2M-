@@ -1,0 +1,2 @@
+hp 1
+additem 1 50

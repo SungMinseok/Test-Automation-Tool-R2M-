@@ -1,0 +1,13 @@
+addmaterial 7004 1 숙련
+addmaterial 7014 1 영혼
+addmaterial 7024 1 수호
+addmaterial 7034 1 파괴
+addmaterial 7044 1 생명
+addmaterial 7053 1 행운 최상급
+addmaterial 7063 1 변신강화 최상급
+addmaterial 7079 1 힘 최상급 
+addmaterial 7080 1 민 최상급
+addmaterial 7081 1 지 최상급
+addmaterial 7101 1 수렵
+addmaterial 7102 1 구원
+addmaterial 7103 1 퇴마
