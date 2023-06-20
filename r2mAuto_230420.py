@@ -6211,14 +6211,14 @@ class Ui_MainWindow(object):
         if path != "" :
             target.setText(path[0])
 
-    def getXlData(self):
-        path = self.input_itemListFile.text()
-        #if path != "" :
-        try :
-            ms.getXlFile(path)
-            self.popUp("성공","아이템 리스트 연동 성공!\n")
-        except :
-            self.popUp("실패","경로 오류!\n")
+    # def getXlData(self):
+    #     path = self.input_itemListFile.text()
+    #     #if path != "" :
+    #     try :
+    #         ms.getXlFile(path)
+    #         self.popUp("성공","아이템 리스트 연동 성공!\n")
+    #     except :
+    #         self.popUp("실패","경로 오류!\n")
 
     def popUp(self,titleText,desText,type = "about"):
         #if type == "about" :
@@ -6326,7 +6326,7 @@ import translate as tl
 import importlib
 import pandas as pd
 import pyautogui as pag
-import clipboard as cb
+#import clipboard as cb
 import time
 import re
 
