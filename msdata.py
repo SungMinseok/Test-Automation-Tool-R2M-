@@ -34,13 +34,14 @@ from itemInfoCheck import ItemInfoCheck
 from probTest import ProbTest
 from cmdBundle import GoCharacterSelectPage, initCmdBundle
 import time
-from datetime import datetime
+import datetime
 import pandas as pd
 
 import pyperclip as pc
 
 import gc
 from tqdm import tqdm
+import paperclip
 
 #import xlwings as xw
 
@@ -612,10 +613,7 @@ def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
 
 def Command(command):       
     print(command) 
-    #cb.copy('')
-    #cb.copy(command)
     Move(centerPos)
-    #sleep(waitTime)       
     if devMode == 0 :
         pag.hotkey('z','x','c','v')
     else:
@@ -623,17 +621,19 @@ def Command(command):
     sleep(waitTime)       
     Move(commandPos)
     sleep(waitTime)
-    #result = cb.paste()
-    #sleep(waitTime)
-    #pag.hotkey('ctrl','v')
-    #pag.typewrite(result)
     pag.typewrite(command)
-    #sleep(waitTime)
     Move(centerUpPos)
     sleep(0.1)
-    #pag.click()
     Move(executePos)
     Move(centerUpPos)
+
+    #pyperclip.copy(command)
+
+    # Use hotkey to paste the command
+    #pag.hotkey("ctrl", "v")
+
+
+
 
 def inputCommand(command):
     sleep(waitTime)
@@ -1189,7 +1189,7 @@ def 최신파일찾고열기():
 
     def find_latest_file(folder):
         latest_file = None
-        latest_time = datetime.min
+        latest_time = datetime.datetime.min
 
         for root, dirs, files in os.walk(folder):
             if target_file in files:

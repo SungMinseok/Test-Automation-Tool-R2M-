@@ -5890,7 +5890,7 @@ class Ui_MainWindow(object):
                 
                 ms.createHistoryCache("item",itemName)
                 self.applyHistory("item")
-                cb.copy(self.input_itemid.text())
+                #cb.copy(self.input_itemid.text())
 
     #230118
     def applyHistory(self, target:str) :
