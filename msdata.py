@@ -41,7 +41,6 @@ import pyperclip as pc
 
 import gc
 from tqdm import tqdm
-import paperclip
 
 #import xlwings as xw
 
@@ -612,27 +611,33 @@ def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
 
 
 def Command(command):       
-    print(command) 
-    Move(centerPos)
-    if devMode == 0 :
-        pag.hotkey('z','x','c','v')
-    else:
-        DragDown(centerPos)
-    sleep(waitTime)       
+    # print(command) 
+    # Move(centerPos)
+    # if devMode == 0 :
+    #     pag.hotkey('z','x','c','v')
+    # else:
+    #     DragDown(centerPos)
+    # sleep(waitTime)       
+    # Move(commandPos)
+    # sleep(waitTime)
+    # pag.typewrite(command)
+    # Move(centerUpPos)
+    # sleep(0.1)
+    # Move(executePos)
+    # Move(centerUpPos)
+    
+    #230621 update
+
+    pc.copy(command)
+    pag.hotkey('z','x','c','v')
+    sleep(waitTime) 
     Move(commandPos)
-    sleep(waitTime)
-    pag.typewrite(command)
-    Move(centerUpPos)
-    sleep(0.1)
+
+
+    pag.hotkey("ctrl", "v")
+
+
     Move(executePos)
-    Move(centerUpPos)
-
-    #pyperclip.copy(command)
-
-    # Use hotkey to paste the command
-    #pag.hotkey("ctrl", "v")
-
-
 
 
 def inputCommand(command):
