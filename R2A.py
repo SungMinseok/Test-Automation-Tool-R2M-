@@ -314,9 +314,8 @@ class WindowClass(QMainWindow, form_class) :
     def setCurrentAppTop(self):
         currentAppName = self.comboBox_appNameList.currentText()
 
-        try:
-            currentAppName != ""
-        except : 
+        if currentAppName != "" :
+        
             return
         
         a = pag.getWindowsWithTitle(currentAppName)[0]
@@ -334,6 +333,7 @@ class WindowClass(QMainWindow, form_class) :
 
 
     def executeCommand(self, cmd):
+        self.setCurrentAppTop(self)
         ms.Command(cmd)
 
     def doTeleport(self):
