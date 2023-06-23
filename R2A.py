@@ -301,7 +301,10 @@ class WindowClass(QMainWindow, form_class) :
 
     def setCurrentAppPos(self):
         currentAppName = self.comboBox_appNameList.currentText()
-        a = pag.getWindowsWithTitle(currentAppName)[0]
+        try :
+            a = pag.getWindowsWithTitle(currentAppName)[0]
+        except : 
+            return
         
         x,y,w,h = sas.applyNewAppSize(a.left,a.top,a.right,a.bottom)
         self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(x,y,w,h))
