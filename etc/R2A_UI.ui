@@ -1154,7 +1154,7 @@ font : bold</string>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox_itemhistory_2">
+           <widget class="QComboBox" name="comboBox_itemcmd">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1172,7 +1172,7 @@ font : bold</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>136</width>
               <height>23</height>
              </size>
             </property>
@@ -6216,6 +6216,37 @@ font : bold</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_teleportBookMark_openFile_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>열기</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_searchItemName_2">
             <property name="enabled">
              <bool>true</bool>
@@ -10173,7 +10204,7 @@ font: bold</string>
       </widget>
       <widget class="QWidget" name="tab_9">
        <attribute name="title">
-        <string>쪽</string>
+        <string>Data</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_5">

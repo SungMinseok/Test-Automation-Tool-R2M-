@@ -293,6 +293,7 @@ class WindowClass(QMainWindow, form_class) :
 
     def optimizeCurrentAppPos(self):
         print("optimizeCurrentAppPos")
+        global currentAppName
         currentAppName = self.comboBox_appNameList.currentText()
         a = pag.getWindowsWithTitle(currentAppName)[0]
         a.moveTo(0,0)
@@ -300,6 +301,7 @@ class WindowClass(QMainWindow, form_class) :
         self.setCurrentAppPos()
 
     def setCurrentAppPos(self):
+        global currentAppName
         currentAppName = self.comboBox_appNameList.currentText()
         try :
             a = pag.getWindowsWithTitle(currentAppName)[0]
@@ -308,6 +310,17 @@ class WindowClass(QMainWindow, form_class) :
         
         x,y,w,h = sas.applyNewAppSize(a.left,a.top,a.right,a.bottom)
         self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(x,y,w,h))
+
+    def setCurrentAppTop(self):
+        currentAppName = self.comboBox_appNameList.currentText()
+
+        try:
+            currentAppName != ""
+        except : 
+            return
+        
+        a = pag.getWindowsWithTitle(currentAppName)[0]
+        a.moveTo(a.left,a.top)
 
     def applyNewAppNameList(self):
         self.comboBox_appNameList.clear()
@@ -344,6 +357,8 @@ class WindowClass(QMainWindow, form_class) :
     #         ms.setTeleportNum = 7   
 
     def executeCommand(self,cmd) :
+        self.setCurrentAppTop()
+
         ms.Command(cmd)
 
     def executeCommandByID(self,cmdID) :
@@ -400,11 +415,14 @@ class WindowClass(QMainWindow, form_class) :
 
     def additem(self, slotNum) :
         
+        cmdStr = self.comboBox_itemcmd.currentText()
         itemID = getattr(self, f'input_additem_itemid_{slotNum}').text()
         itemAmount = getattr(self, f'input_additem_amount_{slotNum}').text()
         
-        print(itemID, itemAmount)
-        multi.autoAddItem(itemID, itemAmount)
+        #print(itemID, itemAmount)
+        #multi.autoAddItem(itemID, itemAmount)
+
+        self.executeCommand(f'{cmdStr} {itemID} {itemAmount}')
 
     def additemAll(self) :
         multi.autoAddItemAll(self.input_additemall_id.text())
