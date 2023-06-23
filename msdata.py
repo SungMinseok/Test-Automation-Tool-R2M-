@@ -625,9 +625,9 @@ def Command(command):
     # sleep(0.1)
     # Move(executePos)
     # Move(centerUpPos)
-    
-    #230621 update
 
+    #230621 update
+    sleep(0.1) 
     pc.copy(command)
     pag.hotkey('z','x','c','v')
     sleep(waitTime) 
