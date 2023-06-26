@@ -90,6 +90,8 @@ def getBoxPos(x,y,w,h):
 
 appX, appY, appW, appH = 0,0,0,0
 #region mouse position
+joyPos=[0.1043,0.805]
+
 menuPos0=[0.773,0.043]
 menuPos1=[0.82,0.043]
 menuPos2=[0.865,0.043]
@@ -627,17 +629,19 @@ def Command(command):
     # Move(centerUpPos)
 
     #230621 update
-    sleep(0.1) 
+    #sleep(0.1) 
+    Click(joyPos)
     pc.copy(command)
     pag.hotkey('z','x','c','v')
     sleep(waitTime) 
-    Move(commandPos)
+    Click(commandPos)
 
 
     pag.hotkey("ctrl", "v")
 
 
-    Move(executePos)
+    Click(executePos)
+    Click(executePos)
 
 
 def inputCommand(command):
