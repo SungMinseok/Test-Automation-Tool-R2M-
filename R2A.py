@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QKeySequence
 
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
@@ -33,13 +34,31 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_customCmd_16.clicked.connect(multi.logout)
         #단축키설정■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
-        for i in range(0, 12):
-            shortcut = QShortcut(Qt.Key_F1 + i, self)
-            shortcut.activated.connect(getattr(self, f'btn_additem_execute_{i}').click)
-        for i in range(0, 12):
-            shortcut = QShortcut(Qt.Key_F1 + i, self)
-            shortcut.activated.connect(getattr(self, f'btn_custom_execute_{i}').click)
+        # for i in range(0, 20):
+        #     shortcut = QShortcut(Qt.Key_F1 + i, self)
+        #     shortcut.activated.connect(getattr(self, f'btn_additem_execute_{i}').click)
+        # for i in range(0, 12):
+        #     shortcut = QShortcut(Qt.Key_F1 + i, self)
+        #     shortcut.activated.connect(getattr(self, f'btn_custom_execute_{i}').click)
 
+        for i in range(0, 12):
+            button_name = f'btn_additem_execute_{i}'
+            if hasattr(self, button_name):
+                shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
+                button = getattr(self, button_name)
+                shortcut.activated.connect(button.click)
+
+        for i in range(0, 20):
+            button_name = f'btn_additem_execute_{i}'
+            if hasattr(self, button_name):
+                #shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
+                button = getattr(self, button_name)
+                if i <= 11 :
+                    button.setText(f"생성 F{i+1}")
+                else : 
+                    button.setText(f"생성")
+
+                #shortcut.activated.connect(button.click)
 
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
@@ -50,9 +69,9 @@ class WindowClass(QMainWindow, form_class) :
         
         #self.input_itemListFile.setText("itemlist_220207.xlsx")
         #self.getXlData()
-        self.input_additemtext_name.setText("additems.txt")        
-        self.input_itemBookMark_name.setText(curDirectory + "/data/items/itemBookMarkList.txt")
-        self.applyItemBookMarkList()
+        #self.input_additemtext_name.setText("additems.txt")        
+        #self.input_itemBookMark_name.setText(curDirectory + "/data/items/itemBookMarkList.txt")
+        #self.applyItemBookMarkList()
         
         self.input_cmd_name.setText("multicommand.txt")
 
@@ -62,6 +81,10 @@ class WindowClass(QMainWindow, form_class) :
 
         #print(os.getcwd() + self.input_itemBookMark_name.text())
         self.applyTestCaseList()
+
+
+        for i in range(0,22) :
+            getattr(self, f'label_custom_count_{i}').setText('0')
 
         #반응형 UI ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
@@ -89,11 +112,8 @@ class WindowClass(QMainWindow, form_class) :
         global df_item
         global df_tran
         global df_serv
-        #global df_cache
-        #df_item = pd.read_excel("./data/아이템.xlsx",engine="openpyxl",usecols=[0,1,2,3])
         df_tran = pd.read_excel("./data/변신 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
         df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
-        #df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
                         
 
         today = time.strftime('%y%m%d')
@@ -118,59 +138,44 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
         # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        #ms.getCsvFile(f"./data/csv/cache.csv")
-        #ms.df_cache =ms.df_cache.fillna(0)
         global df_cache
         df_cache = pd.read_csv(f'{cache_path}')
         df_cache = df_cache.fillna(0)
-        #df_cache.set_index()
-        
+        df_cache = df_cache.set_index('key').T.to_dict()
 
-        # for i in range(0,12) :
-        #     try :
-        #         #itemID = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value0"))
-        #         itemID = int(ms.DF값불러오기(df_cache,"key",f'item_{i}',"value0"))
-        #         #itemAmount = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value1"))
-        #         itemAmount = int(ms.DF값불러오기(df_cache,"key",f'item_{i}',"value1"))
-        #         getattr(self, f'input_additem_itemid_{i}').setText(str(itemID))
-        #         getattr(self, f'input_additem_amount_{i}').setText(str(itemAmount))
-        #     except :
-        #         print("noVal in item Cache")
-        #         pass
-        #     try :
-        #         getattr(self, f'input_custom_cmd_{i}').setText(str(ms.DF값불러오기(ms.df_cache,"key",f'cmdCache{i}',"value0")))
-        #     except :
-        #         print("noVal in cmd Cache")
-        #         pass
+        try:
+            x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
+            sas.applyNewAppSize(x,y,w,h)
+        except:
+            pass
 
 
-        # def load_csv_and_fill_inputs(filename):
-        #     df = pd.read_csv(filename)
+        for i in range(0,20):
+            try:
 
-        #     for i in range(len(df)):
-        #         key = f'item_{i}'
-        #         tempVal0 = df.loc[i, 'value0']
-        #         tempVal1 = df.loc[i, 'value1']
+                val0 = df_cache[f'item_{i}']['value0']
+                val1 = df_cache[f'item_{i}']['value1']
+                if val0 != 0 :
+                    getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
+                if val1 != 0 :
+                    getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
+            except:
+                continue
 
-        #         setattr(self, f'input_additem_itemid_{i}', str(tempVal0))
-        #         setattr(self, f'input_additem_amount_{i}', str(tempVal1))
+        for i in range(0,22):
+            try:
 
-        for i, row in df_cache.iterrows():
-            key = row['key']
-            tempVal0 = row['value0']
-            tempVal1 = row.get('value1')  # For cmd_0 to cmd_21 keys
-
-            if key.startswith('item_'):
-                getattr(self, f'input_additem_itemid_{i}').setText(str(int(tempVal0)))
-                getattr(self, f'input_additem_amount_{i}').setText(str(int(tempVal1)))
-          
-                #setattr(self, f'input_additem_itemid_{i}', str(tempVal0))
-                #setattr(self, f'input_additem_amount_{i}', str(tempVal1))
-            elif key.startswith('cmd_'):
-                setattr(self, f'input_custom_cmd_{i}', str(tempVal0))
-
-
-
+                val0 = df_cache[f'cmd_{i}']['value0']
+                val1 = df_cache[f'cmd_{i}']['value1']
+                val2 = df_cache[f'cmd_{i}']['value2']
+                if val0 != 0 :
+                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
+                if val1 != 0 :
+                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
+                if val2 != 0 :
+                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
+            except:
+                continue
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
        
@@ -248,37 +253,25 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_subbtn_0.clicked.connect(lambda : self.executeCommand("cleanupinventory"))
     
     #Tab [Item]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        #self.btn_cleanupmaterial.clicked.connect(lambda : self.executeCommand("cleanupmaterial"))
 
-        for i in range(0,12) :
-            getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.additem(x))
-            #getattr(self, f'input_additem_itemid_{i}').textChanged.connect(lambda _, x=i : self.getItemNameByInput(x))
-        
-        #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-
-        #self.btn_itemlist_openFile.clicked.connect(lambda : self.openFile(self.input_itemListFile.text()))
-        #self.btn_itemlist_setFname.clicked.connect(lambda : self.setFilePath(self.input_itemListFile))
-        #self.btn_itemlist_set.clicked.connect(self.getXlData)
+        #아이템 검색■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         self.btn_searchItemName_all.clicked.connect(self.searchItemAll)
         self.btn_searchItemName.clicked.connect(lambda : self.copyText("item"))
         self.comboBox_itemhistory.currentTextChanged.connect(lambda : self.applyHistoryID("item"))
-        #self.btn_itemlist_set.clicked.connect(lambda : self.popUp("성공","아이템 리스트 연동 성공!"))
 
-        self.btn_goods.clicked.connect(self.additemGoods)
-        #self.btn_additem.clicked.connect(self.additem)
+
+        self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
+        #아이템/매터리얼 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+
+        for i in range(0,20) :
+            getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.do_item(x))
+        
+
+        #0~13강 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+
         self.btn_additemall.clicked.connect(self.additemAll)
-        self.btn_additemtext_setDir.clicked.connect(lambda : self.setFilePath(self.input_additemtext_name))
-        self.btn_additemtext.clicked.connect(self.additemText)
-        self.btn_additemtext_openFile.clicked.connect(lambda : self.openFile(self.input_additemtext_name.text()))
-        
-        
-        
-        self.btn_itemBookMark_openFile.clicked.connect(lambda : self.openFile(self.input_itemBookMark_name.text()))
-        self.btn_itemBookMark_setFile.clicked.connect(lambda : self.setFilePath(self.input_itemBookMark_name))
-        self.btn_itemBookMark_apply.clicked.connect(self.applyItemBookMarkList)
-    
-    
+
     
     
     #Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -372,6 +365,7 @@ class WindowClass(QMainWindow, form_class) :
     def executeCommand(self, cmd):
         self.setCurrentAppTop()
         ms.Command(cmd)
+        self.activateWindow()
 
     def doTeleport(self):
         arguments = [self.input_teleport_mapNum.text(),
@@ -450,17 +444,30 @@ class WindowClass(QMainWindow, form_class) :
     #def additem(self) :
     #    multi.autoAddItem(self.input_additem_id.text(),self.input_additem_count.text())
 
-    def additem(self, slotNum) :
+    def do_item(self, slotNum) :
         
         cmdStr = self.comboBox_itemcmd.currentText()
         itemID = getattr(self, f'input_additem_itemid_{slotNum}').text()
         itemAmount = getattr(self, f'input_additem_amount_{slotNum}').text()
         
+        if itemAmount == "" :
+            itemAmount = 1
         #print(itemID, itemAmount)
         #multi.autoAddItem(itemID, itemAmount)
 
         self.executeCommand(f'{cmdStr} {itemID} {itemAmount}')
 
+    def additem_bookmark(self) :
+        
+        itemID = self.input_additem_itemid_main.text()
+        itemAmount = self.input_additem_amount_main.text()
+        
+        if itemAmount == "" :
+            itemAmount = 1
+        #print(itemID, itemAmount)
+        #multi.autoAddItem(itemID, itemAmount)
+
+        self.executeCommand(f'additem {itemID} {itemAmount}')
     def additemAll(self) :
 
         try:
@@ -625,7 +632,7 @@ class WindowClass(QMainWindow, form_class) :
             try: 
                 itemName = self.comboBox_itemhistory.currentText()
                 itemID = ms.DF값불러오기(df_item,"mName",itemName,"mID")
-                self.input_itemName_2.setText(str(itemID))
+                self.input_additem_itemid_main.setText(str(itemID))
             except:
                 print(f"no {target} name")
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -974,8 +981,14 @@ class WindowClass(QMainWindow, form_class) :
 
     def export_cache(self):
         data = {}
+
+        key = f'apppos_default'
+        data[key] = {
+            'value0': '0,0,1469,838',
+        }
+
         
-        for i in range(0,12):
+        for i in range(0,20):
             tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
             tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
             
@@ -985,7 +998,7 @@ class WindowClass(QMainWindow, form_class) :
                 'value1': tempVal1
             }
 
-        for i in range(0,5):
+        for i in range(0,22):
             tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
             tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
             tempVal2 = getattr(self, f'label_custom_count_{i}').text()
