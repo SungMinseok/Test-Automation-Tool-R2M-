@@ -8,6 +8,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
 form_class = uic.loadUiType(f'./etc/R2A_UI.ui')[0]
 
+cache_path = f'./cache/cache.csv'
+
 #화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
@@ -116,23 +118,58 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
         # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        ms.getCsvFile(f"./data/csv/cache.csv")
+        #ms.getCsvFile(f"./data/csv/cache.csv")
         #ms.df_cache =ms.df_cache.fillna(0)
+        global df_cache
+        df_cache = pd.read_csv(f'{cache_path}')
+        df_cache = df_cache.fillna(0)
+        #df_cache.set_index()
         
-        for i in range(0,12) :
-            try :
-                itemID = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value0"))
-                itemAmount = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value1"))
-                getattr(self, f'input_additem_itemid_{i}').setText(str(itemID))
-                getattr(self, f'input_additem_amount_{i}').setText(str(itemAmount))
-            except :
-                print("noVal in item Cache")
-                pass
-            try :
-                getattr(self, f'input_custom_cmd_{i}').setText(str(ms.DF값불러오기(ms.df_cache,"key",f'cmdCache{i}',"value0")))
-            except :
-                print("noVal in cmd Cache")
-                pass
+
+        # for i in range(0,12) :
+        #     try :
+        #         #itemID = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value0"))
+        #         itemID = int(ms.DF값불러오기(df_cache,"key",f'item_{i}',"value0"))
+        #         #itemAmount = int(ms.DF값불러오기(ms.df_cache,"key",f'itemCache{i}',"value1"))
+        #         itemAmount = int(ms.DF값불러오기(df_cache,"key",f'item_{i}',"value1"))
+        #         getattr(self, f'input_additem_itemid_{i}').setText(str(itemID))
+        #         getattr(self, f'input_additem_amount_{i}').setText(str(itemAmount))
+        #     except :
+        #         print("noVal in item Cache")
+        #         pass
+        #     try :
+        #         getattr(self, f'input_custom_cmd_{i}').setText(str(ms.DF값불러오기(ms.df_cache,"key",f'cmdCache{i}',"value0")))
+        #     except :
+        #         print("noVal in cmd Cache")
+        #         pass
+
+
+        # def load_csv_and_fill_inputs(filename):
+        #     df = pd.read_csv(filename)
+
+        #     for i in range(len(df)):
+        #         key = f'item_{i}'
+        #         tempVal0 = df.loc[i, 'value0']
+        #         tempVal1 = df.loc[i, 'value1']
+
+        #         setattr(self, f'input_additem_itemid_{i}', str(tempVal0))
+        #         setattr(self, f'input_additem_amount_{i}', str(tempVal1))
+
+        for i, row in df_cache.iterrows():
+            key = row['key']
+            tempVal0 = row['value0']
+            tempVal1 = row.get('value1')  # For cmd_0 to cmd_21 keys
+
+            if key.startswith('item_'):
+                getattr(self, f'input_additem_itemid_{i}').setText(str(int(tempVal0)))
+                getattr(self, f'input_additem_amount_{i}').setText(str(int(tempVal1)))
+          
+                #setattr(self, f'input_additem_itemid_{i}', str(tempVal0))
+                #setattr(self, f'input_additem_amount_{i}', str(tempVal1))
+            elif key.startswith('cmd_'):
+                setattr(self, f'input_custom_cmd_{i}', str(tempVal0))
+
+
 
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
@@ -333,7 +370,7 @@ class WindowClass(QMainWindow, form_class) :
 
 
     def executeCommand(self, cmd):
-        self.setCurrentAppTop(self)
+        self.setCurrentAppTop()
         ms.Command(cmd)
 
     def doTeleport(self):
@@ -356,10 +393,10 @@ class WindowClass(QMainWindow, form_class) :
     #     elif item == "그렘린숲" :
     #         ms.setTeleportNum = 7   
 
-    def executeCommand(self,cmd) :
-        self.setCurrentAppTop()
+    # def executeCommand(self,cmd) :
+    #     self.setCurrentAppTop()
 
-        ms.Command(cmd)
+    #     ms.Command(cmd)
 
     def executeCommandByID(self,cmdID) :
         cmd = ""
@@ -425,13 +462,41 @@ class WindowClass(QMainWindow, form_class) :
         self.executeCommand(f'{cmdStr} {itemID} {itemAmount}')
 
     def additemAll(self) :
-        multi.autoAddItemAll(self.input_additemall_id.text())
+
+        try:
+            itemID = int(self.input_additemall_id.text())
+        except :
+            return
+
+        ms.ResetFirst()
+
+
+
+        cmd = "additems"
+        for i in range(0,14):
+            cmd = f'{cmd} {str(itemID + i)}'
+
+        ms.Command(cmd)
 
     def additemText(self):
+
         try : 
-            multi.autoAddItemText(self.input_additemtext_name.text())
+            file_path = self.input_additemtext_name.text()
         except FileNotFoundError as errorMsg:
             self.popUp("에러",str(errorMsg))
+            return
+
+        with open(file_path) as f:
+            lines = f.read().splitlines()
+        f.close()
+
+        cmd = "additems"
+        for line in lines:
+            cmd = f'{cmd} {line}'
+
+        ms.Command(cmd)
+
+
 
     
 
@@ -686,23 +751,14 @@ class WindowClass(QMainWindow, form_class) :
         startTime = ms.GetElapsedTimeAuto(0)
         endTime = ms.GetElapsedTimeAuto((len(lines)*2+repeatDelay)*repeatCount)
 
-        self.label_cmd_startTime.setText("시작 시각 : {0}".format(startTime.strftime('%m-%d %H:%M:%S')))
-        self.label_cmd_endTime.setText("예상 종료 시각 : {0}".format(endTime.strftime('%m-%d %H:%M:%S')))
+        # self.label_cmd_startTime.setText("시작 시각 : {0}".format(startTime.strftime('%m-%d %H:%M:%S')))
+        # self.label_cmd_endTime.setText("예상 종료 시각 : {0}".format(endTime.strftime('%m-%d %H:%M:%S')))
 
-        # self.timer = QtCore.QTimer(MainWindow)
-        # self.timer.start(1000)
-        # self.timer.timeout.connect(self.showTimer)
-        # global isTesting
-        # isTesting = 1
 
         for i in range(0,repeatCount) :
-            #print(i)
-            #self.label_cmd_curRepeatCount.setText("실행횟수 : {0}/{1}".format(str(i+1),str(repeatCount)))
-            self.label_cmd_curRepeatCount.setText("총 {1}번 중 {0}번 째 실행 중...".format(str(i+1),str(repeatCount)))
-            self.progressBar_cmd.setValue(int(i/repeatCount*100))
-            QtWidgets.QApplication.processEvents()
-            #self.label_cmd_curRepeatCount.repaint()
-        #print(i+1 ,"번 째 실행", end='\r')
+            # self.label_cmd_curRepeatCount.setText("총 {1}번 중 {0}번 째 실행 중...".format(str(i+1),str(repeatCount)))
+            # self.progressBar_cmd.setValue(int(i/repeatCount*100))
+            # QtWidgets.QApplication.processEvents()
             for line in lines:
                 if not headerText == "" :
                     line = headerText + " " + line
@@ -714,10 +770,10 @@ class WindowClass(QMainWindow, form_class) :
         consumedTime = ms.GetConsumedTime(startTime)
         #isTesting = 0
 
-        self.progressBar_cmd.setValue(100)
-        self.label_cmd_curRepeatCount.setText("-")
-        self.label_cmd_startTime.setText("시작 시각 : -")
-        self.label_cmd_endTime.setText("예상 종료 시각 : -")
+        # self.progressBar_cmd.setValue(100)
+        # self.label_cmd_curRepeatCount.setText("-")
+        # self.label_cmd_startTime.setText("시작 시각 : -")
+        # self.label_cmd_endTime.setText("예상 종료 시각 : -")
 
         #self.timer.stop()
         if self.checkBox_setApp_0.isChecked() :
@@ -916,6 +972,45 @@ class WindowClass(QMainWindow, form_class) :
 
 
 
+    def export_cache(self):
+        data = {}
+        
+        for i in range(0,12):
+            tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
+            tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
+            
+            key = f'item_{i}'
+            data[key] = {
+                'value0': tempVal0,
+                'value1': tempVal1
+            }
+
+        for i in range(0,5):
+            tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
+            tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
+            tempVal2 = getattr(self, f'label_custom_count_{i}').text()
+            
+            key = f'cmd_{i}'
+            data[key] = {
+                'value0': tempVal0,
+                'value1': tempVal1,
+                'value2': tempVal2
+            }
+
+
+        # for i in range(0,3):
+        #     tempVal0 = getattr(self, f'plainText_event_{i}').text()
+            
+        #     key = f'event_{i}'
+        #     data[key] = {
+        #         'value0': tempVal0
+        #     }
+        
+        df = pd.DataFrame(data).T
+
+  
+        #df.to_csv(cache_path, index_label='Item')
+        df.to_csv(cache_path, index_label='key')
 
 
     # def showTimer(self):
@@ -927,25 +1022,27 @@ class WindowClass(QMainWindow, form_class) :
     #         curTime = int(self.label_cmdTimer.text()[0])
     #         curTime = curTime + 1
     #         self.label_cmdTimer.setText("{0}초".format(curTime))
-    def closeEvent(self):
+    def closeEvent(self,event):
         print("end")
+
+        self.export_cache()
 
         # Cache파일 저장(Save Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         #ms.getCsvFile(f"./data/csv/cacheList.csv")
         
-        for i in range(0,12) :
-            tempVal = getattr(self, f'input_additem_itemid_{i}').text()
-            ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value0")
-        #for i in range(0,12) :
-            tempVal = getattr(self, f'input_additem_amount_{i}').text()
-            ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value1")
+        # for i in range(0,12) :
+        #     tempVal = getattr(self, f'input_additem_itemid_{i}').text()
+        #     ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value0")
+        # #for i in range(0,12) :
+        #     tempVal = getattr(self, f'input_additem_amount_{i}').text()
+        #     ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value1")
 
-        for i in range(0,12) :
-            tempVal = getattr(self, f'input_custom_cmd_{i}').text()
-            ms.saveCacheData(tempVal,'key',f'cmdCache{i}',"value0")
+        # for i in range(0,12) :
+        #     tempVal = getattr(self, f'input_custom_cmd_{i}').text()
+        #     ms.saveCacheData(tempVal,'key',f'cmdCache{i}',"value0")
 
-        ms.df_cache.to_csv(f"./data/csv/cache.csv",sep=',',na_rep='NaN',index=False)
-        print(ms.df_cache)
+        # ms.df_cache.to_csv(f"./data/csv/cache.csv",sep=',',na_rep='NaN',index=False)
+        # print(ms.df_cache)
 
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
@@ -959,8 +1056,8 @@ class WindowClass(QMainWindow, form_class) :
         # else:
         #     event.ignore()
 
-    def closeEvent(self,event):
-        super().closeEvent(event)
+    # def closeEvent(self,event):
+    #     super().closeEvent(event)
 import msdata as ms
 import multicommand as multi
 import setclass as sc

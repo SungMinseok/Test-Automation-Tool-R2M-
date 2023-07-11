@@ -629,18 +629,24 @@ def Command(command):
     # Move(centerUpPos)
 
     #230621 update
+    try :
+        command =command.replace('\n','')
+    except:
+        pass
     #sleep(0.1) 
-    Click(joyPos)
     pc.copy(command)
+    Click(joyPos)
+    #pc.copy('')
+    #pc.copy(command)
     pag.hotkey('z','x','c','v')
-    sleep(waitTime) 
+    #sleep(waitTime) 
     Click(commandPos)
 
 
     pag.hotkey("ctrl", "v")
+    pag.press('enter')
 
-
-    Click(executePos)
+    #Click(executePos)
     Click(executePos)
 
 
@@ -650,24 +656,24 @@ def inputCommand(command):
     sleep(1)
     Move(centerUpPos)
 
-def CommandOpen():
-    Move(commandPos)
-    sleep(waitTime)
+# def CommandOpen():
+#     Move(commandPos)
+#     sleep(waitTime)
 
-    if devMode == 0 :
-        pag.hotkey('z','x','c','v')
-    else:
-        DragDown(centerPos)
-    sleep(waitTime)    
-    Move(commandPos)
-    sleep(waitTime)
+#     if devMode == 0 :
+#         pag.hotkey('z','x','c','v')
+#     else:
+#         DragDown(centerPos)
+#     sleep(waitTime)    
+#     Move(commandPos)
+#     sleep(waitTime)
     
-def CommandClose():
-    sleep(waitTime)
-    Move(executePos)
-    sleep(0.1)
-    pag.click()
-    sleep(waitTime)
+# def CommandClose():
+#     sleep(waitTime)
+#     Move(executePos)
+#     sleep(0.1)
+#     pag.click()
+#     sleep(waitTime)
 
 def ResetFirst():
     

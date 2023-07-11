@@ -65,15 +65,15 @@ def autoAddItem(id, count):
 
     ms.Command(f'additem {id} {count}')
 
-def autoAddItemAll(id):
+# def autoAddItemAll(id):
 
-    #ms.ResetFirst()
-    ms.CommandOpen()
-    pag.typewrite("additems ")
-    for j in range(0,14):
-        temp = int(id)+j
-        pag.typewrite(str(temp)+" ")
-    ms.CommandClose()
+#     #ms.ResetFirst()
+#     ms.CommandOpen()
+#     pag.typewrite("additems ")
+#     for j in range(0,14):
+#         temp = int(id)+j
+#         pag.typewrite(str(temp)+" ")
+#     ms.CommandClose()
 
 
 def Command_Additems_Text():
@@ -116,22 +116,22 @@ def Command_Additems_Text():
             pag.typewrite(" "+line)
         ms.CommandClose()
 
-def autoAddItemText(filePath):
-    with open(filePath) as f:
-        lines = f.read().splitlines()
-    f.close()
-    #ms.ResetFirst()
-    ms.CommandOpen()
-    pag.typewrite("additems")
-    for line in lines:
-        pag.typewrite(" "+line)
-    ms.CommandClose()
+# def autoAddItemText(filePath):
+#     with open(filePath) as f:
+#         lines = f.read().splitlines()
+#     f.close()
+#     #ms.ResetFirst()
+#     ms.CommandOpen()
+#     pag.typewrite("additems")
+#     for line in lines:
+#         pag.typewrite(" "+line)
+#     ms.CommandClose()
 
-    # cmdStr= "additems"
-    # for line in lines:
-    #     cmdStr += " " + str(line)
-    # ms.Command(cmdStr)
-    sleep(2)
+#     # cmdStr= "additems"
+#     # for line in lines:
+#     #     cmdStr += " " + str(line)
+#     # ms.Command(cmdStr)
+#     sleep(2)
 
 
 #R2M_Alpha_Command : makeitem X N > X in txtFile
