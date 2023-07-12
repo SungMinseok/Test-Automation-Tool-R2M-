@@ -3,8 +3,10 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QKeySequence
-
+from PyQt5.QtGui import QKeySequence,QPixmap
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
+from PyQt5.QtCore import Qt
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
 form_class = uic.loadUiType(f'./etc/R2A_UI.ui')[0]
@@ -88,9 +90,15 @@ class WindowClass(QMainWindow, form_class) :
 
         #반응형 UI ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
-        for i in range(0,12) :
+        for i in range(0,20) :
             getattr(self, f'input_additem_itemid_{i}').textChanged.connect(lambda _, x=i : self.getItemNameByInput(x))
-        
+            getattr(self, f'input_additem_itemid_{i}').textChanged.connect(lambda _, x=i : self.이미지로드(x))
+            getattr(self, f'item_img_{i}').mouseMoveEvent = self.onMouseMoveEvent(i)#(lambda _, x=i : self.onMouseMoveEvent(x))
+            getattr(self, f'item_img_{i}').mouseReleaseEvent = self.onMouseReleaseEvent(x)#(lambda _, x=i : self.onMouseReleaseEvent(x))
+
+
+
+
         self.input_itemName.textChanged.connect(self.getItemIdByInput)
         self.comboBox_itemType.currentTextChanged.connect(self.getItemIdByInput)
         
@@ -100,21 +108,15 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         #XLSX파일 연동■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        # csvDf = pd.read_csv("./data/csv/csvList.csv",encoding='CP949')
 
-        # itemDataFileName = ms.DF값불러오기(csvDf,"mData","item","fileName")
-        # tranDataFileName = ms.DF값불러오기(csvDf,"mData","transform","fileName")
-        # servDataFileName = ms.DF값불러오기(csvDf,"mData","servant","fileName")
-        
-        # ms.getXlFile(f"./data/아이템.xlsx")
-        # ms.getCsvFile(f"./data/csv/{tranDataFileName}.csv")
-        # ms.getCsvFile(f"./data/csv/{servDataFileName}.csv")
         global df_item
         global df_tran
         global df_serv
+        global df_res_item
         df_tran = pd.read_excel("./data/변신 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
         df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
-                        
+        df_res_item = pd.read_excel("./data/resource/아이템 리소스.xlsx",engine="openpyxl")
+        #df_res_item = df_res_item.set_index("mID") 
 
         today = time.strftime('%y%m%d')
         itemFileName = f"./data/아이템_{today}.csv"
@@ -122,7 +124,7 @@ class WindowClass(QMainWindow, form_class) :
         try:
             df_item = pd.read_csv(itemFileName)
         except FileNotFoundError:
-            df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3])
+            df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3,23])
             df_item.to_csv(itemFileName, index=False)
         
             # 이전 날짜의 아이템 파일 삭제
@@ -138,44 +140,7 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
         # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        global df_cache
-        df_cache = pd.read_csv(f'{cache_path}')
-        df_cache = df_cache.fillna(0)
-        df_cache = df_cache.set_index('key').T.to_dict()
-
-        try:
-            x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
-            sas.applyNewAppSize(x,y,w,h)
-        except:
-            pass
-
-
-        for i in range(0,20):
-            try:
-
-                val0 = df_cache[f'item_{i}']['value0']
-                val1 = df_cache[f'item_{i}']['value1']
-                if val0 != 0 :
-                    getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
-                if val1 != 0 :
-                    getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
-            except:
-                continue
-
-        for i in range(0,22):
-            try:
-
-                val0 = df_cache[f'cmd_{i}']['value0']
-                val1 = df_cache[f'cmd_{i}']['value1']
-                val2 = df_cache[f'cmd_{i}']['value2']
-                if val0 != 0 :
-                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
-                if val1 != 0 :
-                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
-                if val2 != 0 :
-                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
-            except:
-                continue
+        self.import_cache()
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
        
@@ -635,6 +600,34 @@ class WindowClass(QMainWindow, form_class) :
                 self.input_additem_itemid_main.setText(str(itemID))
             except:
                 print(f"no {target} name")
+
+    #230712
+    # def 리소스로드(self):
+
+    #230712        
+    def 이미지로드(self,slot_num):
+        #image_path = './resource/Accessory_Cash_002.png'
+
+
+
+        try:
+            itemID = getattr(self, f'input_additem_itemid_{slot_num}').text()
+            resource_id = df_item.loc[df_item["mID"] == int(itemID), "mResourceID"].values[0]
+            res_name = df_res_item.loc[df_res_item["mID"] == int(resource_id), "mIconName"].values[0]
+
+            #res_name = df_res_item.loc[int(itemID),"mIconName"].values[0]
+            image_path = f'./resource/{res_name}.png'
+            # QPixmap 객체 생성
+            pixmap = QPixmap(image_path)
+            if pixmap.isNull():
+                print('Error: QPixmap 객체 생성 실패')
+                #sys.exit()
+
+            # QLabel 위젯에 이미지 설정
+            getattr(self, f'item_img_{slot_num}').setPixmap(pixmap)
+        except Exception as e :
+            print(e)
+            return
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
 
@@ -977,7 +970,53 @@ class WindowClass(QMainWindow, form_class) :
         result = ms.findAllValInDataFrame(df_item,"mName","포션","mID")
         self.popUp("검색",str(result),"about")
 
+    def import_cache(self) :
+        global df_cache
+        try :
+            df_cache = pd.read_csv(f'{cache_path}')
+        except Exception as e: 
+            
+            if not os.path.isdir('./cache'):                                                           
+                os.mkdir('./cache')
+            print(e)
+            return
 
+        df_cache = df_cache.fillna(0)
+        df_cache = df_cache.set_index('key').T.to_dict()
+
+        try:
+            x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
+            sas.applyNewAppSize(x,y,w,h)
+        except:
+            pass
+
+
+        for i in range(0,20):
+            try:
+
+                val0 = df_cache[f'item_{i}']['value0']
+                val1 = df_cache[f'item_{i}']['value1']
+                if val0 != 0 :
+                    getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
+                if val1 != 0 :
+                    getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
+            except:
+                continue
+
+        for i in range(0,22):
+            try:
+
+                val0 = df_cache[f'cmd_{i}']['value0']
+                val1 = df_cache[f'cmd_{i}']['value1']
+                val2 = df_cache[f'cmd_{i}']['value2']
+                if val0 != 0 :
+                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
+                if val1 != 0 :
+                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
+                if val2 != 0 :
+                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
+            except:
+                continue
 
     def export_cache(self):
         data = {}
@@ -1025,6 +1064,19 @@ class WindowClass(QMainWindow, form_class) :
         #df.to_csv(cache_path, index_label='Item')
         df.to_csv(cache_path, index_label='key')
 
+    def onMouseMoveEvent(self, slot_num):
+        current_label = getattr(self, f'item_img_{slot_num}')
+        if current_label.pixmap() != "" :
+            pixmap = current_label.pixmap()
+        #getattr(self, f'item_img_{slot_num}').setPixmap(getattr(self, f'item_img_{slot_num}').pixmap().scaled(300, 300, aspectRatioMode=True))
+            current_label.setPixmap(pixmap.scaled(300, 300, aspectRatioMode=True))
+            #self.label.setPixmap(self.label.pixmap().scaled(300, 300, aspectRatioMode=True))
+
+
+    def onMouseReleaseEvent(self, slot_num):
+        getattr(self, f'item_img_{slot_num}').setPixmap(getattr(self, f'item_img_{slot_num}').pixmap().scaled(35, 35, aspectRatioMode=True))
+        # 마우스 릴리즈 시 이미지 원래 크기로 돌아감
+        #self.label.setPixmap(self.label.pixmap().scaled(35, 35, aspectRatioMode=True))
 
     # def showTimer(self):
         
