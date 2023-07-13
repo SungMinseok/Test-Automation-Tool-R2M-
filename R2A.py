@@ -1,12 +1,28 @@
+ITEM_SLOT_COUNT = 21
+
+
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QKeySequence,QPixmap
+from PyQt5.QtGui import QKeySequence,QPixmap,QCursor
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout, QToolTip
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap, QCursor, QFont,QColor
+from PyQt5.QtWidgets import QLabel, QToolTip, QWidget, QVBoxLayout
+
+class ImageTooltip(QWidget):
+    def __init__(self, pixmap):
+        super().__init__()
+        layout = QVBoxLayout()
+        label = QLabel()
+        label.setPixmap(pixmap)
+        layout.addWidget(label)
+        self.setLayout(layout)
+
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
 form_class = uic.loadUiType(f'./etc/R2A_UI.ui')[0]
@@ -89,14 +105,24 @@ class WindowClass(QMainWindow, form_class) :
             getattr(self, f'label_custom_count_{i}').setText('0')
 
         #반응형 UI ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        
-        for i in range(0,20) :
+
+        for i in range(0,ITEM_SLOT_COUNT) :
             getattr(self, f'input_additem_itemid_{i}').textChanged.connect(lambda _, x=i : self.getItemNameByInput(x))
             getattr(self, f'input_additem_itemid_{i}').textChanged.connect(lambda _, x=i : self.이미지로드(x))
-            getattr(self, f'item_img_{i}').mouseMoveEvent = self.onMouseMoveEvent(i)#(lambda _, x=i : self.onMouseMoveEvent(x))
-            getattr(self, f'item_img_{i}').mouseReleaseEvent = self.onMouseReleaseEvent(x)#(lambda _, x=i : self.onMouseReleaseEvent(x))
+            #getattr(self, f'item_img_{i}').mouseMoveEvent = self.onMouseMoveEvent(i)#(lambda _, x=i : self.onMouseMoveEvent(x))
+           # getattr(self, f'item_img_{i}').mousePressEvent = self.onMouseMoveEvent(i)#(lambda _, x=i : self.onMouseMoveEvent(x))
+            #getattr(self, f'item_img_{i}').mouseReleaseEvent = self.onMouseReleaseEvent(i)#(lambda _, x=i : self.onMouseReleaseEvent(x))
 
 
+        # for i in range(0, 20):
+        #     label = getattr(self, f'item_img_{i}')
+        #     label.enterEvent = lambda event, slot=i: self.onMouseEnterEvent(slot)
+        #     label.leaveEvent = lambda event, slot=i: self.onMouseLeaveEvent(slot)
+        # # QVBoxLayout 레이아웃 생성 및 QLabel 추가
+        # layout = QVBoxLayout()
+        # for i in range(0,20) :
+        #     layout.addWidget(getattr(self, f'item_img_{i}'))
+        # self.setLayout(layout)
 
 
         self.input_itemName.textChanged.connect(self.getItemIdByInput)
@@ -226,10 +252,10 @@ class WindowClass(QMainWindow, form_class) :
         self.comboBox_itemhistory.currentTextChanged.connect(lambda : self.applyHistoryID("item"))
 
 
-        self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
+        #self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
         #아이템/매터리얼 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
-        for i in range(0,20) :
+        for i in range(0,ITEM_SLOT_COUNT) :
             getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.do_item(x))
         
 
@@ -528,6 +554,8 @@ class WindowClass(QMainWindow, form_class) :
 
     def getItemNameByInput(self,slotNum):
         itemID = getattr(self, f'input_additem_itemid_{slotNum}').text()
+        
+        
         #print(itemID)
         try :
             itemName = ms.DF값불러오기(df_item,"mID",itemID,"mName")
@@ -535,7 +563,36 @@ class WindowClass(QMainWindow, form_class) :
             getattr(self, f'input_additem_itemName_{slotNum}').setText(itemName)
         except :
             print(f"no item ID : {itemID}")
-            getattr(self, f'input_additem_itemName_{slotNum}').setText("no name")
+            try:
+                getattr(self, f'input_additem_itemName_{slotNum}').setText("no name")
+            except:
+                pass
+
+        if slotNum != 0 :
+            line_edit = getattr(self, f'input_additem_itemName_{slotNum}')
+
+
+        try:
+            rarity = ms.DF값불러오기(df_item, "mID", itemID, "mRarity")
+            if rarity == 0:
+                line_edit.setStyleSheet("color: #b2b2b2;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 0
+            elif rarity == 1:
+                line_edit.setStyleSheet("color: #62c5b1;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 1
+            elif rarity == 2:
+                line_edit.setStyleSheet("color: #0e9bd9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 2
+            elif rarity == 3:
+                line_edit.setStyleSheet("color: #b343d9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 3
+            elif rarity == 4:
+                line_edit.setStyleSheet("color: #ff0000;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 4
+            elif rarity == 5:
+                line_edit.setStyleSheet("color: #fdb300;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 5
+        except:
+            if slotNum != 0 :
+
+                line_edit.setStyleSheet("")  # Set font color for rarity level 0
+            pass
+
+
 
     def getItemIdByInput(self):
         subString = self.comboBox_itemType.currentText()
@@ -597,7 +654,7 @@ class WindowClass(QMainWindow, form_class) :
             try: 
                 itemName = self.comboBox_itemhistory.currentText()
                 itemID = ms.DF값불러오기(df_item,"mName",itemName,"mID")
-                self.input_additem_itemid_main.setText(str(itemID))
+                self.input_additem_itemid_0.setText(str(itemID))
             except:
                 print(f"no {target} name")
 
@@ -627,6 +684,9 @@ class WindowClass(QMainWindow, form_class) :
             getattr(self, f'item_img_{slot_num}').setPixmap(pixmap)
         except Exception as e :
             print(e)
+            empty_pixmap = QPixmap(1, 1)  # Create a QPixmap object with width and height of 1 pixel
+            empty_pixmap.fill(QColor(0, 0, 0, 0))  # Fill the QPixmap with a transparent color
+            getattr(self, f'item_img_{slot_num}').setPixmap(empty_pixmap)
             return
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
@@ -991,7 +1051,7 @@ class WindowClass(QMainWindow, form_class) :
             pass
 
 
-        for i in range(0,20):
+        for i in range(0,ITEM_SLOT_COUNT):
             try:
 
                 val0 = df_cache[f'item_{i}']['value0']
@@ -1027,7 +1087,7 @@ class WindowClass(QMainWindow, form_class) :
         }
 
         
-        for i in range(0,20):
+        for i in range(0,ITEM_SLOT_COUNT):
             tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
             tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
             
@@ -1064,29 +1124,7 @@ class WindowClass(QMainWindow, form_class) :
         #df.to_csv(cache_path, index_label='Item')
         df.to_csv(cache_path, index_label='key')
 
-    def onMouseMoveEvent(self, slot_num):
-        current_label = getattr(self, f'item_img_{slot_num}')
-        if current_label.pixmap() != "" :
-            pixmap = current_label.pixmap()
-        #getattr(self, f'item_img_{slot_num}').setPixmap(getattr(self, f'item_img_{slot_num}').pixmap().scaled(300, 300, aspectRatioMode=True))
-            current_label.setPixmap(pixmap.scaled(300, 300, aspectRatioMode=True))
-            #self.label.setPixmap(self.label.pixmap().scaled(300, 300, aspectRatioMode=True))
 
-
-    def onMouseReleaseEvent(self, slot_num):
-        getattr(self, f'item_img_{slot_num}').setPixmap(getattr(self, f'item_img_{slot_num}').pixmap().scaled(35, 35, aspectRatioMode=True))
-        # 마우스 릴리즈 시 이미지 원래 크기로 돌아감
-        #self.label.setPixmap(self.label.pixmap().scaled(35, 35, aspectRatioMode=True))
-
-    # def showTimer(self):
-        
-    #     #print("222")
-    #     #curtime = 1
-    #     #print(self.label_cmdTimer.text()[0])
-    #     if isTesting == 1:
-    #         curTime = int(self.label_cmdTimer.text()[0])
-    #         curTime = curTime + 1
-    #         self.label_cmdTimer.setText("{0}초".format(curTime))
     def closeEvent(self,event):
         print("end")
 
