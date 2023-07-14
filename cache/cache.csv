@@ -1,6 +1,6 @@
 key,value0,value1,value2
 apppos_default,"0,0,1469,838",,
-item_0,1,5,
+item_0,15002,5,
 item_1,2,5,
 item_2,3,5,
 item_3,,5,
@@ -21,8 +21,8 @@ item_17,,,
 item_18,,,
 item_19,,,
 item_20,,,
-cmd_0,,,0
-cmd_1,,,0
+cmd_0,adad,,0
+cmd_1,resetguildpenalty,길드가입패널티삭제,0
 cmd_2,,,0
 cmd_3,,,0
 cmd_4,,,0
