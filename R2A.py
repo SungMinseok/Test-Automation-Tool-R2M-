@@ -1,5 +1,12 @@
 ITEM_SLOT_COUNT = 21
 
+'''
+기본 세팅(폴더생성)
+'''
+import os
+path_resource = "./resource"
+if not os.path.isdir(path_resource):                                                           
+    os.mkdir(path_resource)
 
 import sys
 from PyQt5.QtWidgets import *
@@ -13,6 +20,12 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QCursor, QFont,QColor
 from PyQt5.QtWidgets import QLabel, QToolTip, QWidget, QVBoxLayout
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QUrl
+
+
+# Connect the QAction button to the open_patch_notes function
+
 
 class ImageTooltip(QWidget):
     def __init__(self, pixmap):
@@ -50,7 +63,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_customCmd_14.clicked.connect(multi.go_character_selection_window)
         self.btn_customCmd_15.clicked.connect(multi.go_server_selection_window)
         self.btn_customCmd_16.clicked.connect(multi.logout)
-        #단축키설정■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+
+        '''메뉴탭■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
+        self.menu_patchnote.triggered.connect(lambda : self.파일열기("패치노트.txt"))
 
         # for i in range(0, 20):
         #     shortcut = QShortcut(Qt.Key_F1 + i, self)
@@ -58,6 +73,7 @@ class WindowClass(QMainWindow, form_class) :
         # for i in range(0, 12):
         #     shortcut = QShortcut(Qt.Key_F1 + i, self)
         #     shortcut.activated.connect(getattr(self, f'btn_custom_execute_{i}').click)
+        '''단축키■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
 
         for i in range(0, 12):
             button_name = f'btn_additem_execute_{i}'
@@ -93,7 +109,6 @@ class WindowClass(QMainWindow, form_class) :
         
         self.input_cmd_name.setText("multicommand.txt")
 
-        self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(ms.appX,ms.appY,ms.appW,ms.appH))
         self.input_teleportBookMark_name.setText(curDirectory + "/data/etc/teleportPos.txt")
         self.applyTeleportBookMarkList()
 
@@ -203,7 +218,7 @@ class WindowClass(QMainWindow, form_class) :
         
         self.btn_screenShot_setPos0.clicked.connect(lambda : self.getMousePos(2))
         self.btn_screenShot_setPos1.clicked.connect(lambda : self.getMousePos(3))
-        self.btn_screenShot_openFile.clicked.connect(lambda : self.openFile(self.input_screenShot_fileName.text()))
+        self.btn_screenShot_openFile.clicked.connect(lambda : self.파일열기(self.input_screenShot_fileName.text()))
         self.btn_screenShot_capture.clicked.connect(self.takePicture)
         #self.btn_img2str_0.clicked.connect(lambda : self.getImg2Str(1))
         #self.btn_img2str_1.clicked.connect(lambda : self.getImg2Str(2))
@@ -214,7 +229,7 @@ class WindowClass(QMainWindow, form_class) :
         #self.btn_setpos0.clicked.connect(lambda : self.getMousePos(0))
         #self.btn_setpos1.clicked.connect(lambda : self.getMousePos(1))
         #self.btn_setappsize.clicked.connect(self.setNewAppSize)
-        #self.btn_setappsizewizard.clicked.connect(lambda : self.openFile("setAppSizeIndex.py"))
+        #self.btn_setappsizewizard.clicked.connect(lambda : self.파일열기("setAppSizeIndex.py"))
 
     
     
@@ -234,10 +249,17 @@ class WindowClass(QMainWindow, form_class) :
     #Tab [Hot]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         self.comboBox_teleport.currentTextChanged.connect(self.changeTeleportBookMark)
         
-        self.btn_teleportBookMark_openFile.clicked.connect(lambda : self.openFile(self.input_teleportBookMark_name.text()))
+        self.btn_teleportBookMark_openFile.clicked.connect(lambda : self.파일열기(self.input_teleportBookMark_name.text()))
         self.btn_teleportBookMark_setFile.clicked.connect(lambda : self.setFilePath(self.input_teleportBookMark_name))
         self.btn_teleportBookMark_apply.clicked.connect(self.applyTeleportBookMarkList)
-    
+        #self.comboBox_teleport.showPopup.connect(self.applyTeleportBookMarkList)
+        #self.comboBox_teleport.showPopup.connect(self.applyTeleportBookMarkList)
+        #self.comboBox_teleport.activated.connect(lambda index: self.applyTeleportBookMarkList() if index == -1 else None)
+        #self.comboBox_teleport.highlighted.connect(self.applyTeleportBookMarkList)
+
+
+       # self.comboBox_teleport.activated.connect(lambda index: self.applyTeleportBookMarkList() if index == -1 else None)
+
         #self.btn_screenshot_setdir.clicked.connect(self.setFilePath)
         #self.btn_record_setdir.clicked.connect(self.setFilePath)
 
@@ -274,14 +296,14 @@ class WindowClass(QMainWindow, form_class) :
     
     
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        self.btn_cmd_openFile.clicked.connect(lambda : self.openFile(self.input_cmd_name.text()))
+        self.btn_cmd_openFile.clicked.connect(lambda : self.파일열기(self.input_cmd_name.text()))
         self.btn_cmd_setFile.clicked.connect(lambda : self.setFilePath(self.input_cmd_name))
         self.btn_cmd_apply.clicked.connect(self.applyCmdTextFile)
         self.btn_cmd_execute.clicked.connect(self.executeMultiCommand)
         #self.btn_cmdBookMark_execute_0.clicked.connect(lambda : self.executeCommand(self.input_cmdBookMark_0.text()))
         #self.btn_cmdBookMark_execute_1.clicked.connect(lambda : self.executeCommand(self.input_cmdBookMark_1.text()))
         
-        self.btn_testCase_openFile.clicked.connect(lambda : self.openFile(".\data/etc/testCaseList.txt"))
+        self.btn_testCase_openFile.clicked.connect(lambda : self.파일열기(".\data/etc/testCaseList.txt"))
         self.btn_testCase_apply.clicked.connect(self.applyTestCaseList)
         self.comboBox_testCase.currentTextChanged.connect(self.applyCurrentTestCase)
         self.btn_testCase_execute.clicked.connect(self.executeTestCase)
@@ -540,7 +562,7 @@ class WindowClass(QMainWindow, form_class) :
         # for line in lines:
         #     self.comboBox_goods.addItem(line)
 
-    def openFile(self,filePath):
+    def 파일열기(self,filePath):
         # if filePath[0] != "/":
         #     filePath = "/"+ filePath
         # os.startfile(os.getcwd() + "/"+ filePath)
@@ -695,11 +717,12 @@ class WindowClass(QMainWindow, form_class) :
 
     def customCommand(self, slotNum) :
         cmd = getattr(self, f'input_custom_cmd_{slotNum}').text()
-        count = getattr(self, f'input_custom_count_{slotNum}').text()
+#        count = getattr(self, f'input_custom_count_{slotNum}').text()
         
         #print(itemID, itemAmount)
         #multi.Command_Text(itemID, itemAmount)
-        ms.Command(cmd)
+        #ms.Command(cmd)
+        self.executeCommand(cmd)
 
 
 
@@ -1047,6 +1070,8 @@ class WindowClass(QMainWindow, form_class) :
         try:
             x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
             sas.applyNewAppSize(x,y,w,h)
+            self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(ms.appX,ms.appY,ms.appW,ms.appH))
+
         except:
             pass
 

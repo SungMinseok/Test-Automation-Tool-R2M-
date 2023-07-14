@@ -555,7 +555,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -15630,7 +15630,9 @@ color: rgb(255, 255, 255);</string>
      <addaction name="actionttt"/>
     </widget>
     <addaction name="menu_2"/>
-    <addaction name="actionabout"/>
+    <addaction name="menu_about"/>
+    <addaction name="separator"/>
+    <addaction name="menu_patchnote"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -15640,7 +15642,7 @@ color: rgb(255, 255, 255);</string>
     <string>SetAppSize</string>
    </property>
   </action>
-  <action name="actionabout">
+  <action name="menu_about">
    <property name="text">
     <string>about</string>
    </property>
@@ -15648,6 +15650,11 @@ color: rgb(255, 255, 255);</string>
   <action name="actionttt">
    <property name="text">
     <string>ttt</string>
+   </property>
+  </action>
+  <action name="menu_patchnote">
+   <property name="text">
+    <string>패치노트</string>
    </property>
   </action>
  </widget>

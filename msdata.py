@@ -244,7 +244,8 @@ quickBtn7=[0.723,0.859]
 
 centerPos=[0.5,0.5]
 centerUpPos=[0.5,0.4]
-commandPos=[0.5,0.734]
+#commandPos=[0.5,0.734]
+commandPos=[0.8803,0.7329]#230714
 executePos=[0.99,0.734]
 okPos=[0.583,0.63]
 cancelPos=[0.423,0.63]
