@@ -1549,9 +1549,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -1788,9 +1785,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -2024,9 +2018,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -2253,9 +2244,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -2484,9 +2472,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -2713,9 +2698,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -2944,9 +2926,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -3174,9 +3153,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -3400,9 +3376,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -3628,9 +3601,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -3854,9 +3824,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -4082,9 +4049,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -4308,9 +4272,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -4536,9 +4497,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -4762,9 +4720,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -4990,9 +4945,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -5216,9 +5168,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -5444,9 +5393,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -5671,9 +5617,6 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -5897,9 +5840,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -11008,6 +10948,11 @@ font: bold</string>
          </layout>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab_10">
+       <attribute name="title">
+        <string>Trigger</string>
+       </attribute>
       </widget>
       <widget class="QWidget" name="tab_9">
        <attribute name="title">

@@ -1179,24 +1179,37 @@ def saveCacheData(value : str,refCol :str, key : str , targetCol : str):#참조 
     #df_cache.loc[tempID,[]]
     df_cache.loc[df_cache[refCol]==key,targetCol] = value
     
-def createHistoryCache(targetFileName :str, targetStr :str): #target : item/tran/serv
-    fName = f'./data/etc/{targetFileName}History.txt'
+def 텍스트파일_내용추가(파일명 :str, targetStr :str): #target : item/tran/serv
+    #fName = f'./data/etc/{targetFileName}History.txt'
 
     # if not os.path.isfile(fName):                                                           
     #     with open(fName,'a',encoding='utf-8') as tx:
     #         tx.write("날짜|itemID|scrollID|isEnchanted|isBlessed|isKept|isSafe|totalCount|passCount|passProb")    
     contents = ""
 
-    if os.path.exists(fName) :
-        with open(fName,'r',encoding='utf-8') as f:
+    if os.path.exists(파일명) :
+        with open(파일명,'r',encoding='utf-8') as f:
             contents = f.read()
         f.close()
 
-    with open(fName,'a',encoding='utf-8') as f:
+    with open(파일명,'a',encoding='utf-8') as f:
         if targetStr not in contents :
             f.write(targetStr + "\n")
 
     f.close()
+
+def 텍스트파일_내용삭제(파일명 :str, 삭제스트링 :str):
+    #file_path = f'./data/etc/{파일명}History.txt'
+    # Read the contents of the file
+    with open(파일명, 'r',encoding='utf-8') as file:
+        lines = file.readlines()
+
+    # Search for the target string and remove it from the contents
+    modified_lines = [line for line in lines if 삭제스트링 not in line]
+
+    # Write the modified contents back to the file
+    with open(파일명, 'w',encoding='utf-8') as file:
+        file.writelines(modified_lines)
 
 def 최신파일찾고열기():
 

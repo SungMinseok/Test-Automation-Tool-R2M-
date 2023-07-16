@@ -8,20 +8,17 @@ path_resource = "./resource"
 if not os.path.isdir(path_resource):                                                           
     os.mkdir(path_resource)
 
+
+
+
+
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QKeySequence,QPixmap,QCursor
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout, QToolTip
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QCursor, QFont,QColor
-from PyQt5.QtWidgets import QLabel, QToolTip, QWidget, QVBoxLayout
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtCore import QUrl
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QKeySequence,QPixmap, QColor
+from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
 
 
 # Connect the QAction button to the open_patch_notes function
@@ -41,6 +38,7 @@ class ImageTooltip(QWidget):
 form_class = uic.loadUiType(f'./etc/R2A_UI.ui')[0]
 
 cache_path = f'./cache/cache.csv'
+history_item_path = f'./data/etc/itemHistory.txt'
 
 #화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class) :
@@ -153,11 +151,14 @@ class WindowClass(QMainWindow, form_class) :
         global df_item
         global df_tran
         global df_serv
-        global df_res_item
+        global df_resource_item
         df_tran = pd.read_excel("./data/변신 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
         df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
-        df_res_item = pd.read_excel("./data/resource/아이템 리소스.xlsx",engine="openpyxl")
-        #df_res_item = df_res_item.set_index("mID") 
+        try:
+            df_resource_item = pd.read_excel("./data/resource/아이템 리소스.xlsx",engine="openpyxl")
+        except :
+            pass
+        #df_resource_item = df_resource_item.set_index("mID") 
 
         today = time.strftime('%y%m%d')
         itemFileName = f"./data/아이템_{today}.csv"
@@ -276,9 +277,11 @@ class WindowClass(QMainWindow, form_class) :
 
         #self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
         #아이템/매터리얼 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-
         for i in range(0,ITEM_SLOT_COUNT) :
             getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.do_item(x))
+            if i != 0 :
+                getattr(self, f'btn_additem_bookmark_{i}').clicked.connect(lambda _, x=i: self.아이템북마크추가(x))
+        getattr(self, f'btn_additem_bookmark_0').clicked.connect(lambda _, x=i : self.아이템북마크제거(x))
         
 
         #0~13강 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
@@ -648,9 +651,9 @@ class WindowClass(QMainWindow, form_class) :
                 else :
                     itemName = f'{self.input_itemName.text()}'
                 
-                ms.createHistoryCache("item",itemName)
+                ms.텍스트파일_내용추가("item",itemName)
                 self.applyHistory("item")
-                cb.copy(self.input_itemid.text())
+                pc.copy(self.input_itemid.text())
 
     #230118
     def applyHistory(self, target:str) :
@@ -692,9 +695,9 @@ class WindowClass(QMainWindow, form_class) :
         try:
             itemID = getattr(self, f'input_additem_itemid_{slot_num}').text()
             resource_id = df_item.loc[df_item["mID"] == int(itemID), "mResourceID"].values[0]
-            res_name = df_res_item.loc[df_res_item["mID"] == int(resource_id), "mIconName"].values[0]
+            res_name = df_resource_item.loc[df_resource_item["mID"] == int(resource_id), "mIconName"].values[0]
 
-            #res_name = df_res_item.loc[int(itemID),"mIconName"].values[0]
+            #res_name = df_resource_item.loc[int(itemID),"mIconName"].values[0]
             image_path = f'./resource/{res_name}.png'
             # QPixmap 객체 생성
             pixmap = QPixmap(image_path)
@@ -710,7 +713,31 @@ class WindowClass(QMainWindow, form_class) :
             empty_pixmap.fill(QColor(0, 0, 0, 0))  # Fill the QPixmap with a transparent color
             getattr(self, f'item_img_{slot_num}').setPixmap(empty_pixmap)
             return
+        
+    #230717
+    def 아이템북마크추가(self, slot_num):
+        if slot_num == 0:
+            return
+        item_name = getattr(self, f'input_additem_itemName_{slot_num}').text()
+        if item_name == "" :
+            return
+        
+        ms.텍스트파일_내용추가(history_item_path,item_name)
+        self.applyHistory("item")
+    
+    #230717
+    def 아이템북마크제거(self, slot_num):
+        #if slot_num != 0 :
+        #    return
+        print("45425")
+        #item_name = getattr(self, f'input_additem_itemName_{slot_num}').text()
+        item_name = self.comboBox_itemhistory.currentText()
+
+        ms.텍스트파일_내용삭제(history_item_path,item_name)
+        self.applyHistory("item")
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+
+
 
 
 #Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1200,7 +1227,7 @@ import pyautogui as pag
 #import clipboard as cb
 import time
 import re
-
+import pyperclip as pc
 
 #endregion
 # if __name__ == "__main__":
