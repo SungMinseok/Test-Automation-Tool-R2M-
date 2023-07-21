@@ -90,7 +90,8 @@ def getBoxPos(x,y,w,h):
 
 appX, appY, appW, appH = 0,0,0,0
 #region mouse position
-joyPos=[0.1043,0.805]
+joyPos=[0.1092,0.805]
+joy_cmd_pos = [0.1092,0.7429]
 
 menuPos0=[0.773,0.043]
 menuPos1=[0.82,0.043]
@@ -416,6 +417,9 @@ mainhud_chat_btn = [0.0252,0.677] #채팅버튼, 채팅인풋박스
 send_chat_btn = [0.2675,0.6907]
 chat_popup_box = [0*appW+appX,0.1876*appH+appY,0.3046*appW,0.4708*appH]
 
+#시스템메시지관련
+center_system_msg_box = [0.355*appW+appX,0.6373*appH+appY,0.29*appW,0.0484*appH]
+
 #endregion
 
 waitTime = 0.3
@@ -636,19 +640,35 @@ def Command(command):
         pass
     #sleep(0.1) 
     pc.copy(command)
-    Click(joyPos)
+    Click(joy_cmd_pos)
     #pc.copy('')
     #pc.copy(command)
     pag.hotkey('z','x','c','v')
     #sleep(waitTime) 
-    Click(commandPos)
+    Click(joy_cmd_pos)
 
 
     pag.hotkey("ctrl", "v")
-    pag.press('enter')
+    sleep(0.05)
+    #Click(joyPos)  
+    pag.press('enter')  
+    sleep(0.05)
+    Click(executePos)
+
+    #sleep(0.5)
+    #pag.press('enter')
+    #pag.press(pag.KEYBOARD_KEYS('enter'))
+    #pag.typewrite('\n')
+
+    #pag.keyDown('enter')  # 'enter' 키를 누른 상태로 유지합니다.
+    #pag.keyUp('enter')    # 'enter' 키를 떼어냅니다.
+
+
+# 'enter' 키에 해당하는 가상 키 코드는 'enter'입니다.
+
 
     #Click(executePos)
-    Click(executePos)
+    #Click(executePos)
 
 
 def inputCommand(command):
