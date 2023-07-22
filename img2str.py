@@ -1626,6 +1626,7 @@ def getOnlyNumberFromImg(imgName):#숫자만 읽기
 
     return data
 
+#region
 
 #endregion
 if __name__ == "__main__" : 
