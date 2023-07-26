@@ -639,9 +639,11 @@ def Command(command):
         command =command.replace('\n','')
     except:
         pass
-    #sleep(0.1) 
-    pc.copy(command)
+    #Click(joy_cmd_pos)
+    #sleep(1) 
+    #pc.copy(command)
     Click(joy_cmd_pos)
+    pag.press('hangul')
     #pc.copy('')
     #pc.copy(command)
     pag.hotkey('z','x','c','v')
@@ -649,7 +651,8 @@ def Command(command):
     Click(joy_cmd_pos)
 
 
-    pag.hotkey("ctrl", "v")
+    #pag.hotkey("ctrl", "v")
+    pag.typewrite(command)
     sleep(0.05)
     #Click(joyPos)  
     pag.press('enter')  

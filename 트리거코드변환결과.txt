@@ -4,6 +4,5 @@ trigger.lines = 대상파일읽기및리스트반환(f'{current_directory}/퀵�
 trigger.결과물명 = f'{result_directory}/result.txt'
 trigger.
 for i in range(0, 2):
-        trigger.명령어입력("2")
-    for i in range(0, 3):
+            trigger.명령어입력("2")
             trigger.명령어입력("3")

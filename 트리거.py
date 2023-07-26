@@ -6,6 +6,9 @@ import os
 def 대기(초:float):
     sleep(초)
 
+def 출력(str):
+    print(str)
+
 def 화면리셋() :
     ms.ResetFirst()
     return

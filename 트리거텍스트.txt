@@ -1,11 +1,18 @@
-current_directory = 현재디렉토리반환()
 result_directory = 결과저장디렉토리생성("quick_slot_ban")
-lines = 대상파일읽기및리스트반환(f'{current_directory}/퀵슬롯제한대상.txt')
-결과물명 = f'{result_directory}/result.txt'
+result_file = 스크린샷("inventoryBox",f'{result_directory}/result')
+for i in range(0,10):
+    print(result_file)
 
-반복시작1(2)
-명령어입력("2")
-반복시작2(3)
-명령어입력("3")
-반복끝2
-반복끝1
+#current_directory = 현재디렉토리반환()
+#result_directory = 결과저장디렉토리생성("quick_slot_ban")
+#lines = 대상파일읽기및리스트반환(f'{current_directory}/퀵슬롯제한대상.txt')
+#lines = 대상파일읽기및리스트반환(f'퀵슬롯제한대상.txt')
+#결과물명 = f'{result_directory}/result.txt'
+
+#반복시작(2)
+#current_directory = 현재디렉토리반환()
+#명령어입력(lines[0])
+#print(current_directory)
+#명령어입력("2")
+#명령어입력("3")
+#반복끝

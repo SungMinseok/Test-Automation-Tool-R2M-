@@ -278,7 +278,7 @@ class WindowClass(QMainWindow, form_class) :
         #self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
         #아이템/매터리얼 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         for i in range(0,ITEM_SLOT_COUNT) :
-            getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.do_item(x))
+            getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.아이템생성(x))
             if i != 0 :
                 getattr(self, f'btn_additem_bookmark_{i}').clicked.connect(lambda _, x=i: self.아이템북마크추가(x))
         getattr(self, f'btn_additem_bookmark_0').clicked.connect(lambda _, x=i : self.아이템북마크제거(x))
@@ -460,7 +460,7 @@ class WindowClass(QMainWindow, form_class) :
     #def additem(self) :
     #    multi.autoAddItem(self.input_additem_id.text(),self.input_additem_count.text())
 
-    def do_item(self, slotNum) :
+    def 아이템생성(self, slotNum) :
         
         cmdStr = self.comboBox_itemcmd.currentText()
         itemID = getattr(self, f'input_additem_itemid_{slotNum}').text()
