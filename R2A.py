@@ -1,4 +1,5 @@
 ITEM_SLOT_COUNT = 21
+CUSTOM_CMD_SLOT_COUNT = 22
 
 '''
 기본 세팅(폴더생성)
@@ -57,10 +58,10 @@ class WindowClass(QMainWindow, form_class) :
         self.setFixedSize(450,1020)
         
         self.btn_teleport.clicked.connect(self.doTeleport)
-        self.btn_customCmd_13.clicked.connect(multi.restartgame)
-        self.btn_customCmd_14.clicked.connect(multi.go_character_selection_window)
-        self.btn_customCmd_15.clicked.connect(multi.go_server_selection_window)
-        self.btn_customCmd_16.clicked.connect(multi.logout)
+        self.btn_customCmd_13.clicked.connect(multi.캐릭터재접속)
+        self.btn_customCmd_14.clicked.connect(multi.캐릭터선택창)
+        self.btn_customCmd_15.clicked.connect(multi.서버선택창)
+        self.btn_customCmd_16.clicked.connect(multi.서드파티창)
 
         '''메뉴탭■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
         self.menu_patchnote.triggered.connect(lambda : self.파일열기("패치노트.txt"))
@@ -73,14 +74,14 @@ class WindowClass(QMainWindow, form_class) :
         #     shortcut.activated.connect(getattr(self, f'btn_custom_execute_{i}').click)
         '''단축키■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
 
-        for i in range(0, 12):
-            button_name = f'btn_additem_execute_{i}'
-            if hasattr(self, button_name):
-                shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
-                button = getattr(self, button_name)
-                shortcut.activated.connect(button.click)
+        # for i in range(0, 12):
+        #     button_name = f'btn_additem_execute_{i}'
+        #     if hasattr(self, button_name):
+        #         shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
+        #         button = getattr(self, button_name)
+        #         shortcut.activated.connect(lambda : self.button.click)
 
-        for i in range(0, 20):
+        for i in range(0, ITEM_SLOT_COUNT):
             button_name = f'btn_additem_execute_{i}'
             if hasattr(self, button_name):
                 #shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
@@ -114,7 +115,7 @@ class WindowClass(QMainWindow, form_class) :
         self.applyTestCaseList()
 
 
-        for i in range(0,22) :
+        for i in range(0,CUSTOM_CMD_SLOT_COUNT) :
             getattr(self, f'label_custom_count_{i}').setText('0')
 
         #반응형 UI ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
@@ -265,6 +266,10 @@ class WindowClass(QMainWindow, form_class) :
         #self.btn_record_setdir.clicked.connect(self.setFilePath)
 
         self.btn_subbtn_0.clicked.connect(lambda : self.executeCommand("cleanupinventory"))
+        self.btn_subbtn_1.clicked.connect(lambda : self.executeCommand("additem 999 100000000"))
+        self.btn_subbtn_2.clicked.connect(lambda : self.executeCommand("addcurrency 25 100000"))
+        self.btn_subbtn_3.clicked.connect(multi.캐릭터생성_알파)
+        self.btn_subbtn_4.clicked.connect(multi.캐릭터생성_라이브)
     
     #Tab [Item]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -292,7 +297,7 @@ class WindowClass(QMainWindow, form_class) :
     
     #Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     
-        for i in range(0,12) :
+        for i in range(0,CUSTOM_CMD_SLOT_COUNT) :
             getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
 
     
@@ -1149,7 +1154,7 @@ class WindowClass(QMainWindow, form_class) :
                 'value1': tempVal1
             }
 
-        for i in range(0,22):
+        for i in range(0,CUSTOM_CMD_SLOT_COUNT):
             tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
             tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
             tempVal2 = getattr(self, f'label_custom_count_{i}').text()

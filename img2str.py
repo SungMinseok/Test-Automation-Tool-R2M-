@@ -5,7 +5,7 @@ import time
 import os
 import msdata as ms
 from datetime import datetime
-pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'd:\Tesseract-OCR\tesseract.exe'
 
 # path = "./screenshot/Img2str"+ time.strftime("_%m%d")
 # if not os.path.isdir(path):                                                           
@@ -1587,7 +1587,7 @@ def getNumbersInColumnFromImg_0(imgName:str) :
     return str(data)
    
 
-def getStringFromImg(imgName, langCode):#일반적인 인식(개행 모두 제거)
+def getStringFromImg(imgName, langCode= 'kor'):#일반적인 인식(개행 모두 제거)
     img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)
     result = 234- img
     data = pytesseract.image_to_string(result, lang=langCode,config='--psm 6')

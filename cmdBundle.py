@@ -36,7 +36,7 @@ def initCmdBundle():
     #multicommand()
 
 
-def deleteAccount():
+def 캐릭터탈퇴():
     while True:
         ms.PrintUB_Bold()     
         print("※회원탈퇴")

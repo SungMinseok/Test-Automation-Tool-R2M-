@@ -298,17 +298,22 @@ def setClass_auto(classNum, checkBoxValues):
             lines = f.read().splitlines()
         f.close()
 
-        ms.CommandOpen()
-        pag.typewrite("additems")
-        for line in lines:
-            pag.typewrite(" "+line)
-        ms.CommandClose()
+        #ms.CommandOpen()
+        
+        #lines = [72000, 13000, 15000]
+        result_string = ' '.join(map(str, lines))
+        ms.Command(f'additems {result_string}')
+        #print(result_string)
 
-        ms.CommandOpen()
-        pag.typewrite("additems")
-        for line in lines:
-            pag.typewrite(" "+line)
-        ms.CommandClose()
+            #pag.typewrite(" "+line)
+        #pag.typewrite("additems")
+        # #ms.CommandClose()
+
+        # ms.CommandOpen()
+        # pag.typewrite("additems")
+        # for line in lines:
+        #     pag.typewrite(" "+line)
+        # ms.CommandClose()
 
         ms.Move(ms.menuPos1)
         sleep(ms.waitTime2)

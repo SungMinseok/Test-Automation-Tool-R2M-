@@ -6,6 +6,8 @@ from time import sleep
 import os.path
 import time
 import img2str as i2s
+import random
+import string
 
 
 def multicommand():
@@ -65,16 +67,6 @@ def autoAddItem(id, count):
 
     ms.Command(f'additem {id} {count}')
 
-# def autoAddItemAll(id):
-
-#     #ms.ResetFirst()
-#     ms.CommandOpen()
-#     pag.typewrite("additems ")
-#     for j in range(0,14):
-#         temp = int(id)+j
-#         pag.typewrite(str(temp)+" ")
-#     ms.CommandClose()
-
 
 def Command_Additems_Text():
     while True :
@@ -115,23 +107,6 @@ def Command_Additems_Text():
         for line in lines:
             pag.typewrite(" "+line)
         ms.CommandClose()
-
-# def autoAddItemText(filePath):
-#     with open(filePath) as f:
-#         lines = f.read().splitlines()
-#     f.close()
-#     #ms.ResetFirst()
-#     ms.CommandOpen()
-#     pag.typewrite("additems")
-#     for line in lines:
-#         pag.typewrite(" "+line)
-#     ms.CommandClose()
-
-#     # cmdStr= "additems"
-#     # for line in lines:
-#     #     cmdStr += " " + str(line)
-#     # ms.Command(cmdStr)
-#     sleep(2)
 
 
 #R2M_Alpha_Command : makeitem X N > X in txtFile
@@ -327,18 +302,7 @@ def Command_Direct2():
     #     print("다시 입력해주세요.")
     #     Command_Direct()
 
-# def multiCommand_auto(commandText, repeatCount, repeatDelay):
-#     lines = commandText.splitlines()
 
-#     for i in range(0,repeatCount) :
-  
-#         print(i+1 ,"번 째 실행", end='\r')
-#         for line in lines:
-#             ms.Command(line)
-#             sleep(1)
-        
-#         if i < (count - 1) :
-#             ms.sleep(term)
 
 
 def autoTest_regist2market(marketType = 0,fileName = ""):#일반/통합,id텍스트파일명
@@ -497,7 +461,7 @@ def executeCmdPackage(cmd) :
     ms.Move(ms.menuPos4)
     ms.Move(ms.menuPos20)
 
-def restartgame():
+def 캐릭터재접속():
     """
     캐릭터 재접속
     """
@@ -514,11 +478,11 @@ def restartgame():
     ms.Move(ms.okPos)
     ms.sleep(0.2)
 
-    ms.sleep(4)
+    ms.sleep(1.5)
 
     ms.Move(ms.characterCreateBtn)
 
-def go_character_selection_window():
+def 캐릭터선택창():
     """
     캐릭터 선택창
     """
@@ -535,7 +499,7 @@ def go_character_selection_window():
     ms.Move(ms.okPos)
     ms.sleep(0.2)
 
-def go_server_selection_window():
+def 서버선택창():
     """
     서버 선택창
     """
@@ -552,7 +516,7 @@ def go_server_selection_window():
     ms.Move(ms.okPos)
     ms.sleep(0.2)
 
-def logout():
+def 서드파티창():
     """
     로그아웃&서드파티 선택창
     """
@@ -570,7 +534,7 @@ def logout():
     ms.sleep(0.2)
 
 
-def chat_ingame(chat : str, screenshot_path = ""):
+def 채팅및스샷저장(chat : str, screenshot_path = ""):
     """
     채팅팝업 내 채팅발생
     """
@@ -591,179 +555,238 @@ def chat_ingame(chat : str, screenshot_path = ""):
         ms.captureSomeBox2("chat_popup_box",screenshot_path)
     ms.ResetFirst()
 
-# def autoTest_reinforceEquipment(reinType,count,equipType,scrollType,fileName):  #일반/다중강화, 테스트횟수, 장비타입(1무기/2방어구/3장신구/4전리품), 주문서타입(1일반/2축복/3저주/4고대)
+def 캐릭터탈퇴():
+
+    ms.ResetFirst()
+
+    ms.Move(ms.menuPos4)
+    ms.Move(ms.menuPos20)
+    ms.Move(ms.menuMiddleUpperTab5)
+    ms.Move(ms.deleteAccountBtn)
+    ms.Move(ms.okPos)
+    ms.sleep(1)
+    codeResultFileName = ms.captureSomeBox("deleteAccountCodeBox")
+    ms.sleep(0.5)
+    codeID = i2s.Indiv_Eng_Return(codeResultFileName)
+    print(codeID[0:4])
+    ms.sleep(0.5)
+    ms.Move(ms.deleteAccountCodeInput)
+
+    ms.inputCommand(codeID[0:4])
+    ms.sleep(0.1)
+    ms.Move(ms.okPos)
+
+
+def 캐릭터생성_라이브():
+
+
+    ms.Move(ms.appUpPos)
+    sleep(0.01)
+    ms.Move(ms.characterNameBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.characterNameInput)
+
+    randomName = ""
+    for i in range(8):
+        randomName += random.choice(string.ascii_letters)
+    ms.sleep(1)
+
+    ms.inputCommand(randomName)
+    ms.Move(ms.okPos)
+    ms.sleep(1)
     
-#     path = "./screenshot/autoTest_reinforceEquipment"+ time.strftime("_%m%d")
-#     if not os.path.isdir(path):                                                           
-#         os.mkdir(path)
-        
-#     path_result = path + "/result"
-#     if not os.path.isdir(path_result):                                                           
-#         os.mkdir(path_result)
+    ms.Move(ms.characterCreateBtn)
+    ms.sleep(0.5)
+
+    ms.Move(ms.characterCreateBtn)
 
 
 
-#     if equipType <=3 :
-#         print("[1]일반 [2]축복 [3]저주 [4]고대 // [0]뒤로 : ")
-#         scrollType = int(ms.InputNum(4))
-#         if scrollType == 0 : 
-#             ProbTest()
-#     # else :
-#     #     print("수호팔찌340/파괴가면341/생명금관342")
-#     #     print("숙련나팔343/영혼부적344/극복성배345")
-#     #     print("전리품강화주문서 ID 입력 // [0]뒤로 : ")
-#     #     bookNum = int(ms.InputNum(999))
-#     #     if bookNum == 0 : 
-#     #         ProbTest()
+    ms.sleep(5)
+
+    
+    tempText = ""
+
+    while tempText != "벨리타" :
+        print("텍스트 대기 중:", tempText)
+        belitaBoxName = ms.captureSomeBox("belitaBox")
+        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+        sleep(1)
+
+    ms.Move(ms.centerPos)
+    ms.sleep(0.5)
+    ms.Move(ms.getFirstQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(1)
+
+
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(1)
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(1)
+
+    pag.press('d')
+    ms.sleep(0.5)
+
+    pag.keyDown('w')
+    pag.keyDown('a')
+
+    while tempText != "벨켄" :
+        print("텍스트 대기 중:", tempText)
+        belitaBoxName = ms.captureSomeBox("belitaBox")
+        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+        sleep(1)
+
+    pag.keyUp('w')
+    pag.keyUp('a')
+
+    
+    for i in range(3):
+        pag.press('esc')
+        ms.sleep(0.5)
+
+    #ms.Command("cleanupinventory")
+    #ms.ResetFirst()
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(0.5)
+
+    ms.Move(ms.menuPos1)
+    ms.sleep(0.5)
+    ms.Move(ms.invenBtn3)
+    ms.sleep(0.5)
+    ms.Move(ms.invenBtn3)
+    ms.sleep(0.5)
+    ms.Move(ms.invenMainExitBtn)
+    ms.sleep(0.5)
+    for i in range(3):
+        pag.press('esc')
+        ms.sleep(0.5)
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.getFirstQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.okTeleportBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.tutoMonPos)
+    ms.sleep(0.5)
+    ms.Move(ms.attackBtn)
+    ms.sleep(0.5)
+
+    while tempText != "호텐 플로츠" :
+        print("텍스트 대기 중:", tempText)
+        belitaBoxName = ms.captureSomeBox("belitaBox")
+        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+        sleep(1)
+
+    for i in range(3):
+        pag.press('esc')
+        ms.sleep(0.5)
+
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.getFirstQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.okTeleportBtn)
+    ms.sleep(0.5)
+
+    ms.sleep(5)
+
+    for i in range(4):
+        pag.press('esc')
+        ms.sleep(0.5)
+
+    ms.Move(ms.acceptQuestBtn)
+
+def 캐릭터생성_알파():#명령어사용
+
+    ms.Move(ms.appUpPos)
+    sleep(0.01)
+    ms.Move(ms.characterNameBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.characterNameInput)
+
+    randomName = ""
+    for i in range(8):
+        randomName += random.choice(string.ascii_letters)
+    ms.sleep(1)
+
+    ms.inputCommand(randomName)
+    ms.Move(ms.okPos)
+    ms.sleep(1)
+    
+    ms.Move(ms.characterCreateBtn)
+    ms.sleep(0.5)
+
+    ms.Move(ms.characterCreateBtn)
 
 
 
-#     with open("장비강화.txt") as f:
-#         lines = f.read().splitlines()
+    ms.sleep(5)
 
-#     for itemNum in lines:
-#         print("총 예상 종료 시간 : "+ms.GetElapsedTime((10+ count * 17)*len(lines)) +")")
+    
+    tempText = ""
 
-# #아이템 별 폴더 추가 생성
-#         #if folderCheck == 1:
-#         startTime = time.strftime("_%m%d%H%M")
-        
-#         extraPath = path + "/"+ itemNum + startTime
-#         if not os.path.isdir(extraPath):                                                           
-#             os.mkdir(extraPath)  
-#         else :#있을경우 삭제하고 다시생성(스샷 덮어쓰기가 안되서...0719)
-#             shutil.rmtree(extraPath)                                                           
-#             os.mkdir(extraPath)  
+    while tempText != "벨리타" :
+        print("텍스트 대기 중:", tempText)
+        belitaBoxName = ms.captureSomeBox("belitaBox")
+        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+        sleep(1)
 
-#         if count <= 0 :
-                
-#             print("처음부터 다시 입력해주세요.")
-#             ReinforceEquipment()
-
-#         else :
-#             if reinType == "single" :
-#                 print("실행 중... (예상 종료 시간 : "+ms.GetElapsedTime(10+count * 17) +")")
-
-#                 #print("실행 중... (예상 종료 시간 : "+ms.GetElapsedTime(10+count * 3.2) +")")
-
-#                 ms.ResetFirst()
-#                 ms.Command("cleanupinventory")
+    ms.Move(ms.centerPos)
+    ms.sleep(0.5)
+    ms.Move(ms.getFirstQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(1)
 
 
-#                 if equipType <=3 :
-#                     bookNum = 300 + (scrollType-1)*10 + (equipType-1)
-#                 elif equipType == 4:
-#                     if int(itemNum) <=430008 :
-#                         bookNum = 340
-#                     elif int(itemNum) <=431008:
-#                         bookNum = 341
-#                     elif int(itemNum) <=432008:
-#                         bookNum = 342
-#                     elif int(itemNum) <=433008:
-#                         bookNum = 343
-#                     elif int(itemNum) <=434008:
-#                         bookNum = 344
-#                     elif int(itemNum) <=435008:
-#                         bookNum = 345
-#                 ms.Command("additem "+str(bookNum)+" "+str(count))
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(0.5)
+    pag.press('esc')
+    ms.sleep(1)
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(1)
 
-#                 ms.Command("additem 999 1500000000")
-#                 ms.Command("additem "+itemNum+" "+str(count*2))
+    pag.press('d')
+    ms.sleep(0.5)
 
-#                 sleep(0.01)
-#                 #인벤열기 >
-#                 ms.Move(ms.menuPos1)
-#                 sleep(ms.waitTime)
-#                 #강화UI 오픈
-#                 ms.Move(ms.invenBtnRein)
-#                 sleep(0.2)
-                
-#                 ms.Move(ms.invenReinBtnUp1)
-#                 ms.Move(ms.invenBtn0)
-#                 ms.Move(ms.invenReinBtnUp0)
+    pag.press('w')
+    pag.press('a')
 
-#                 txtName = path+"/"+str(itemNum)+"_"+str(bookNum)+"_"+str(count)+startTime+".txt"
+    ms.Command("flowcompletequest 100500")
 
-#                 for i in range(0,count) :
-#                     print(str(i+1) +"/" + str(count), end='\r')
-#                     ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
-#                     ms.Move(ms.invenReinBtnDown1)
-#                     sleep(1.5)    
-#                     ms.Move(ms.centerPos)         
-#                     sleep(1.5)       
-#                     ms.CaptureReinforceResult(extraPath+"/"+str(i))
-#                     img2str.Indiv_Item(txtName,extraPath+"/"+str(i)+".jpg")
-                        
-#                     sleep(0.3)       
-#                     ms.Move(ms.invenReinBtnDown1) 
-#             #다중강화
-#             elif reinType == "multi":
-#                 print("실행 중... (예상 종료 시간 : "+ms.GetElapsedTime(10+count * 18) +")")
-
-                
-#                 for i in range(0,count) :
-#                     print(str(i+1) +"/" + str(count), end='\r')
-#                     ms.ResetFirst()
-
-#                     ms.Command("cleanupinventory")
-
-#                     if equipType <=3 :
-#                         bookNum = 300 + (scrollType-1)*10 + (equipType-1)
-#                     elif equipType == 4:
-#                         if int(itemNum) <=430008:
-#                             bookNum = 340
-#                         elif int(itemNum) <=431008:
-#                             bookNum = 341
-#                         elif int(itemNum) <=432008:
-#                             bookNum = 342
-#                         elif int(itemNum) <=433008:
-#                             bookNum = 343
-#                         elif int(itemNum) <=434008:
-#                             bookNum = 344
-#                         elif int(itemNum) <=435008:
-#                             bookNum = 345
-#                     ms.Command("additem "+str(bookNum)+" 100000")
-
-#                     ms.Command("additem 999 1500000000")
-#                     ms.Command("additem "+itemNum+" 16")
-
-#                     sleep(0.01)
-#                     #인벤열기 >
-#                     ms.Move(ms.menuPos1)
-#                     sleep(ms.waitTime)
-#                     #강화UI 오픈
-#                     ms.Move(ms.invenBtnRein)
-#                     sleep(0.2)
-#                     #다중강화 클릭
-#                     ms.Move(ms.invenReinBtnLeft1)
-#                     #주문서등록
-#                     ms.Move(ms.invenReinBtnUp1)
-#                     ms.Move(ms.invenBtn0)
-#                     #장비등록준비
-#                     ms.Move(ms.invenReinBtnUp0)
-#                     #장비등록
-#                     for k in range(0,16):
-#                         ms.Move(getattr(ms, 'invenBtn{}'.format(k)))
-                    
-#                     txtName = path+"/"+str(itemNum)+"_"+str(bookNum)+"_"+str(count*16)+startTime+".txt"
-#                     #강화도 클릭
-#                     phaseNum = (int(itemNum) % 10) + 1
-#                     ms.Move(getattr(ms, 'reinPhase{}'.format(phaseNum)))
-
-#                     #강화시작 클릭
-#                     ms.Move(ms.invenReinBtnDown2)
-
-#                     #2초대기     
-#                     sleep(3)       
-
-#                     #스샷저장
-#                     if phaseNum < 9 :
-#                         ms.CaptureReinMultiResultBox(extraPath+"/"+str(i))
-#                     else : 
-#                         ms.Capture(extraPath+"/"+str(i))
+    ms.Move(ms.acceptQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.getFirstQuestBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.okTeleportBtn)
+    ms.sleep(0.5)
+    ms.Move(ms.tutoMonPos)
+    ms.sleep(0.5)
+    ms.Move(ms.attackBtn)
+    ms.sleep(0.5)
 
 
-#                     #반복종료 리턴(끝)
+# def GoCharacterSelectPage():
+#     ms.ResetFirst()
+#     ms.Move(ms.menuPos4)
+#     ms.sleep(0.5)
+#     ms.Move(ms.menuPos20)
+#     ms.Move(ms.menuMiddleUpperTab5)
+#     ms.Move(ms.goCharacterSelectPageBtn)
+#     ms.Move(ms.okPos)
+
 
 
 if __name__ == "__main__" : 

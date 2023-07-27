@@ -555,7 +555,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -1582,6 +1582,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F1</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -1818,6 +1821,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F2</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -2051,6 +2057,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F3</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -2277,6 +2286,9 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
+            </property>
+            <property name="shortcut">
+             <string>F4</string>
             </property>
            </widget>
           </item>
@@ -2505,6 +2517,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F5</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -2731,6 +2746,9 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
+            </property>
+            <property name="shortcut">
+             <string>F6</string>
             </property>
            </widget>
           </item>
@@ -2959,6 +2977,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F7</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -3186,6 +3207,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F8</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -3409,6 +3433,9 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
+            </property>
+            <property name="shortcut">
+             <string>F9</string>
             </property>
            </widget>
           </item>
@@ -3634,6 +3661,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F10</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -3858,6 +3888,9 @@ font: bold</string>
             <property name="text">
              <string>생성 F1</string>
             </property>
+            <property name="shortcut">
+             <string>F11</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -4081,6 +4114,9 @@ font: bold</string>
             </property>
             <property name="text">
              <string>생성 F1</string>
+            </property>
+            <property name="shortcut">
+             <string>F12</string>
             </property>
            </widget>
           </item>
@@ -7600,7 +7636,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F2</string>
             </property>
            </widget>
           </item>
@@ -7777,7 +7813,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F3</string>
             </property>
            </widget>
           </item>
@@ -7954,7 +7990,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F4</string>
             </property>
            </widget>
           </item>
@@ -8131,7 +8167,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F5</string>
             </property>
            </widget>
           </item>
@@ -8308,7 +8344,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F6</string>
             </property>
            </widget>
           </item>
@@ -8485,7 +8521,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F7</string>
             </property>
            </widget>
           </item>
@@ -8662,7 +8698,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F8</string>
             </property>
            </widget>
           </item>
@@ -8839,7 +8875,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F9</string>
             </property>
            </widget>
           </item>
@@ -9016,7 +9052,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F10</string>
             </property>
            </widget>
           </item>
@@ -9193,7 +9229,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F11</string>
             </property>
            </widget>
           </item>
@@ -9370,7 +9406,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>F12</string>
             </property>
            </widget>
           </item>
@@ -9546,9 +9582,6 @@ font: bold</string>
             <property name="text">
              <string>실행 (F1)</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -9722,9 +9755,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행 (F1)</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -9900,9 +9930,6 @@ font: bold</string>
             <property name="text">
              <string>실행 (F1)</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -10076,9 +10103,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행 (F1)</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -10254,9 +10278,6 @@ font: bold</string>
             <property name="text">
              <string>실행 (F1)</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -10430,9 +10451,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행 (F1)</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -10608,9 +10626,6 @@ font: bold</string>
             <property name="text">
              <string>실행 (F1)</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -10784,9 +10799,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행 (F1)</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>
@@ -10962,9 +10974,6 @@ font: bold</string>
             <property name="text">
              <string>실행 (F1)</string>
             </property>
-            <property name="shortcut">
-             <string>F1</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -11138,9 +11147,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행 (F1)</string>
-            </property>
-            <property name="shortcut">
-             <string>F1</string>
             </property>
            </widget>
           </item>

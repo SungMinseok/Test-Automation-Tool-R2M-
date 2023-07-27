@@ -1,0 +1,3 @@
+result_directory = 결과저장디렉토리생성("트리거텍스트테스트")
+result_file = 스크린샷("inventoryBox",f'{result_directory}/result')
+텍스트변환("belitaBox.jpg", "test_text.txt")

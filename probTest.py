@@ -12,7 +12,7 @@ import shutil
 import img2str
 import pyautogui as pag
 import numpy as np
-pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 pag.FAILSAFE = False
 
 # path = "./screenshot/Img2str"+ time.strftime("_%m%d")

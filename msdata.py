@@ -7,8 +7,8 @@ if not os.path.isdir(path_screenshot):
     os.mkdir(path_screenshot)
 ######################
 
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
+#import pytesseract
+#pytesseract.pytesseract.tesseract_cmd = r'd:\Tesseract-OCR\tesseract.exe'
 
 
 
@@ -598,12 +598,26 @@ def captureSomeBox(boxName : str):
 
 def captureSomeBox2(boxName,resultPath):
     """
-    boxName : ms의 박스 변수명
-    resultPath : 경로지정 (.jpg 제외)
+    boxName : ms의 박스 변수명\n
+    resultPath : 경로지정 (.jpg 제외하고 입력)\n
     Returns : resultPath로 스크린샷 저장
     """
     resultJPGFileName = resultPath + ".jpg"
-    #print(boxName)
+    #print(boxName)import os
+
+    if os.path.exists(resultJPGFileName):
+        # 이미 파일이 존재하는 경우, 번호를 붙여가며 존재하지 않는 파일명 찾기
+        i = 0
+        while True:
+            i += 1
+            numbered_resultJPGFileName = f"{resultPath}_{i}.jpg"
+            if not os.path.exists(numbered_resultJPGFileName):
+                resultJPGFileName = numbered_resultJPGFileName
+                break
+
+    pag.screenshot(resultJPGFileName, region=(globals()[boxName][0], globals()[boxName][1], globals()[boxName][2], globals()[boxName][3]))
+    return resultJPGFileName
+
     #pag.screenshot(resultJPGFileName, region=(getattr(self, boxName)[0],getattr(self,boxName)[1],getattr(self,boxName)[2],getattr(self,boxName)[3]))
     pag.screenshot(resultJPGFileName, region=(globals()[boxName][0],globals()[boxName][1],globals()[boxName][2],globals()[boxName][3]))
     return resultJPGFileName
@@ -642,11 +656,12 @@ def Command(command):
     #Click(joy_cmd_pos)
     #sleep(1) 
     #pc.copy(command)
-    Click(joy_cmd_pos)
-    pag.press('hangul')
+    Click(appUpPos)
+    #pag.press('hangul')
     #pc.copy('')
     #pc.copy(command)
     pag.hotkey('z','x','c','v')
+    sleep(0.1)
     #sleep(waitTime) 
     Click(joy_cmd_pos)
 

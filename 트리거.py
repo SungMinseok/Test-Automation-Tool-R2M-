@@ -13,28 +13,29 @@ def 화면리셋() :
     ms.ResetFirst()
     return
 
-def 명령어입력(커맨드:str) :
+def 명령어(커맨드:str) :
     ms.Command(커맨드)
     return
 
-def 화면클릭(x,y) :
+def 클릭(x,y) :
     return
 
-def 화면클릭(버튼명:str) :
+def 클릭(버튼명:str) :
     btn_name = getattr(ms,버튼명)
     ms.Click(btn_name)
     return
 
 def 스크린샷(박스명:str, 저장경로:str) :
     #box_name = getattr(ms,박스명)
-    ms.captureSomeBox2(박스명, 저장경로)
-    return
+    
+    return ms.captureSomeBox2(박스명, 저장경로)
 
 def 텍스트변환(이미지경로:str, 저장경로:str):
     data = i2s.getStringFromImg(이미지경로)
+    print(data)
     
     with open(저장경로,'a',encoding='utf-8') as tx:
-        tx.write(저장경로)
+        tx.write(f'{data}\n')
     return
 
 def 현재디렉토리반환():
