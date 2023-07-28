@@ -5,7 +5,7 @@ import time
 import os
 import msdata as ms
 from datetime import datetime
-#pytesseract.pytesseract.tesseract_cmd = r'd:\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'd:\Tesseract-OCR\tesseract.exe'
 
 # path = "./screenshot/Img2str"+ time.strftime("_%m%d")
 # if not os.path.isdir(path):                                                           

@@ -268,8 +268,6 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_subbtn_0.clicked.connect(lambda : self.executeCommand("cleanupinventory"))
         self.btn_subbtn_1.clicked.connect(lambda : self.executeCommand("additem 999 100000000"))
         self.btn_subbtn_2.clicked.connect(lambda : self.executeCommand("addcurrency 25 100000"))
-        self.btn_subbtn_3.clicked.connect(multi.캐릭터생성_알파)
-        self.btn_subbtn_4.clicked.connect(multi.캐릭터생성_라이브)
     
     #Tab [Item]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -333,6 +331,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_hp.clicked.connect(lambda : self.executeCommandByID(6))
         self.btn_mp.clicked.connect(lambda : self.executeCommandByID(7))
         
+        self.btn_character_script_btn_0.clicked.connect(multi.캐릭터생성_알파)
+        self.btn_character_script_btn_1.clicked.connect(multi.캐릭터생성_라이브)
+        self.btn_character_script_btn_2.clicked.connect(multi.캐릭터탈퇴)
 #endregion
 
     #[App Window]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨

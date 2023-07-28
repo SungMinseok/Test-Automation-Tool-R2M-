@@ -32,7 +32,6 @@ from engraveCheck import EngraveCheck
 from dropCheck import DropCheck
 from itemInfoCheck import ItemInfoCheck
 from probTest import ProbTest
-from cmdBundle import GoCharacterSelectPage, initCmdBundle
 import time
 import datetime
 import pandas as pd
@@ -632,62 +631,28 @@ def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
     return resultJPGFileName
 
 
-def Command(command):       
-    # print(command) 
-    # Move(centerPos)
-    # if devMode == 0 :
-    #     pag.hotkey('z','x','c','v')
-    # else:
-    #     DragDown(centerPos)
-    # sleep(waitTime)       
-    # Move(commandPos)
-    # sleep(waitTime)
-    # pag.typewrite(command)
-    # Move(centerUpPos)
-    # sleep(0.1)
-    # Move(executePos)
-    # Move(centerUpPos)
-
-    #230621 update
+def Command(command):    
     try :
         command =command.replace('\n','')
     except:
         pass
-    #Click(joy_cmd_pos)
-    #sleep(1) 
-    #pc.copy(command)
+    
     Click(appUpPos)
-    #pag.press('hangul')
-    #pc.copy('')
-    #pc.copy(command)
+    sleep(0.05)
+    
+    Click(joyPos)
     pag.hotkey('z','x','c','v')
-    sleep(0.1)
-    #sleep(waitTime) 
+    #sleep(0.1)
     Click(joy_cmd_pos)
+    sleep(0.2)
 
 
-    #pag.hotkey("ctrl", "v")
     pag.typewrite(command)
-    sleep(0.05)
-    #Click(joyPos)  
-    pag.press('enter')  
-    sleep(0.05)
+    #sleep(0.1)   
+    Click(joy_cmd_pos)
+    sleep(0.1)
     Click(executePos)
 
-    #sleep(0.5)
-    #pag.press('enter')
-    #pag.press(pag.KEYBOARD_KEYS('enter'))
-    #pag.typewrite('\n')
-
-    #pag.keyDown('enter')  # 'enter' 키를 누른 상태로 유지합니다.
-    #pag.keyUp('enter')    # 'enter' 키를 떼어냅니다.
-
-
-# 'enter' 키에 해당하는 가상 키 코드는 'enter'입니다.
-
-
-    #Click(executePos)
-    #Click(executePos)
 
 
 def inputCommand(command):

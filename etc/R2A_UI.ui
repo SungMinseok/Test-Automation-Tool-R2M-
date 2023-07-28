@@ -467,78 +467,6 @@ font : bold</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btn_subbtn_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>맑은 고딕</family>
-          <pointsize>9</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(47, 117,181);
-color: rgb(255, 255, 255);
-font : bold</string>
-        </property>
-        <property name="text">
-         <string>캐릭생성(A)</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_subbtn_4">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>맑은 고딕</family>
-          <pointsize>9</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(47, 117,181);
-color: rgb(255, 255, 255);
-font : bold</string>
-        </property>
-        <property name="text">
-         <string>캐릭생성(L)</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
     <item>
@@ -555,7 +483,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -11154,16 +11082,6 @@ font: bold</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_10">
-       <attribute name="title">
-        <string>Trigger</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_9">
-       <attribute name="title">
-        <string>Data</string>
-       </attribute>
-      </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
         <string>Character</string>
@@ -11204,208 +11122,6 @@ font : bold</string>
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-        </item>
-        <item>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="checkBox_setCharacter_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>장비</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QCheckBox" name="checkBox_setCharacter_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>전리품</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QCheckBox" name="checkBox_setCharacter_8">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>소모품</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QCheckBox" name="checkBox_setCharacter_7">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>스킬 마스터</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="checkBox_setCharacter_9">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>서버이전</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox_setCharacter_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>스킬(공통)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="checkBox_setCharacter_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>변신/서번트</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="checkBox_setCharacter_6">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>스킬(클래스)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QCheckBox" name="checkBox_setCharacter_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>맑은 고딕</family>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
-            </property>
-            <property name="text">
-             <string>매터리얼</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -11485,7 +11201,7 @@ font : bold</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>55</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -11511,22 +11227,760 @@ font : bold</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>맑은 고딕</family>
               <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(155, 194, 230);</string>
+             <string notr="true">background-color: rgb(47, 117, 181);
+color: rgb(255, 255, 255);
+font: bold</string>
             </property>
             <property name="text">
-             <string>세팅 시작 (Ctrl+1)</string>
+             <string>시작 C1</string>
             </property>
             <property name="shortcut">
              <string>Ctrl+1</string>
             </property>
            </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>장비</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="2">
+           <layout class="QHBoxLayout" name="horizontalLayout_99">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_9">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>서버이전</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_9">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_100">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_10">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>유물</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_10">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_85">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>스킬(공통)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_39">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>변/서</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_83">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>전리품</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_98">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_8">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>소모품</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_8">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="2">
+           <layout class="QHBoxLayout" name="horizontalLayout_86">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>스킬(클래스)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_101">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_11">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>조각상</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_11">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="2">
+           <layout class="QHBoxLayout" name="horizontalLayout_82">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>매터리얼</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_97">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_7">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>스킬 마스터</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_7">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="2">
+           <layout class="QHBoxLayout" name="horizontalLayout_102">
+            <item>
+             <widget class="QCheckBox" name="checkBox_setCharacter_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>장비(전설)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_setClass_openfile_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>맑은 고딕</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(155, 194, 230);</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -11705,6 +12159,148 @@ font : bold</string>
             </property>
             <property name="shortcut">
              <string>Ctrl+2</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_25">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>23</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>맑은 고딕</family>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(31, 78,120);
+color: rgb(255, 255, 255);
+font : bold</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="text">
+           <string> 캐릭터 관련 스크립트</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="btn_character_script_btn_0">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>캐릭생성(알파)</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+`</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="btn_character_script_btn_1">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>캐릭생성(라이브)</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+`</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="btn_character_script_btn_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>캐릭탈퇴</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+`</string>
             </property>
            </widget>
           </item>
@@ -12118,6 +12714,16 @@ font : bold</string>
          </layout>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab_10">
+       <attribute name="title">
+        <string>Trigger</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_9">
+       <attribute name="title">
+        <string>Data</string>
+       </attribute>
       </widget>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
