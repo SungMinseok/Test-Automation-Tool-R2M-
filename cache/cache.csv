@@ -1,31 +1,31 @@
 key,value0,value1,value2
 apppos_default,"0,0,1469,838",,
-item_0,3,5,
+item_0,950,10000000,
 item_1,15000,5,
 item_2,3,5,
 item_3,,5,
 item_4,,,
-item_5,757,,
+item_5,900,100,
 item_6,72000,,
-item_7,37,,
-item_8,111,,
+item_7,901,1,
+item_8,903,1,
 item_9,67,,
-item_10,,,
-item_11,777,,
+item_10,7000,200,
+item_11,201,1,
 item_12,,,
 item_13,444,4,
 item_14,,,
 item_15,,,
 item_16,,,
 item_17,,,
-item_18,,,
-item_19,,,
-item_20,,,
-cmd_0,adad,,0
+item_18,904,1,
+item_19,660014,,
+item_20,630014,1,
+cmd_0,setguildlevel 10,,0
 cmd_1,resetguildpenalty,길드가입패널티삭제,0
-cmd_2,,,0
-cmd_3,,,0
-cmd_4,,,0
+cmd_2,kill 0 20,,0
+cmd_3,summon 20040,,0
+cmd_4,summon 20030,,0
 cmd_5,,,0
 cmd_6,,,0
 cmd_7,,,0
@@ -38,8 +38,8 @@ cmd_13,,,0
 cmd_14,,,0
 cmd_15,,,0
 cmd_16,,,0
-cmd_17,,,0
-cmd_18,,,0
-cmd_19,,,0
-cmd_20,,,0
-cmd_21,,,0
+cmd_17,cleanupmaterial,,0
+cmd_18,summon 17352 30,존나센선공몹,0
+cmd_19,startspotwar 0 30,,0
+cmd_20,setspotguild 92 1380000001 3,로덴성,0
+cmd_21,setspotguild 91 1380000001 3,스팟,0

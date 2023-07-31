@@ -1,7 +1,7 @@
 from 트리거 import *
 
 # Read the content of target.txt
-with open('트리거텍스트2.txt', 'r',encoding='utf-8') as file:
+with open('트리거_길드정보저장.txt', 'r',encoding='utf-8') as file:
     lines = file.readlines()
 
 # Initialize an empty namespace for variable storage
@@ -9,7 +9,7 @@ with open('트리거텍스트2.txt', 'r',encoding='utf-8') as file:
 
 # Execute each line as Python code
 for line in lines:
-    for i in range(0,5):
+    for i in range(0,1):
         exec(line)
     #line = f'{line}'
     #eval(f'트리거.{line}')#, namespace)

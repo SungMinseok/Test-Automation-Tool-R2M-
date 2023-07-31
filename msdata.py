@@ -420,6 +420,12 @@ chat_popup_box = [0*appW+appX,0.1876*appH+appY,0.3046*appW,0.4708*appH]
 #시스템메시지관련
 center_system_msg_box = [0.355*appW+appX,0.6373*appH+appY,0.29*appW,0.0484*appH]
 
+#전체화면
+full_screen = [0*appW+appX,0*appH+appY,1*appW,1*appH]
+
+#NPC소환시 터치 위치
+summon_npc_position = [0.3466,0.2969]
+
 #endregion
 
 waitTime = 0.3
@@ -601,7 +607,7 @@ def captureSomeBox2(boxName,resultPath):
     resultPath : 경로지정 (.jpg 제외하고 입력)\n
     Returns : resultPath로 스크린샷 저장
     """
-    resultJPGFileName = resultPath + ".jpg"
+    resultJPGFileName = f'{resultPath}_0.jpg'
     #print(boxName)import os
 
     if os.path.exists(resultJPGFileName):
@@ -638,7 +644,7 @@ def Command(command):
         pass
     
     Click(appUpPos)
-    sleep(0.05)
+    #sleep(0.05)
     
     Click(joyPos)
     pag.hotkey('z','x','c','v')

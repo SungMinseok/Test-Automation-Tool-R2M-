@@ -483,7 +483,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -16262,9 +16262,65 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item>
+       <widget class="QComboBox" name="comboBox_apptype">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Ignored">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>10</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(155, 194, 230);</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="insertPolicy">
+         <enum>QComboBox::InsertAtBottom</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="placeholderText">
+         <string>이동 지역 선택</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>LDPlayer</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mirroid</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="QLineEdit" name="input_appNameList_inclusiveStr">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -16277,7 +16333,7 @@ color: rgb(255, 255, 255);</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>75</width>
+          <width>70</width>
           <height>16777215</height>
          </size>
         </property>
@@ -16297,20 +16353,20 @@ color: rgb(255, 255, 255);</string>
       <item>
        <widget class="QPushButton" name="btn_appNameList_apply">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>54</width>
+          <width>30</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>54</width>
+          <width>30</width>
           <height>16777215</height>
          </size>
         </property>
@@ -16331,20 +16387,20 @@ color: rgb(255, 255, 255);</string>
       <item>
        <widget class="QPushButton" name="btn_appNameList_optimize">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>54</width>
+          <width>50</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>54</width>
+          <width>50</width>
           <height>16777215</height>
          </size>
         </property>

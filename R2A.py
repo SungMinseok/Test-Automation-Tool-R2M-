@@ -1,6 +1,8 @@
 ITEM_SLOT_COUNT = 21
 CUSTOM_CMD_SLOT_COUNT = 22
 
+app_type = 0
+
 '''
 기본 세팅(폴더생성)
 '''
