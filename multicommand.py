@@ -761,21 +761,36 @@ def 캐릭터생성_알파():#명령어사용
     pag.press('d')
     ms.sleep(0.5)
 
-    pag.press('w')
-    pag.press('a')
+    pag.keyDown('w')
+    pag.keyDown('a')
 
+    ms.sleep(1)
+
+    pag.keyUp('w')
+    pag.keyUp('a')
+
+    ms.sleep(1)
     ms.Command("flowcompletequest 100500")
 
-    ms.Move(ms.acceptQuestBtn)
-    ms.sleep(0.5)
-    ms.Move(ms.getFirstQuestBtn)
-    ms.sleep(0.5)
-    ms.Move(ms.okTeleportBtn)
-    ms.sleep(0.5)
-    ms.Move(ms.tutoMonPos)
-    ms.sleep(0.5)
-    ms.Move(ms.attackBtn)
-    ms.sleep(0.5)
+    # ms.sleep(2)
+    # ms.Move(ms.acceptQuestBtn)
+    # ms.sleep(0.5)
+    # #ms.Move(ms.getFirstQuestBtn)
+    # pag.press('esc')
+    # ms.sleep(2)
+    # ms.Move(ms.acceptQuestBtn)
+    # ms.sleep(0.5)
+    # #ms.Move(ms.getFirstQuestBtn)
+    # pag.press('esc')
+    # ms.sleep(0.5)
+    # ms.Move(ms.okTeleportBtn)
+    # ms.sleep(0.5)
+    # ms.Move(ms.tutoMonPos)
+    # ms.sleep(0.5)
+    # ms.Move(ms.attackBtn)
+    # ms.sleep(0.5)
+
+    ms.Command("lv 80")
 
 
 # def GoCharacterSelectPage():

@@ -26,7 +26,7 @@ cmd_1,resetguildpenalty,길드가입패널티삭제,0
 cmd_2,kill 0 20,,0
 cmd_3,summon 20040,,0
 cmd_4,summon 20030,,0
-cmd_5,,,0
+cmd_5,dailyattendadd,,0
 cmd_6,,,0
 cmd_7,,,0
 cmd_8,,,0
@@ -37,7 +37,7 @@ cmd_12,,,0
 cmd_13,,,0
 cmd_14,,,0
 cmd_15,,,0
-cmd_16,,,0
+cmd_16,flowcompletequest 100500,,0
 cmd_17,cleanupmaterial,,0
 cmd_18,summon 17352 30,존나센선공몹,0
 cmd_19,startspotwar 0 30,,0
