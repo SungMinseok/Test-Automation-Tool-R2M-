@@ -1,5 +1,5 @@
 ITEM_SLOT_COUNT = 21
-CUSTOM_CMD_SLOT_COUNT = 22
+CUSTOM_CMD_SLOT_COUNT = 27
 
 app_type = 0
 
@@ -776,6 +776,9 @@ class WindowClass(QMainWindow, form_class) :
         ,self.checkBox_setCharacter_7.isChecked()
         ,self.checkBox_setCharacter_8.isChecked()
         ,self.checkBox_setCharacter_9.isChecked()
+        ,self.checkBox_setCharacter_10.isChecked()
+        ,self.checkBox_setCharacter_11.isChecked()
+        ,self.checkBox_setCharacter_12.isChecked()
         ]
         if self.comboBox_setClass.currentText() == "나이트":
             classNum = 1
@@ -1123,7 +1126,7 @@ class WindowClass(QMainWindow, form_class) :
             except:
                 continue
 
-        for i in range(0,22):
+        for i in range(0,CUSTOM_CMD_SLOT_COUNT):
             try:
 
                 val0 = df_cache[f'cmd_{i}']['value0']
