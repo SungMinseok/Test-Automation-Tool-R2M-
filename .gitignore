@@ -4,3 +4,5 @@ Scripts/
 pyvenv.cfg
 __pycache__/
 resource/
+upload.log
+pypkg/

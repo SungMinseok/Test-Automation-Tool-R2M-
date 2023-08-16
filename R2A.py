@@ -150,6 +150,7 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         #XLSX파일 연동■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+        print('아이템 파일 로드 중')
 
         global df_item
         global df_tran
@@ -781,12 +782,14 @@ class WindowClass(QMainWindow, form_class) :
         ,self.checkBox_setCharacter_12.isChecked()
         ]
         if self.comboBox_setClass.currentText() == "나이트":
-            classNum = 1
+            classNum = 0
         elif self.comboBox_setClass.currentText() == "아처":
-            classNum = 2
+            classNum = 1
         elif self.comboBox_setClass.currentText() == "위저드":
-            classNum = 3
+            classNum = 2
         elif self.comboBox_setClass.currentText() == "어쌔신":
+            classNum = 3
+        elif self.comboBox_setClass.currentText() == "버서커":
             classNum = 4
         sc.setClass_auto(classNum,checkBoxValues)
 

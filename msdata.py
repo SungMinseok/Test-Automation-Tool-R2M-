@@ -644,7 +644,7 @@ def Command(command):
         pass
     
     Click(appUpPos)
-    sleep(0.05)
+    sleep(0.1)
     
     Click(joyPos)
     pag.hotkey('z','x','c','v')

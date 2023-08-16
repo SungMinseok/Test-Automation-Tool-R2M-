@@ -1586,6 +1586,19 @@ def getNumbersInColumnFromImg_0(imgName:str) :
     #print(data)
     return str(data)
    
+def 숫자인식(imgName:str) :
+    """장비 능력치 숫자 인식률 99%
+    imgName : 이미지 파일명 (확장자 필수)
+    """
+    img = cv2.imread(imgName)
+    img = cv2.bitwise_not(img)
+    _, binary = cv2.threshold(img,150,255,cv2.THRESH_BINARY)
+    data = pytesseract.image_to_string(binary,config='--psm 6')
+    data = data.replace("","")
+    data = data.replace('\n\n', "\n")
+
+    #print(data)
+    return str(data)
 
 def getStringFromImg(imgName, langCode= 'kor'):#일반적인 인식(개행 모두 제거)
     img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)

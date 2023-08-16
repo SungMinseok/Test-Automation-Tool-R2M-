@@ -43,3 +43,8 @@ cmd_18,summon 17352 30,존나센선공몹,0
 cmd_19,startspotwar 0 30,,0
 cmd_20,setspotguild 92 1380000001 3,로덴성,0
 cmd_21,setspotguild 91 1380000001 3,스팟,0
+cmd_22,,,0
+cmd_23,,,0
+cmd_24,,,0
+cmd_25,,,0
+cmd_26,,,0

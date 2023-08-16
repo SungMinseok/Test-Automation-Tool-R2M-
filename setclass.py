@@ -192,17 +192,21 @@ def SetClass(classNum, isDefault):
             
 def setClass_auto(classNum, checkBoxValues):
 
-    defaultDirectory = "./data/character/"
+    defaultDirectory = "./data/character/upgrade/"
     
     className = ""
-    if classNum == 1:
-        className = "Knight"
-    elif classNum ==2:
-        className = "Archer"
-    elif classNum ==3:
-        className = "Wizard"
-    elif classNum ==4:
-        className = "Assassin"
+    # if classNum == 1:
+    #     className = "Knight"
+    #     className = "Knight"
+    # elif classNum ==2:
+    #     className = "Archer"
+    #     className = "Archer"
+    # elif classNum ==3:
+    #     className = "Wizard"
+    #     className = "Wizard"
+    # elif classNum ==4:
+    #     className = "Assassin"
+    #     className = "Assassin"
 
     ms.ResetFirst()
     #sleep(0.5)
