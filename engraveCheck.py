@@ -22,10 +22,10 @@ def EngraveCheck():
     print("각인 TEST")
     ms.PrintUB()
     #print("ver 1.0 / 210615")        
-    print("[1]아이템id입력\n[2]텍스트파일\n[3]능력치찾기")
+    print("[1]아이템id입력\n[2]텍스트파일\n[3]능력치찾기\n[4]능력치찾기(라이브)")
     print("[0]돌아가기")
     ms.PrintUB()
-    num = int(ms.InputNum(3))
+    num = int(ms.InputNum(4))
     ms.clear()
     if num==0:
         ms.TestMenu()
@@ -35,6 +35,8 @@ def EngraveCheck():
         Engraving2()
     elif num==3:
         Engraving3()
+    elif num==4:
+        Engraving4()
     
     EngraveCheck()
 
@@ -266,6 +268,45 @@ def Engraving3():
 
     
     Engraving3()
+
+def Engraving4():
+
+    targetStr = input("찾을 능력치 텍스트 : ")
+    lang = int(input("[0]국내 [1]대만 : "))
+    if lang == 0 :
+        langCode = 'kor'
+    else :
+        langCode = 'chi_tra'
+    
+    extraPath = path + "/"+ time.strftime("_%H%M")
+    if not os.path.isdir(extraPath):                                                           
+        os.mkdir(extraPath) 
+    else :#있을경우 삭제하고 다시생성(스샷 덮어쓰기가 안되서...0719)
+        shutil.rmtree(extraPath)                                                           
+        os.mkdir(extraPath)  
+
+    i = 1
+    while True :#targetStr == resultText :
+        print(f'>{i}회 째 실시', end='\r')
+        ms.Move(ms.engraveBtn)
+        sleep(2)
+        ms.CaptureEngraveRes(extraPath+"/"+str(i))
+        resultText = img2str.Indiv_Engrave(extraPath+"/"+str(i)+".txt",extraPath+"/"+str(i)+".jpg",langCode)
+        print(resultText)
+
+        if targetStr in resultText :
+            print(f'{i}번 만에 찾았다!')
+            break
+
+        #print("못찾았다")
+        
+
+        sleep(0.01)
+
+        i=i+1
+
+    
+    Engraving4()
 
 if __name__ == "__main__" : 
     EngraveCheck()

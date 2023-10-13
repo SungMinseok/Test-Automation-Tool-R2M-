@@ -5,6 +5,9 @@ import os
 path_screenshot = "./screenshot"
 if not os.path.isdir(path_screenshot):                                                           
     os.mkdir(path_screenshot)
+temp_dir = "./screenshot/temp"
+if not os.path.isdir(temp_dir):                                                           
+    os.mkdir(temp_dir)
 ######################
 
 #import pytesseract
@@ -40,7 +43,13 @@ import pyperclip as pc
 
 import gc
 from tqdm import tqdm
+from enum import Enum
 
+class Player(Enum):
+    LDPlayer= 1#LDPlayer
+    Mirroid = 2#Mirroid
+
+currentPlayer = Player.LDPlayer
 #import xlwings as xw
 
 
@@ -230,6 +239,7 @@ soulTargetBtn=[0.861,0.26]
 soulEnchantBtn=[0.489,0.849]
 soulEnchantPriceBox=[0.4371*appW+appX,0.7654*appH+appY,0.1819*appW,0.0454*appH]#왼쪽위X,왼쪽위Y,가로,세로
 soulEnchantCardNameBox=[0.1002*appW+appX,0.6835*appH+appY,0.1578*appW,0.0353*appH]#왼쪽위X,왼쪽위Y,가로,세로
+soulEnchantResultNameBox=[0.3725*appW+appX,0.4211*appH+appY,0.2381*appW,0.0435*appH]#왼쪽위X,왼쪽위Y,가로,세로
 
 #자동사냥
 autoBtn=[0.784,0.906]
@@ -247,7 +257,8 @@ centerPos=[0.5,0.5]
 centerUpPos=[0.5,0.4]
 #commandPos=[0.5,0.734]
 commandPos=[0.8803,0.7329]#230714
-executePos=[0.99,0.734]
+executePos=[0.99,0.758]
+executePos_mirroid=[0.9156,0.8068]
 okPos=[0.583,0.63]
 cancelPos=[0.423,0.63]
 appUpPos=[0.019,-0.026]
@@ -426,6 +437,14 @@ full_screen = [0*appW+appX,0*appH+appY,1*appW,1*appH]
 #NPC소환시 터치 위치
 summon_npc_position = [0.3466,0.2969]
 
+#결제관련
+cashshop_last_slot= [0.8869,0.5953]
+cashshop_ok_btn = [0.572,0.8833]
+cashshop_module_box = [0.4975*appW+appX,0.6352*appH+appY,0.3367*appW,0.7415*appH]
+cashshop_module_ok_btn = [0.572,0.8833]
+cashshop_result_ok_btn = [0.5008,0.6248]
+
+
 #endregion
 
 waitTime = 0.3
@@ -601,9 +620,9 @@ def captureSomeBox(boxName : str):
     return str(resultJPGFileName)
 
 
-def captureSomeBox2(boxName,resultPath):
+def captureSomeBox2(boxName : str,resultPath):
     """
-    boxName : ms의 박스 변수명\n
+    boxName : ms의 박스 변수명(str)\n
     resultPath : 경로지정 (.jpg 제외하고 입력)\n
     Returns : resultPath로 스크린샷 저장
     """
@@ -628,16 +647,39 @@ def captureSomeBox2(boxName,resultPath):
     return resultJPGFileName
 
 def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
+
     timestr = time.strftime("_%Y%m%d_%H%M%S")
-    resultJPGFileName = ".\screenshot/screenshot"+ timestr + ".jpg"
+    resultJPGFileName = f"./screenshot/temp/{timestr}.jpg"
     #print(boxName)
     #pag.screenshot(resultJPGFileName, region=(getattr(self, boxName)[0],getattr(self,boxName)[1],getattr(self,boxName)[2],getattr(self,boxName)[3]))
     pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
     #[0.154*appW+appX,0.935*appH+appY,0.074*appW,0.049*appH]
     return resultJPGFileName
+def captureSomeBox4(ratio_list,resultPath):
 
+    """
+    ratio_list : [x,y,w,h] : list\n
+    resultPath : 경로지정 (.jpg 제외하고 입력)\n
+    Returns : resultPath로 스크린샷 저장
+    """
+    resultJPGFileName = f'{resultPath}.jpg'
+    #print(boxName)import os
 
-def Command(command):    
+    if os.path.exists(resultJPGFileName):
+        # 이미 파일이 존재하는 경우, 번호를 붙여가며 존재하지 않는 파일명 찾기
+        i = 0
+        while True:
+            i += 1
+            numbered_resultJPGFileName = f"{resultPath}_{i}.jpg"
+            if not os.path.exists(numbered_resultJPGFileName):
+                resultJPGFileName = numbered_resultJPGFileName
+                break
+
+    pag.screenshot(resultJPGFileName, region=(ratio_list[0],ratio_list[1],ratio_list[2],ratio_list[3]))
+    return resultJPGFileName
+
+def Command(command):
+
     try :
         command =command.replace('\n','')
     except:
@@ -649,17 +691,31 @@ def Command(command):
     Click(joyPos)
     pag.hotkey('z','x','c','v')
     #sleep(0.1)
-    Click(joy_cmd_pos)
-    sleep(0.2)
+    if currentPlayer == Player.LDPlayer :    
+        Click(joy_cmd_pos)
+        sleep(0.2)
 
 
-    pag.typewrite(command)
-    #sleep(0.1)   
-    Click(joy_cmd_pos)
-    sleep(0.1)
-    Click(executePos)
+        pag.typewrite(command)
+        #sleep(0.1)   
+        Click(joy_cmd_pos)
+        sleep(0.1)
+        Click(executePos)
+
+    elif currentPlayer == Player.Mirroid :    
+
+        sleep(0.2)
+        Click(joy_cmd_pos)
+        sleep(0.2)
 
 
+        pag.typewrite(command)
+        sleep(0.2)   
+        Click(joy_cmd_pos)
+        sleep(0.2)
+        Click(executePos_mirroid)
+        sleep(0.1)
+        Click(executePos)
 
 def inputCommand(command):
     sleep(waitTime)
@@ -1248,6 +1304,14 @@ def 최신파일찾고열기():
 
     else:
         print(f"'{target_file}' 파일을 찾을 수 없습니다.")
+
+def 플레이어변경(player_name):
+    print(f'플레이어변경 : {player_name}')
+    global currentPlayer
+    if player_name == "LDPlayer" :
+        currentPlayer = Player.LDPlayer
+    elif player_name == "Mirroid" :
+        currentPlayer = Player.Mirroid
 
 # if __name__ == "__main__" : 
 #     최신파일찾고열기()

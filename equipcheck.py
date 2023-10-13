@@ -121,17 +121,11 @@ def EquipCheck1():
 #장비생성
         ms.ResetFirst()
         ms.Command("cleanupinventory")
-        ms.CommandOpen()
-        pag.typewrite("additems")
+
+        cmdStr= "additems"
         for j in range(0,14):
-            if equipType == 2 and j == 10:
-                break
-            pag.press('space')
-            temp = int(itemNum)+j
-            pag.typewrite(str(temp))
-
-
-        ms.CommandClose()
+            cmdStr += " " + str(int(itemNum)+j)
+        ms.Command(cmdStr)
         sleep(0.01)
 #인벤열기 >
         ms.Move(ms.menuPos1)

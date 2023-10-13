@@ -243,7 +243,7 @@ def hardcoreQuestCheck():
         ms.captureSomeBox2("inventoryBox",path+"/"+lines[i]+"_3") #퀘스트 보상 아이템
         ms.Move(ms.menuPos1)
 
-        mtc.chat_ingame(lines[i],path+"/"+lines[i]+"_4")
+        mtc.채팅및스샷저장(lines[i],path+"/"+lines[i]+"_4")
 
 
 
@@ -274,8 +274,40 @@ def quest_reward_check():
 
         ms.Command("cleanupinventory")
         ms.Command("completequest " + lines[i])
-        mtc.chat_ingame(lines[i],path+"/"+lines[i])
+        mtc.채팅및스샷저장(lines[i],path+"/"+lines[i])
 
+
+
+def quest_string_check():
+
+#기본 세팅(폴더생성)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    path = "./screenshot/questCheck"+ time.strftime("_%y%m%d") + "/quest_string"
+    if not os.path.isdir(path):                                                           
+        os.makedirs(path)
+#■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+    target_txt = f"quest_string.txt"
+    #screenWidth, screenHeight = pag.size()
+    ms.PrintUB()
+    print(target_txt)    
+    ms.PrintUB()
+
+    with open(target_txt) as f:
+        lines = f.read().splitlines()
+
+    input("Press any key to start([0]테스트메뉴) : ")
+    print("실행 중... (예상 종료 시간 : "+ms.GetElapsedTime(10 + 11*len(lines)) +")")
+
+
+    #ms.ResetFirst()
+
+    ms.Command("flowremovequest "+lines[len(lines)-1])
+
+    for i in tqdm(range(0,len(lines))): #회당 
+
+        ms.Command("acceptquest " + lines[i])
+        ms.Capture(path+"/"+lines[i],False)
+        ms.Command("completequest " + lines[i])
 
 
 

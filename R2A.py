@@ -1,7 +1,8 @@
 ITEM_SLOT_COUNT = 21
 CUSTOM_CMD_SLOT_COUNT = 27
-
+ITEM_CHECK_BOX_COUNT = 27
 app_type = 0
+#currentAppName = ""
 
 '''
 기본 세팅(폴더생성)
@@ -12,7 +13,14 @@ if not os.path.isdir(path_resource):
     os.mkdir(path_resource)
 
 
+from enum import Enum
 
+class 직업(Enum):
+    나이트 = 0
+    아처 = 1
+    위저드 = 2
+    어쌔신 = 3
+    버서커 = 4
 
 
 import sys
@@ -22,10 +30,10 @@ from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QKeySequence,QPixmap, QColor
 from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
+from msdata import 플레이어변경, Player
 
 
 # Connect the QAction button to the open_patch_notes function
-
 
 class ImageTooltip(QWidget):
     def __init__(self, pixmap):
@@ -66,7 +74,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_customCmd_16.clicked.connect(multi.서드파티창)
 
         '''메뉴탭■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
-        self.menu_patchnote.triggered.connect(lambda : self.파일열기("패치노트.txt"))
+        self.menu_patchnote.triggered.connect(lambda : self.파일열기("패치노트_R2A.txt"))
 
         # for i in range(0, 20):
         #     shortcut = QShortcut(Qt.Key_F1 + i, self)
@@ -219,6 +227,7 @@ class WindowClass(QMainWindow, form_class) :
         self.comboBox_appNameList.currentTextChanged.connect(self.setCurrentAppPos)
         self.btn_appNameList_optimize.clicked.connect(self.optimizeCurrentAppPos)
         self.btn_appNameList_apply.clicked.connect(self.applyNewAppNameList)
+        self.comboBox_apptype.currentTextChanged.connect(lambda : 플레이어변경(self.comboBox_apptype.currentText()))
         #  Tab [Settings]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
         self.btn_screenShot_setPos0.clicked.connect(lambda : self.getMousePos(2))
@@ -227,7 +236,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_screenShot_capture.clicked.connect(self.takePicture)
         #self.btn_img2str_0.clicked.connect(lambda : self.getImg2Str(1))
         #self.btn_img2str_1.clicked.connect(lambda : self.getImg2Str(2))
-        
+        #self.comboBox_apptype.currentTextChanged.connect(self.set_apptype)
         
         
         
@@ -257,16 +266,6 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_teleportBookMark_openFile.clicked.connect(lambda : self.파일열기(self.input_teleportBookMark_name.text()))
         self.btn_teleportBookMark_setFile.clicked.connect(lambda : self.setFilePath(self.input_teleportBookMark_name))
         self.btn_teleportBookMark_apply.clicked.connect(self.applyTeleportBookMarkList)
-        #self.comboBox_teleport.showPopup.connect(self.applyTeleportBookMarkList)
-        #self.comboBox_teleport.showPopup.connect(self.applyTeleportBookMarkList)
-        #self.comboBox_teleport.activated.connect(lambda index: self.applyTeleportBookMarkList() if index == -1 else None)
-        #self.comboBox_teleport.highlighted.connect(self.applyTeleportBookMarkList)
-
-
-       # self.comboBox_teleport.activated.connect(lambda index: self.applyTeleportBookMarkList() if index == -1 else None)
-
-        #self.btn_screenshot_setdir.clicked.connect(self.setFilePath)
-        #self.btn_record_setdir.clicked.connect(self.setFilePath)
 
         self.btn_subbtn_0.clicked.connect(lambda : self.executeCommand("cleanupinventory"))
         self.btn_subbtn_1.clicked.connect(lambda : self.executeCommand("additem 999 100000000"))
@@ -280,8 +279,6 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_searchItemName.clicked.connect(lambda : self.copyText("item"))
         self.comboBox_itemhistory.currentTextChanged.connect(lambda : self.applyHistoryID("item"))
 
-
-        #self.btn_itemHistory_additem.clicked.connect(self.additem_bookmark)
         #아이템/매터리얼 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         for i in range(0,ITEM_SLOT_COUNT) :
             getattr(self, f'btn_additem_execute_{i}').clicked.connect(lambda _, x=i : self.아이템생성(x))
@@ -318,8 +315,11 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_testCase_execute.clicked.connect(self.executeTestCase)
     #Tab [Character]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         self.btn_setClass.clicked.connect(self.setClass)
-        self.comboBox_setClass.currentTextChanged.connect(self.applySkillGroupList)
+        self.combo_setclass_3.currentTextChanged.connect(self.applySkillGroupList)
         self.comboBox_skillGroup.currentTextChanged.connect(self.changeSkillGroup)
+        self.btn_skillmaster_opentxt.clicked.connect(self.open_skill_data)
+        
+        
         self.btn_skillGroup_execute.clicked.connect(lambda : self.executeCommand(\
             "changeskillenchant "+\
             self.input_skillGroup_id.text()+" "+\
@@ -337,6 +337,13 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_character_script_btn_0.clicked.connect(multi.캐릭터생성_알파)
         self.btn_character_script_btn_1.clicked.connect(multi.캐릭터생성_라이브)
         self.btn_character_script_btn_2.clicked.connect(multi.캐릭터탈퇴)
+
+        #231013 리뉴얼
+        self.btn_setClass_2.clicked.connect(self.get_skill_by_class)
+        #self.btn_setskill_0.clicked.connect(lambda : self.파일열기(fr".\data\character\skill\testCaseList.txt"))
+
+        for i in range(0,3) :
+            getattr(self, f'btn_setskill_{i}').clicked.connect(lambda _, x=i : self.open_skill_file(x))
 #endregion
 
     #[App Window]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -349,11 +356,21 @@ class WindowClass(QMainWindow, form_class) :
     def optimizeCurrentAppPos(self):
         print("optimizeCurrentAppPos")
         global currentAppName
-        currentAppName = self.comboBox_appNameList.currentText()
+
+        if currentAppName == "" :
+            currentAppName = self.comboBox_appNameList.currentText()
         a = pag.getWindowsWithTitle(currentAppName)[0]
         a.moveTo(0,0)
-        a.resizeTo(1469,838)
-        self.setCurrentAppPos()
+
+        if ms.currentPlayer == ms.Player.LDPlayer :
+            a.resizeTo(1469,838)
+        elif ms.currentPlayer == ms.Player.Mirroid : #145,33,1196,678
+            a.resizeTo(1469,710)
+        
+        try:
+            self.setCurrentAppPos()
+        except:
+            pass
 
     def setCurrentAppPos(self):
         global currentAppName
@@ -578,10 +595,14 @@ class WindowClass(QMainWindow, form_class) :
         # if filePath[0] != "/":
         #     filePath = "/"+ filePath
         # os.startfile(os.getcwd() + "/"+ filePath)
+        print(os.getcwd())
         try:
             os.startfile(filePath)
         except : 
-            print("파일 없음 : "+filePath)    
+            try: 
+                os.startfile(os.path.abspath(filePath))
+            except:
+                print("파일 없음 : "+filePath)    
             
     def openFileWithNoException(self,filePath):
         os.startfile(filePath)
@@ -794,16 +815,19 @@ class WindowClass(QMainWindow, form_class) :
         sc.setClass_auto(classNum,checkBoxValues)
 
     def applySkillGroupList(self) :
-        if self.comboBox_setClass.currentText() == "나이트":
-            className = "Knight"
-        elif self.comboBox_setClass.currentText() == "아처":
-            className = "Archer"
-        elif self.comboBox_setClass.currentText() == "위저드":
-            className = "Wizard"
-        elif self.comboBox_setClass.currentText() == "어쌔신":
-            className = "Assassin"
 
-        fileName = "./data/character/setMaster"+className+".txt"
+        if self.combo_setclass_3.currentText() == "나이트":
+            classNum = 0
+        elif self.combo_setclass_3.currentText() == "아처":
+            classNum = 1
+        elif self.combo_setclass_3.currentText() == "위저드":
+            classNum = 2
+        elif self.combo_setclass_3.currentText() == "어쌔신":
+            classNum = 3
+        elif self.combo_setclass_3.currentText() == "버서커":
+            classNum = 4
+
+        fileName = f"./data/character/skill_master_{classNum}.txt"
      
         with open(fileName,encoding='UTF-8') as f:
             lines = f.read().splitlines()
@@ -816,16 +840,19 @@ class WindowClass(QMainWindow, form_class) :
 
     def changeSkillGroup(self):
         
-        if self.comboBox_setClass.currentText() == "나이트":
-            className = "Knight"
-        elif self.comboBox_setClass.currentText() == "아처":
-            className = "Archer"
-        elif self.comboBox_setClass.currentText() == "위저드":
-            className = "Wizard"
-        elif self.comboBox_setClass.currentText() == "어쌔신":
-            className = "Assassin"
+        if self.combo_setclass_3.currentText() == "나이트":
+            classNum = 0
+        elif self.combo_setclass_3.currentText() == "아처":
+            classNum = 1
+        elif self.combo_setclass_3.currentText() == "위저드":
+            classNum = 2
+        elif self.combo_setclass_3.currentText() == "어쌔신":
+            classNum = 3
+        elif self.combo_setclass_3.currentText() == "버서커":
+            classNum = 4
 
-        fileName = "./data/character/setMaster"+className+".txt"
+        fileName = f"./data/character/skill_master_{classNum}.txt"
+
      
         with open(fileName,encoding='UTF-8') as f:
             lines = f.read().splitlines()
@@ -840,7 +867,47 @@ class WindowClass(QMainWindow, form_class) :
                 return
 
 
+    def open_skill_data(self):
+            
+        selected_class = self.combo_setclass_3.currentText()
+        classNum = 직업[selected_class].value if selected_class in 직업.__members__ else None
+    
+        fileName = f"data\character\skill_master_{classNum}.txt"
 
+        self.파일열기(fileName)
+
+    def get_skill_by_class(self):
+        #class_id = 직업(self.combo_setclass_2.currentText()).value
+        class_name = self.combo_setclass_2.currentText()
+        check_box_list = [
+            self.check_setskill_0.isChecked(),
+            self.check_setskill_1.isChecked(),
+            self.check_setskill_2.isChecked()
+            ]
+        sc.클래스별스킬습득(class_name,check_box_list)
+
+    def open_skill_file(self, num):
+        class_name = self.combo_setclass_2.currentText()
+        if num == 0 :
+            if class_name != "버서커":
+                path = fr'.\data\character\skill\skill_공통.txt'
+            else:
+                path = fr'.\data\character\skill\skill_공통_버서커.txt'
+                
+        elif num == 1:
+            path = fr'.\data\character\skill\skill_{class_name}.txt'
+        elif num == 2:
+            path = fr'.\data\character\skill\skill_master_{class_name}.txt'
+        self.파일열기(path)
+
+    def get_item_by_class(self):
+        class_name = self.combo_setclass_2.currentText()
+        check_box_dict = {}
+        for i in range(ITEM_CHECK_BOX_COUNT):
+            temp_val = getattr(self, f'check_setclass_{i}').isChecked()
+            check_box_dict[i] = temp_val
+
+        txt_file_list = []
 
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

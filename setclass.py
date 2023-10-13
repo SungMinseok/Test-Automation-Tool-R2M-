@@ -307,17 +307,6 @@ def setClass_auto(classNum, checkBoxValues):
         #lines = [72000, 13000, 15000]
         result_string = ' '.join(map(str, lines))
         ms.Command(f'additems {result_string}')
-        #print(result_string)
-
-            #pag.typewrite(" "+line)
-        #pag.typewrite("additems")
-        # #ms.CommandClose()
-
-        # ms.CommandOpen()
-        # pag.typewrite("additems")
-        # for line in lines:
-        #     pag.typewrite(" "+line)
-        # ms.CommandClose()
 
         ms.Move(ms.menuPos1)
         sleep(ms.waitTime2)
@@ -387,6 +376,101 @@ def setClass_auto(classNum, checkBoxValues):
             ms.Command(line)
             
 
+            
+def 클래스별스킬습득(class_name, check_box_list):
+
+    defaultDirectory = "./data/character/skill/"
+    
+    ms.ResetFirst()
+    ms.Command('lv 99')
+    '''
+    공통스킬 습득
+    '''
+    if check_box_list[0]:
+        ms.Command('cleanupinventory')
+
+        if class_name != '버서커' :
+            file_name = os.path.join(defaultDirectory,f'skill_공통.txt')
+        else:
+            file_name = os.path.join(defaultDirectory,f'skill_공통_버서커.txt')
+
+        with open(file_name,encoding='UTF-8') as f:
+            lines = f.read().splitlines()
+        f.close()
+
+        for line in lines:
+            ms.Command(line)
+            ms.Command(line)
+
+        ms.Move(ms.menuPos1)
+        sleep(ms.waitTime2)
+        ms.Move(ms.invenBtnUp2)
+        pag.click()
+        sleep(ms.waitTime2)
+
+        for i in range(0,6):
+            ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
+            pag.click()
+            pag.click()
+            sleep(1.1)
+            
+        ms.ResetFirst()
+
+    '''
+    전용스킬 습득
+    '''
+    if check_box_list[1]:        
+        ms.Command('cleanupinventory')
+        file_name = os.path.join(defaultDirectory,f'skill_{class_name}.txt')
+
+        with open(file_name) as f:
+            lines = f.read().splitlines()
+        f.close()
+
+        result_string = ' '.join(map(str, lines))
+        ms.Command(f'additems {result_string}')
+        ms.Command(f'additems {result_string}')
+
+        ms.Move(ms.menuPos1)
+        sleep(ms.waitTime2)
+        ms.Move(ms.invenBtnUp2)
+        pag.click()
+        sleep(ms.waitTime2)
+
+
+        for i in range(0,len(lines)):
+            ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
+            pag.click()
+            pag.click()
+            sleep(1.1)
+            
+        ms.ResetFirst()
+
+    if check_box_list[2]:
+        file_name = os.path.join(defaultDirectory,f'skill_master_{class_name}.txt')
+        
+        with open(file_name,encoding='UTF-8') as f:
+            lines = f.read().splitlines()
+        f.close()
+
+        for i in range(0,len(lines)):
+            groupID, maxEnchantLevel, skillName= lines[i].split(',')
+            ms.Command("changeskillenchant "+groupID +" "+maxEnchantLevel)
+            
+
+def 캐릭터아이템모음생성(class_name,)
+
+#[매터리얼]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # if check_box_list[2]:
+    #     fileName = defaultDirectory + "setMaster" + className
+        
+    #     with open(fileName +".txt",encoding='UTF-8') as f:
+    #         lines = f.read().splitlines()
+    #     f.close()
+
+    #     for i in range(0,len(lines)):
+    #         groupID, maxEnchantLevel, skillName= lines[i].split(',')
+    #         ms.Command("changeskillenchant "+groupID +" "+maxEnchantLevel)
 
 if __name__ == "__main__" : 
     SetClass()

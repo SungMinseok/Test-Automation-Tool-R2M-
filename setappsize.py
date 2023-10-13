@@ -2,6 +2,7 @@ from typing import Set
 from numpy import select
 import pyautogui as pag
 from time import sleep
+#from msdata import Player
 import msdata as ms
 import os
 
@@ -67,25 +68,39 @@ def ResetAppSize():
     ms.appH = int(appHeight)
 
 def applyNewAppSize(x0,y0,x1,y1):
-    x = int(x0)
-    #y = int(y0) + 30
-    y = int(y0) + 33
-    h = int(y1) - y
-    #w = round(h * 1.773)
-    w = round(h * 1.77382)
+    
+    if ms.currentPlayer == ms.Player.Mirroid :
+        x = int(x0) + 145
+        y = int(y0) + 33
+        h = int(y1) - y
+        #w = round(h * 1.773)
+        w = round(h * 1.763348)
 
-    f = open("info_appsize.txt", 'w')
-    f.write("0")
-    f.close()
+        # f = open("info_appsize.txt", 'w')
+        # f.write("0")
+        # f.close()
 
-    f = open("appsize.txt", 'w')
-    f.write(str(x)+'\n'+str(y)+'\n'+str(w)+'\n'+str(h))
-    f.close()
+        # f = open("appsize.txt", 'w')
+        # f.write(str(x)+'\n'+str(y)+'\n'+str(w)+'\n'+str(h))
+        # f.close()
 
-    ms.appX = int(x)
-    ms.appY = int(y)
-    ms.appW = int(w)
-    ms.appH = int(h)
+        ms.appX = int(x)
+        ms.appY = int(y)
+        ms.appW = int(w)
+        ms.appH = int(h)
+    elif ms.currentPlayer == ms.Player.LDPlayer :
+        
+        x = int(x0)
+        #y = int(y0) + 30
+        y = int(y0) + 33
+        h = int(y1) - y
+        #w = round(h * 1.773)
+        w = round(h * 1.77382)
+
+        ms.appX = int(x)
+        ms.appY = int(y)
+        ms.appW = int(w)
+        ms.appH = int(h)
 
     return x,y,w,h
 
@@ -144,50 +159,3 @@ def SetAppSize_Set():
     else :
         print("Error : 해당 번호의 세팅이 없습니다.")
         SetAppSize_Set()
-#region 1.0
-# def SetAppSize():
-#     print("---------------------------------------------------------------")   
-#     print("앱플레이어 크기 측정 마법사")
-#     print("ver 1.0 / 210525 / made by sms")
-#     print("---------------------------------------------------------------")
-
-    
-
-
-#     print("1. 마우스 포인터를 앱플레이어의 [좌측 상단 모서리]에 위치시켜주세요(5초)")
-#     sleep(5)
-    
-#     appX1, temp = pag.position()
-#     appY1 = temp + 30
-
-#     print("2. 마우스 포인터를 앱플레이어의 [하단 끝]에 위치시켜주세요(5초)")
-#     sleep(5)
-#     appX2, appY2 = pag.position()
-
-#     appHeight = appY2 - appY1
-#     appWidth = round(appHeight * 1.773)
-
-#     print("앱 크기 설정 완료 : ", appWidth,", ",appHeight)
-#     sleep(2)
-#     #print("설정 완료되었습니다. 종료하려면 엔터, 다시 설정하려면 1 입력해주세요...")
-
-#     f = open("appsize.txt", 'w')
-
-#     f.write(str(appX1))
-#     f.write('\n')
-#     f.write(str(appY1))
-#     f.write('\n')
-#     f.write(str(appWidth))
-#     f.write('\n')
-#     f.write(str(appHeight))
-
-#     f.close()
-
-#     ms.appX = int(appX1)
-#     ms.appY = int(appY1)
-#     ms.appW = int(appWidth)
-#     ms.appH = int(appHeight)
-#endregion
-
-# def main():
-#SetAppSize()

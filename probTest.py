@@ -12,6 +12,7 @@ import shutil
 import img2str
 import pyautogui as pag
 import numpy as np
+import pandas as pd
 #pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 pag.FAILSAFE = False
 
@@ -438,9 +439,17 @@ def EnchantSoul():
     print("실행 전 영혼무기.txt에 아이템 ID, 영혼석.txt에 영혼석 ID를 한 줄씩 입력해주세요.")   
     print("--------------------------------------------------------------")
 
+    nation_code = input("0:KR, 1:TW")
+
+    lang_code = 'kor' if nation_code == "0" else 'chi_tra'
+    find_str = '성공' if nation_code == "0" else '成功'
+
+
     contentPath = path + "/EnchantSoul"
     if not os.path.isdir(contentPath):                                                           
         os.mkdir(contentPath)      
+
+    output_file_name = fr'{contentPath}/결과_{time.strftime("%y%m%d_%H%M%S")}.xlsx'
 
     count = int(input("영혼 부여 횟수를 입력해주세요(1~) : "))
     
@@ -452,7 +461,9 @@ def EnchantSoul():
     print("전체 실행횟수 : " + str(len(itemLines)))
     print("전체 예상 종료 시각 : " + str(ms.GetElapsedTime((10+count * 3.7 )* float(len(itemLines)))))
 
+
     for i in range(0,len(itemLines)):
+        data = []
         print("3초 후 시작합니다..")
         sleep(3)
         print("실행 중... (예상 종료 시각 : "+ms.GetElapsedTime(10+count * 3.7) +")")
@@ -488,13 +499,14 @@ def EnchantSoul():
         sleep(1)
         #대만
         #cardNameText = img2str.getStringFromImg(ms.captureSomeBox2("soulEnchantCardNameBox",extraPath+"/cardNameText"),'chi_tra')
-        cardNameText = img2str.getStringFromImg(ms.captureSomeBox2("soulEnchantCardNameBox",extraPath+"/cardNameText"),'kor')
+        cardNameText = img2str.getStringFromImg(ms.captureSomeBox2("soulEnchantCardNameBox",extraPath+"/cardNameText"),lang_code)
         
         for j in range(0,count):
             print(str(j+1) +"/" + str(count), end='\r')
             ms.Move(ms.soulTargetBtn)
             if j == 0:
                 ms.sleep(1)
+                result_item_text = img2str.getStringFromImg(ms.captureSomeBox2("soulEnchantResultNameBox",extraPath+"/result_item_text"),lang_code)
                 enchantPrice = img2str.getNumberFromImg(ms.captureSomeBox2("soulEnchantPriceBox",extraPath+"/priceText"))
                 ms.sleep(1)
             ms.Move(ms.soulEnchantBtn)
@@ -503,59 +515,23 @@ def EnchantSoul():
             sleep(1.5)     
             
             ms.CaptureReinforceResult(extraPath+"/"+str(j))
-            #img2str.Indiv_Item(txtName+".txt",extraPath+"/"+str(j)+".jpg")  
 
-            #221006백업
-            #resultText = img2str.getKorTextFromImg(extraPath+"/"+str(j)+".jpg")
-            #if resultText.find("성공") != -1 :
-            #   passCount = passCount + 1
-            
-            resultText = img2str.getStringFromImg(extraPath+"/"+str(j)+".jpg",'kor')
-            if resultText.find("성공") != -1 :
+            resultText = img2str.getStringFromImg(extraPath+"/"+str(j)+".jpg",lang_code)
+            if resultText.find(find_str) != -1 :
                 passCount = passCount + 1
-                        # #resultText = img2str.getStringFromImg(extraPath+"/"+str(i*20+j)+".jpg",'kor')#대만 : 'chi_tra' 한국 : 'kor'
-                    
-                        # expectedText = ""
-
-                        # if isKept == "1" :
-                        #     expectedText ="아무일"#대만 : 沒有 국내 : 보존
-
-                        # else :
-                        #     expectedText ="성공"#대만chi_tra : 成功 국내 : 성공
-
-
-
-
-
-
-
-
-
-
 
             sleep(0.3)       
             ms.Move(ms.soulEnchantBtn)
 
+        #data.append([itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%'])
+        data = ([itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%'])
 
-        testResultText =\
-        '\n'\
-        +str(datetime.now())\
-        +"|"+str(itemLines[i])\
-        +"|"+str(scrollLines[i])\
-        +"|"+enchantPrice\
-        +"|"+cardNameText\
-        +"|"+str(passCount)\
-        +"|"+str(count)\
-        +"|"+str(round(passCount/count*100,3))+"%"
+        result_df = pd.DataFrame(data, columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률'])
 
-        if not os.path.isfile(resultTxtFileName):                                                           
-            with open(resultTxtFileName,'a',encoding='utf-8') as tx:
-                tx.write("날짜|영혼부여대상장비ID|영혼석ID|전용변신이름|영혼부여비용|성공횟수|총횟수|성공률")    
+        result_df.to_excel(output_file_name, index=False)
 
-        with open(resultTxtFileName,'a',encoding='utf-8') as tx:
-            tx.write(testResultText)
-
-    EnchantSoul()
+    os.startfile(os.path.abspath(output_file_name))
+    #EnchantSoul()
     
 
     
