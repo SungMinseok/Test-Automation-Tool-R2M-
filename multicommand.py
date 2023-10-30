@@ -792,7 +792,15 @@ def 캐릭터생성_알파():#명령어사용
 
     ms.Command("lv 80")
 
-
+def 카드먹기_라이브():
+    ms.Click(ms.quickBtn1)
+    ms.sleep(2)
+    ms.Click(ms.quickBtn2)
+    ms.sleep(0.1)
+    ms.Click(ms.menuPos4)
+    ms.Click(ms.menuPos5)
+    ms.sleep(1)
+    ms.Click(ms.uiTabBtn2_7)
 # def GoCharacterSelectPage():
 #     ms.ResetFirst()
 #     ms.Move(ms.menuPos4)

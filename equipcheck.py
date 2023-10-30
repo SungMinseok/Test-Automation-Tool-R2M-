@@ -125,7 +125,7 @@ def EquipCheck1():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
 #인벤열기 >
         ms.Move(ms.menuPos1)
@@ -195,7 +195,7 @@ def EquipCheck2():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
 #인벤열기 >
         ms.Move(ms.menuPos1)
@@ -269,7 +269,7 @@ def EquipCheck3():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
 #인벤열기 >
         ms.Move(ms.menuPos1)
@@ -350,7 +350,7 @@ def EquipCheck4():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
 
 

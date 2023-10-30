@@ -444,6 +444,8 @@ cashshop_module_box = [0.4975*appW+appX,0.6352*appH+appY,0.3367*appW,0.7415*appH
 cashshop_module_ok_btn = [0.572,0.8833]
 cashshop_result_ok_btn = [0.5008,0.6248]
 
+#퀘스트UI
+quest_get_reward_btn_0 = [0.9244,0.2385]
 
 #endregion
 
@@ -678,7 +680,7 @@ def captureSomeBox4(ratio_list,resultPath):
     pag.screenshot(resultJPGFileName, region=(ratio_list[0],ratio_list[1],ratio_list[2],ratio_list[3]))
     return resultJPGFileName
 
-def Command(command):
+def Command(command, delay = 0):
 
     try :
         command =command.replace('\n','')
@@ -697,6 +699,7 @@ def Command(command):
 
 
         pag.typewrite(command)
+        sleep(delay)
         #sleep(0.1)   
         Click(joy_cmd_pos)
         sleep(0.1)
@@ -710,6 +713,7 @@ def Command(command):
 
 
         pag.typewrite(command)
+        sleep(delay)
         sleep(0.2)   
         Click(joy_cmd_pos)
         sleep(0.2)
@@ -1227,7 +1231,7 @@ def DF값불러오기(df : DataFrame, key : str, refVal : str, targetCol : str):
         resultVal = df.loc[df[key] == refVal, targetCol].values[0]
     except:
         resultVal = df.loc[df[key] == int(refVal), targetCol].values[0]
-    print(resultVal)
+    #print(resultVal)
     return resultVal
 
 

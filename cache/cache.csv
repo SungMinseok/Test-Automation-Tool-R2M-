@@ -1,32 +1,32 @@
 key,value0,value1,value2
 apppos_default,"0,0,1469,838",,
-item_0,950,10000000,
-item_1,999,1900000000,
-item_2,400,1005,
-item_3,,5,
-item_4,17090,,
-item_5,900,100,
-item_6,72000,,
-item_7,901,1,
-item_8,903,1,
-item_9,74180,,
-item_10,7000,200,
-item_11,84172,1,
-item_12,73425,,
-item_13,72186,1,
-item_14,5279,,
-item_15,5279,,
-item_16,5279,,
+item_0,,,
+item_1,999,1999999999,
+item_2,,,
+item_3,,,
+item_4,,,
+item_5,,,
+item_6,,,
+item_7,,,
+item_8,,,
+item_9,,,
+item_10,,,
+item_11,,,
+item_12,,,
+item_13,,,
+item_14,,,
+item_15,,,
+item_16,,,
 item_17,,,
-item_18,904,1,
-item_19,660014,,
-item_20,630014,1,
-cmd_0,setguildlevel 10,,0
-cmd_1,resetguildpenalty,길드가입패널티삭제,0
-cmd_2,kill 0 20,,0
-cmd_3,summon 20040,,0
-cmd_4,summon 20030,,0
-cmd_5,dailyattendadd,,0
+item_18,,,
+item_19,,,
+item_20,,,
+cmd_0,flowcompletequest 100500,,0
+cmd_1,,,0
+cmd_2,,,0
+cmd_3,,,0
+cmd_4,,,0
+cmd_5,,,0
 cmd_6,,,0
 cmd_7,,,0
 cmd_8,,,0
@@ -37,14 +37,40 @@ cmd_12,,,0
 cmd_13,,,0
 cmd_14,,,0
 cmd_15,,,0
-cmd_16,flowcompletequest 100500,,0
-cmd_17,cleanupmaterial,,0
-cmd_18,summon 17352 30,존나센선공몹,0
-cmd_19,startspotwar 0 30,,0
-cmd_20,setspotguild 92 1380000001 3,로덴성,0
-cmd_21,setspotguild 91 1380000001 3,스팟,0
+cmd_16,,,0
+cmd_17,,,0
+cmd_18,,,0
+cmd_19,,,0
+cmd_20,,,0
+cmd_21,,,0
 cmd_22,,,0
 cmd_23,,,0
 cmd_24,,,0
 cmd_25,,,0
 cmd_26,,,0
+setclass_cmd_0,False,초월장비,
+setclass_cmd_1,False,전설장비,
+setclass_cmd_2,False,초월변신서번트,
+setclass_cmd_3,False,전설변신서번트,
+setclass_cmd_4,False,초월매터리얼,
+setclass_cmd_5,False,전설매터리얼,
+setclass_cmd_6,False,10강전리품,
+setclass_cmd_7,False,9강전리품,
+setclass_cmd_8,False,10강조각상,
+setclass_cmd_9,False,소모품(명령어),
+setclass_cmd_10,False,서버이전(명령어),
+setclass_cmd_11,False,영웅유물,
+setclass_cmd_12,False,매터리얼_전설,
+setclass_cmd_13,False,,
+setclass_cmd_14,False,,
+setclass_cmd_15,False,,
+setclass_cmd_16,False,,
+setclass_cmd_17,False,,
+setclass_cmd_18,False,,
+setclass_cmd_19,False,,
+setclass_cmd_20,False,,
+setclass_cmd_21,False,,
+setclass_cmd_22,False,,
+setclass_cmd_23,False,,
+setclass_cmd_24,False,,
+setclass_cmd_25,False,,

@@ -446,6 +446,10 @@ def 클래스별스킬습득(class_name, check_box_list):
             
         ms.ResetFirst()
 
+    
+    '''
+    전용스킬 마스터
+    '''
     if check_box_list[2]:
         file_name = os.path.join(defaultDirectory,f'skill_master_{class_name}.txt')
         
@@ -458,7 +462,45 @@ def 클래스별스킬습득(class_name, check_box_list):
             ms.Command("changeskillenchant "+groupID +" "+maxEnchantLevel)
             
 
-def 캐릭터아이템모음생성(class_name,)
+def 캐릭터아이템모음생성(class_name,txt_list) :
+    
+    defaultDirectory = "./data/character/item/"
+
+    for txt_name in txt_list :
+    
+        file_name = ""
+        temp_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
+        temp_1 = os.path.join(defaultDirectory,f'{txt_name}_{class_name}.txt')
+        #file_name_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
+        if not os.path.isfile(temp_1) : 
+            file_name = temp_0    
+            if not os.path.isfile(temp_0) : 
+                print(f'No File ... : {txt_name}')
+                continue
+        else :
+            file_name = temp_1                                                        
+
+        with open(file_name,encoding='UTF-8') as f:
+            lines = f.read().splitlines()
+        f.close()
+
+        if '명령어' in file_name :
+
+            for line in lines:
+                ms.Command(line)
+
+        else:
+
+            temp_0 = "additems"
+            temp_1 = ""
+            for line in lines:
+                temp_1 += f' {str(int(line))}'
+
+            cmd = f'{temp_0}{temp_1}'
+            #print(cmd)
+            delay_time = len(lines) / 10
+            ms.Command(cmd,delay_time)
+
 
 #[매터리얼]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     # if check_box_list[2]:

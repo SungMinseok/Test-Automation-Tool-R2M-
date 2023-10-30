@@ -46,7 +46,7 @@ def Resolution1():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
         # ms.CommandOpen()
         # pag.typewrite("additems")
@@ -106,7 +106,7 @@ def Resolution2():
         cmdStr= "additems"
         for j in range(0,14):
             cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr)
+        ms.Command(cmdStr,1)
         sleep(0.01)
         # ms.CommandOpen()
         # pag.typewrite("additems")

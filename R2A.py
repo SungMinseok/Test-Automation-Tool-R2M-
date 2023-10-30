@@ -1,6 +1,6 @@
 ITEM_SLOT_COUNT = 21
 CUSTOM_CMD_SLOT_COUNT = 27
-ITEM_CHECK_BOX_COUNT = 27
+ITEM_CHECK_BOX_COUNT = 26
 app_type = 0
 #currentAppName = ""
 
@@ -31,7 +31,8 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QKeySequence,QPixmap, QColor
 from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
 from msdata import 플레이어변경, Player
-
+#import asyncio
+from PyQt5.QtCore import QTimer
 
 # Connect the QAction button to the open_patch_notes function
 
@@ -57,7 +58,10 @@ class WindowClass(QMainWindow, form_class) :
         super().__init__()
         self.setupUi(self)
 
-
+        # QTimer를 사용하여 5분마다 export_cache 함수 실행
+        self.auto_cache_save_timer = QTimer(self)#check_autoCacheSave
+        self.auto_cache_save_timer.timeout.connect(self.export_cache)
+        self.auto_cache_save_timer.start(300000)  # 300000 밀리초 = 5분
 #region 복붙시작 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 #region Main UI
@@ -291,6 +295,11 @@ class WindowClass(QMainWindow, form_class) :
 
         self.btn_additemall.clicked.connect(self.additemAll)
 
+        self.btn_item_txt_0.clicked.connect(lambda:self.setFilePath(self.input_item_txt_0))
+        self.btn_item_txt_1.clicked.connect(lambda:self.파일열기(self.input_item_txt_0.text()))
+        self.btn_item_txt_2.clicked.connect(lambda:self.additemText("additems"))
+        self.btn_item_txt_3.clicked.connect(lambda:self.additemText("makeitem"))
+
     
     
     #Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -314,7 +323,7 @@ class WindowClass(QMainWindow, form_class) :
         self.comboBox_testCase.currentTextChanged.connect(self.applyCurrentTestCase)
         self.btn_testCase_execute.clicked.connect(self.executeTestCase)
     #Tab [Character]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        self.btn_setClass.clicked.connect(self.setClass)
+        #self.btn_setClass.clicked.connect(self.setClass)
         self.combo_setclass_3.currentTextChanged.connect(self.applySkillGroupList)
         self.comboBox_skillGroup.currentTextChanged.connect(self.changeSkillGroup)
         self.btn_skillmaster_opentxt.clicked.connect(self.open_skill_data)
@@ -340,10 +349,35 @@ class WindowClass(QMainWindow, form_class) :
 
         #231013 리뉴얼
         self.btn_setClass_2.clicked.connect(self.get_skill_by_class)
+        self.btn_classSkill_openDir.clicked.connect(lambda : self.파일열기("./data/character/skill/"))
+        self.btn_setClass_check_0.clicked.connect(lambda : self.set_check_box_state("check_setskill_",3,2))
+        self.btn_setClass_check_1.clicked.connect(lambda : self.set_check_box_state("check_setskill_",3,0))
+
+
+
+        self.btn_setClass.clicked.connect(self.get_item_by_class)
+        self.btn_classItem_openDir.clicked.connect(lambda : self.파일열기("./data/character/item/"))
         #self.btn_setskill_0.clicked.connect(lambda : self.파일열기(fr".\data\character\skill\testCaseList.txt"))
+        self.btn_setClass_check_3.clicked.connect(lambda : self.set_check_box_state("check_setclass_",ITEM_CHECK_BOX_COUNT,2))
+        self.btn_setClass_check_2.clicked.connect(lambda : self.set_check_box_state("check_setclass_",ITEM_CHECK_BOX_COUNT,0))
 
         for i in range(0,3) :
             getattr(self, f'btn_setskill_{i}').clicked.connect(lambda _, x=i : self.open_skill_file(x))
+        for i in range(0,ITEM_CHECK_BOX_COUNT) :
+            try:
+                getattr(self, f'btn_setclass_{i}').clicked.connect(lambda _, x=i : self.open_item_file(x))
+            except:
+                continue
+
+        for i in range(0,3) :
+            getattr(self, f'btn_setskill_{i}').clicked.connect(lambda _, x=i : self.open_skill_file(x))
+        for i in range(0,ITEM_CHECK_BOX_COUNT) :
+            try:
+                getattr(self, f'btn_setclass_{i}').clicked.connect(lambda _, x=i : self.open_item_file(x))
+            except:
+                continue
+
+            #set_check_box_state
 #endregion
 
     #[App Window]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -517,33 +551,33 @@ class WindowClass(QMainWindow, form_class) :
         except :
             return
 
-        ms.ResetFirst()
-
-
-
-        cmd = "additems"
+        temp_0 = "additems"
+        temp_1 = ""
         for i in range(0,14):
-            cmd = f'{cmd} {str(itemID + i)}'
+            temp_1 += f' {str(itemID + i)}'
 
-        ms.Command(cmd)
+        cmd = f'{temp_0}{temp_1}'
+        print(cmd)
+        ms.Command(cmd,1)
 
-    def additemText(self):
+    def additemText(self,type_str:str):
 
         try : 
-            file_path = self.input_additemtext_name.text()
+            file_path = self.input_item_txt_0.text()
         except FileNotFoundError as errorMsg:
             self.popUp("에러",str(errorMsg))
             return
 
         with open(file_path) as f:
-            lines = f.read().splitlines()
-        f.close()
+            content = f.read().strip()  # 파일 내용을 읽고 양쪽의 공백을 제거합니다
+            bundle = ' '.join(content.split())  # 띄어쓰기로 구분하여 문자열로 저장
+            print(len(bundle))
 
-        cmd = "additems"
-        for line in lines:
-            cmd = f'{cmd} {line}'
 
-        ms.Command(cmd)
+        cmd = f"additems {bundle}"
+        delay = len(bundle) / 140
+        
+        ms.Command(cmd,delay)
 
 
 
@@ -886,6 +920,20 @@ class WindowClass(QMainWindow, form_class) :
             ]
         sc.클래스별스킬습득(class_name,check_box_list)
 
+    def get_item_by_class(self):
+        #class_id = 직업(self.combo_setclass_2.currentText()).value
+        class_name = self.combo_setclass.currentText()
+        txt_list = []
+        for i in range(ITEM_CHECK_BOX_COUNT):
+            try:
+                temp_val = getattr(self, f'check_setclass_{i}').isChecked()
+                if temp_val :
+                    temp_str = getattr(self, f'input_setclass_{i}').text()
+                    txt_list.append(temp_str)
+            except:
+                continue
+        sc.캐릭터아이템모음생성(class_name,txt_list)
+
     def open_skill_file(self, num):
         class_name = self.combo_setclass_2.currentText()
         if num == 0 :
@@ -900,15 +948,37 @@ class WindowClass(QMainWindow, form_class) :
             path = fr'.\data\character\skill\skill_master_{class_name}.txt'
         self.파일열기(path)
 
-    def get_item_by_class(self):
-        class_name = self.combo_setclass_2.currentText()
-        check_box_dict = {}
-        for i in range(ITEM_CHECK_BOX_COUNT):
-            temp_val = getattr(self, f'check_setclass_{i}').isChecked()
-            check_box_dict[i] = temp_val
+    def open_item_file(self, num):
 
-        txt_file_list = []
+        defaultDirectory = "./data/character/item/"
+        txt_name = getattr(self, f'input_setclass_{num}').text()
+        class_name = self.combo_setclass.currentText()
 
+        file_name = ""
+        temp_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
+        temp_1 = os.path.join(defaultDirectory,f'{txt_name}_{class_name}.txt')
+        #file_name_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
+        if not os.path.isfile(temp_1) : 
+            file_name = temp_0    
+            if not os.path.isfile(temp_0) : 
+                print(f'No File ... : {txt_name}')
+                return
+        else :
+            file_name = temp_1   
+
+        self.파일열기(file_name)
+
+    # def get_item_by_class(self):
+    #     class_name = self.combo_setclass_2.currentText()
+    #     check_box_dict = {}
+    #     for i in range(ITEM_CHECK_BOX_COUNT):
+    #         temp_val = getattr(self, f'check_setclass_{i}').isChecked()
+    #         check_box_dict[i] = temp_val
+
+    #     txt_file_list = []
+    def set_check_box_state(self,attr_str,count,state):
+        for i in range(0,count):
+            getattr(self, f'{attr_str}{i}').setCheckState(state)
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             
@@ -953,7 +1023,7 @@ class WindowClass(QMainWindow, form_class) :
             for line in lines:
                 if not headerText == "" :
                     line = headerText + " " + line
-                ms.Command(line)
+                ms.Command(line,0.5)
             
             if i < (repeatCount - 1) :
                 ms.sleep(repeatDelay)
@@ -1006,7 +1076,6 @@ class WindowClass(QMainWindow, form_class) :
     def executeTestCase(self):
         try :
             self.openFileWithNoException(self.input_testCase_moduleName.text()+".exe")
-            #tempFunc = getattr(importlib.import_module(self.input_testCase_moduleName.text()), self.input_testCase_funcName.text())
             #tempFunc()
             #getattr(self.input_testCase_moduleName.text(),self.input_testCase_funcName.text())
         except FileNotFoundError :
@@ -1093,12 +1162,12 @@ class WindowClass(QMainWindow, form_class) :
     #Functions━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     def setFilePath(self,target):
-        path = QtWidgets.QFileDialog.getOpenFileName(MainWindow)
+        path = QtWidgets.QFileDialog.getOpenFileName(self)
         if path != "" :
             target.setText(path[0])
 
     def setDirectoryPath(self, target):
-        path = QtWidgets.QFileDialog.getExistingDirectory(MainWindow)
+        path = QtWidgets.QFileDialog.getExistingDirectory(self)
         if path != "" :
             target.setText(path[0])
 
@@ -1164,7 +1233,7 @@ class WindowClass(QMainWindow, form_class) :
     def import_cache(self) :
         global df_cache
         try :
-            df_cache = pd.read_csv(f'{cache_path}')
+            df_cache = pd.read_csv(f'{cache_path}',encoding='utf-8')
         except Exception as e: 
             
             if not os.path.isdir('./cache'):                                                           
@@ -1211,7 +1280,23 @@ class WindowClass(QMainWindow, form_class) :
             except:
                 continue
 
-    def export_cache(self):
+        for i in range(0,ITEM_CHECK_BOX_COUNT):
+            try:
+
+                val0 = df_cache[f'setclass_cmd_{i}']['value0']
+                val1 = df_cache[f'setclass_cmd_{i}']['value1']
+                if val0 == "True":
+                    getattr(self, f'check_setclass_{i}').setCheckState(2)
+                if val1 != 0 :
+                    getattr(self, f'input_setclass_{i}').setText(str(val1))
+            except:
+                continue
+
+    def export_cache(self, isForced = False):
+        if not isForced : 
+            if not self.check_autoCacheSave.isChecked() :
+                return
+
         data = {}
 
         key = f'apppos_default'
@@ -1242,6 +1327,16 @@ class WindowClass(QMainWindow, form_class) :
                 'value2': tempVal2
             }
 
+        for i in range(0,ITEM_CHECK_BOX_COUNT):
+            tempVal0 = getattr(self, f'check_setclass_{i}').isChecked()
+            tempVal1 = getattr(self, f'input_setclass_{i}').text()
+            
+            key = f'setclass_cmd_{i}'
+            data[key] = {
+                'value0': tempVal0,
+                'value1': tempVal1,
+            }
+
 
         # for i in range(0,3):
         #     tempVal0 = getattr(self, f'plainText_event_{i}').text()
@@ -1255,45 +1350,25 @@ class WindowClass(QMainWindow, form_class) :
 
   
         #df.to_csv(cache_path, index_label='Item')
-        df.to_csv(cache_path, index_label='key')
+        df.to_csv(cache_path, index_label='key',encoding='utf-8')
 
+        print('export data successfully...')
 
     def closeEvent(self,event):
         print("end")
 
-        self.export_cache()
-
-        # Cache파일 저장(Save Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        #ms.getCsvFile(f"./data/csv/cacheList.csv")
-        
-        # for i in range(0,12) :
-        #     tempVal = getattr(self, f'input_additem_itemid_{i}').text()
-        #     ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value0")
-        # #for i in range(0,12) :
-        #     tempVal = getattr(self, f'input_additem_amount_{i}').text()
-        #     ms.saveCacheData(tempVal,'key',f'itemCache{i}',"value1")
-
-        # for i in range(0,12) :
-        #     tempVal = getattr(self, f'input_custom_cmd_{i}').text()
-        #     ms.saveCacheData(tempVal,'key',f'cmdCache{i}',"value0")
-
-        # ms.df_cache.to_csv(f"./data/csv/cache.csv",sep=',',na_rep='NaN',index=False)
-        # print(ms.df_cache)
-
-        #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+        self.export_cache(isForced= True)
 
 
+    # async def schedules(self):
+    #     await print("스케쥴")
+    #     self.export_cache()
+    # async def schedule_export_cache(self):
+    #     await print('a')
+    #     while True:
+    #         await self.scedules()
+    #         await asyncio.sleep(1)  # 5분(300초) 대기 후 다시 실행
 
-        # quit_msg = "?"
-        # reply = QtWidgets.QMessageBox.question(self,'Message',quit_msg, QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
-
-        # if reply == QtWidgets.QMessageBox.Yes:
-        #     event.accept()
-        # else:
-        #     event.ignore()
-
-    # def closeEvent(self,event):
-    #     super().closeEvent(event)
 import msdata as ms
 import multicommand as multi
 import setclass as sc

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>449</width>
-    <height>1209</height>
+    <height>1214</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -92,6 +92,11 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+         </font>
+        </property>
         <property name="placeholderText">
          <string>map</string>
         </property>
@@ -116,6 +121,11 @@
           <width>40</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+         </font>
         </property>
         <property name="text">
          <string/>
@@ -144,6 +154,11 @@
           <width>40</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+         </font>
         </property>
         <property name="text">
          <string/>
@@ -644,7 +659,7 @@ color: rgb(255, 255, 255);
 font : bold</string>
         </property>
         <property name="text">
-         <string>-</string>
+         <string>마을</string>
         </property>
         <property name="shortcut">
          <string>Ctrl+`</string>
@@ -680,7 +695,7 @@ color: rgb(255, 255, 255);
 font : bold</string>
         </property>
         <property name="text">
-         <string>-</string>
+         <string>성</string>
         </property>
         <property name="shortcut">
          <string>Ctrl+`</string>
@@ -729,6 +744,7 @@ font : bold</string>
      <widget class="QTabWidget" name="tabWidget">
       <property name="font">
        <font>
+        <family>맑은 고딕</family>
         <pointsize>9</pointsize>
        </font>
       </property>
@@ -739,7 +755,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -6763,6 +6779,7 @@ font : bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
@@ -6972,6 +6989,7 @@ font: bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
@@ -7077,6 +7095,11 @@ font: bold</string>
         </item>
         <item>
          <spacer name="verticalSpacer_11">
+          <property name="font">
+           <font>
+            <family>맑은 고딕</family>
+           </font>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -7129,6 +7152,11 @@ font : bold</string>
         </item>
         <item>
          <spacer name="verticalSpacer_18">
+          <property name="font">
+           <font>
+            <family>맑은 고딕</family>
+           </font>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -7200,6 +7228,7 @@ font : bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
@@ -7409,6 +7438,7 @@ font: bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
@@ -7514,6 +7544,11 @@ font: bold</string>
         </item>
         <item>
          <spacer name="verticalSpacer_13">
+          <property name="font">
+           <font>
+            <family>맑은 고딕</family>
+           </font>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -7527,6 +7562,11 @@ font: bold</string>
         </item>
         <item>
          <spacer name="verticalSpacer_12">
+          <property name="font">
+           <font>
+            <family>맑은 고딕</family>
+           </font>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -12800,10 +12840,18 @@ font : bold</string>
               <string>어쌔신</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>버서커</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btn_setclass_total">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -12944,6 +12992,114 @@ font : bold</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_setClass_check_0">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>일괄체크</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_setClass_check_1">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>일괄해제</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_classSkill_openDir">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_setClass_2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -13042,6 +13198,9 @@ font: bold</string>
             </item>
             <item>
              <widget class="QPushButton" name="btn_setskill_0">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -13633,6 +13792,119 @@ font : bold</string>
               <string>어쌔신</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>버서커</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_setClass_check_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>일괄체크</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_setClass_check_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>일괄해제</string>
+            </property>
+            <property name="shortcut">
+             <string>Ctrl+2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_classItem_openDir">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230);</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -13727,25 +13999,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_0">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_0">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -13825,26 +14078,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>10강조각상</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_8">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>조각상</string>
               </property>
              </widget>
             </item>
@@ -13928,26 +14162,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>영웅유물</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_11">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>유물</string>
               </property>
              </widget>
             </item>
@@ -14039,25 +14254,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_22">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_23">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -14121,6 +14317,9 @@ font: bold</string>
               <property name="text">
                <string/>
               </property>
+              <property name="tristate">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -14138,25 +14337,6 @@ font: bold</string>
               </property>
               <property name="text">
                <string>전설장비</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -14240,26 +14420,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>9강전리품</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_7">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>전리품_9강</string>
               </property>
              </widget>
             </item>
@@ -14351,25 +14512,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_18">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_19">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -14453,25 +14595,6 @@ font: bold</string>
               </property>
               <property name="placeholderText">
                <string>입력</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_17">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -14563,25 +14686,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_19">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_20">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -14661,26 +14765,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>초월매터리얼</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_4">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>매터리얼_초월</string>
               </property>
              </widget>
             </item>
@@ -14764,26 +14849,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>소모품</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_9">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
+               <string>소모품(명령어)</string>
               </property>
              </widget>
             </item>
@@ -14867,26 +14933,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>전설변신서번트</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>전설변신서번트(명령어)</string>
               </property>
              </widget>
             </item>
@@ -14978,25 +15025,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_15">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_15">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -15084,25 +15112,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_14">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_14">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -15182,26 +15191,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>서버이전</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_10">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>서버이전(명령어)</string>
               </property>
              </widget>
             </item>
@@ -15285,29 +15275,10 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string/>
+               <string>매터리얼_전설</string>
               </property>
               <property name="placeholderText">
                <string>입력</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_12">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -15399,25 +15370,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_13">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_13">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -15505,25 +15457,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_16">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_16">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -15603,26 +15536,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>전설매터리얼</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_5">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>매터리얼_특수</string>
               </property>
              </widget>
             </item>
@@ -15714,25 +15628,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_23">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_24">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -15812,26 +15707,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>10강전리품</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_6">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
+               <string>전리품_10강</string>
               </property>
              </widget>
             </item>
@@ -15923,25 +15799,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_20">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_21">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -16029,25 +15886,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_21">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_22">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -16127,26 +15965,7 @@ font: bold</string>
                </font>
               </property>
               <property name="text">
-               <string>초월변신서번트</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radio_setclass_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
+               <string>초월변신서번트(명령어)</string>
               </property>
              </widget>
             </item>
@@ -16238,25 +16057,6 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_24">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QPushButton" name="btn_setclass_25">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -16295,7 +16095,7 @@ font: bold</string>
           <item row="13" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_123">
             <item>
-             <widget class="QCheckBox" name="check_setclass_26">
+             <widget class="QCheckBox" name="check_setclass_18">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -16323,7 +16123,7 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="input_setclass_26">
+             <widget class="QLineEdit" name="input_setclass_18">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -16344,26 +16144,7 @@ font: bold</string>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_setclass_25">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_setclass_26">
+             <widget class="QPushButton" name="btn_setclass_18">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -16955,7 +16736,7 @@ font : bold</string>
        <attribute name="title">
         <string>Command</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_13">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
          <widget class="QLabel" name="label_15">
           <property name="minimumSize">
@@ -16994,49 +16775,6 @@ font : bold</string>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_28">
-          <item>
-           <widget class="QLineEdit" name="input_cmd_header">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>23</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-              <strikeout>false</strikeout>
-             </font>
-            </property>
-            <property name="cursor">
-             <cursorShape>IBeamCursor</cursorShape>
-            </property>
-            <property name="contextMenuPolicy">
-             <enum>Qt::DefaultContextMenu</enum>
-            </property>
-            <property name="toolTipDuration">
-             <number>-1</number>
-            </property>
-            <property name="text">
-             <string>sellingcashshop</string>
-            </property>
-            <property name="placeholderText">
-             <string>헤더</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QLineEdit" name="input_cmd_name">
             <property name="sizePolicy">
@@ -17179,6 +16917,225 @@ font : bold</string>
          </layout>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_125">
+          <item>
+           <widget class="QLabel" name="label_28">
+            <property name="minimumSize">
+             <size>
+              <width>33</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>33</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(47, 117,181);
+color: rgb(255, 255, 255);
+font : bold</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="text">
+             <string> 헤더</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="combo_cmdHeader">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>1888888</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230)</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAtTop</enum>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string/>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>sellingcashshop</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>probtest</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_29">
+            <property name="minimumSize">
+             <size>
+              <width>33</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>33</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(47, 117,181);
+color: rgb(255, 255, 255);
+font : bold</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="text">
+             <string> 푸터</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="combo_cmdHeader_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>1888888</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(155, 194, 230)</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAtTop</enum>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string/>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>2023-01-01 05:00:00 2024-01-01 05:00:00</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QPlainTextEdit" name="plainTextEdit_cmd">
           <property name="plainText">
            <string/>
@@ -17212,11 +17169,46 @@ font : bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="placeholderText">
-             <string>반복 횟수</string>
+             <string>총 반복 횟수(회)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="input_cmd_repeatDelay_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>맑은 고딕</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>개별 실행 간격(초)</string>
             </property>
            </widget>
           </item>
@@ -17242,6 +17234,7 @@ font : bold</string>
             </property>
             <property name="font">
              <font>
+              <family>맑은 고딕</family>
               <pointsize>9</pointsize>
              </font>
             </property>
@@ -17249,7 +17242,7 @@ font : bold</string>
              <string/>
             </property>
             <property name="placeholderText">
-             <string>실행 간격</string>
+             <string>총 실행 간격(초)</string>
             </property>
            </widget>
           </item>
@@ -20586,6 +20579,24 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="check_autoCacheSave">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+         </font>
+        </property>
+        <property name="text">
+         <string>정보 자동저장</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_temp_0">
         <property name="enabled">
          <bool>true</bool>
@@ -20750,6 +20761,7 @@ color: rgb(255, 255, 255);</string>
         </property>
         <property name="font">
          <font>
+          <family>맑은 고딕</family>
           <pointsize>9</pointsize>
          </font>
         </property>

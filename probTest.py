@@ -13,6 +13,7 @@ import img2str
 import pyautogui as pag
 import numpy as np
 import pandas as pd
+from openpyxl import load_workbook
 #pytesseract.pytesseract.tesseract_cmd = r'.\Tesseract-OCR\tesseract.exe'
 pag.FAILSAFE = False
 
@@ -524,11 +525,14 @@ def EnchantSoul():
             ms.Move(ms.soulEnchantBtn)
 
         #data.append([itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%'])
-        data = ([itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%'])
+        data = [[itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%']]
+        columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률']
+        result_df = pd.DataFrame(data, columns=columns)
+        
+        save_df_to_excel(output_file_name,result_df)
+        #result_df = pd.DataFrame(data, columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률'])
 
-        result_df = pd.DataFrame(data, columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률'])
-
-        result_df.to_excel(output_file_name, index=False)
+        #result_df.to_excel(output_file_name, index=False)
 
     os.startfile(os.path.abspath(output_file_name))
     #EnchantSoul()
@@ -1155,6 +1159,20 @@ def probTest_spotEnchant():#221020
     
     print("전체종료시각 : ",ms.GetCurrentTime())
 ###############
+
+def save_df_to_excel(output_file_name, df):
+    if os.path.exists(output_file_name):
+        # 파일이 이미 존재하면 기존 내용을 불러옵니다
+        existing_df = pd.read_excel(output_file_name)
+        # 기존 DataFrame에 이어붙입니다 (column은 제외)
+        combined_df = pd.concat([existing_df, df], axis=0, ignore_index=True)
+    else:
+        # 파일이 존재하지 않으면 새 파일로 저장
+        combined_df = df
+
+    combined_df.to_excel(output_file_name, index=False)
+    print(f"Data saved to {output_file_name}")
+
 
 if __name__ == "__main__" : 
     ProbTest()

@@ -1638,9 +1638,65 @@ def getOnlyNumberFromImg(imgName):#숫자만 읽기
     #    data = "0"
 
     return data
+from PIL import Image
+import pytesseract
+
+def extract_korean_text_from_image(image_file):
+    try:
+        # 이미지 파일을 열기
+        image = Image.open(image_file)
+
+        # Tesseract에 한국어 데이터 파일 지정
+        #pytesseract.pytesseract.tesseract_cmd = "경로/tesseract.exe"  # Windows 경로 설정
+        # pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"  # Linux 경로 설정
+
+        # Tesseract 옵션 설정
+        custom_config = r'--oem 3 --psm 6'  # --psm 6은 한줄씩 읽도록 설정
+        # 이미지로부터 한글 텍스트 추출
+        extracted_text = pytesseract.image_to_string(image, lang='kor+eng', config=custom_config)
+        extracted_text = extracted_text.replace('\n\n','\n')
+        # 추출된 텍스트 반환
+        return extracted_text
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return None
+
+import re
+
+def transform_text(input_text):
+    # 각 항목을 찾기 위한 정규 표현식 패턴
+    pattern = r'(\S+)[\s]+([\+\-]?\d+\.\d+%?|\+\d+)'
+
+    # 정규 표현식을 사용하여 항목 찾기
+    matches = re.findall(pattern, input_text)
+
+    # 결과를 문자열로 구성
+    result = '/'.join(['{}{}'.format(match[0], match[1]) for match in matches])
+
+    return result
+
+
+
+# # 이미지 파일명을 파라미터로 전달하고 한글 텍스트 추출
+# image_file = "your_image.jpg"
+# result = extract_korean_text_from_image(image_file)
+
+# if result:
+#     print(result)
+# else:
+#     print("Text extraction failed.")
 
 #region
 
 #endregion
+
+
+
 if __name__ == "__main__" : 
-    Img2Str()
+    #Img2Str()
+    image_file = fr"./screenshot/temp/_20231025_194051.jpg"
+    result = extract_korean_text_from_image(image_file)
+    result = transform_text(result)
+
+    print(result)
