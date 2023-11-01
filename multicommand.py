@@ -799,8 +799,38 @@ def 카드먹기_라이브():
     ms.sleep(0.1)
     ms.Click(ms.menuPos4)
     ms.Click(ms.menuPos5)
-    ms.sleep(1)
+    ms.sleep(0.3)
     ms.Click(ms.uiTabBtn2_7)
+
+    delay_sec = 0.3
+    ms.Click(ms.quest_category_btn_0)
+    ms.Click(ms.quest_get_reward_btn_0)
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+    ms.sleep(delay_sec)
+    ms.Click(ms.quest_get_reward_btn_0)#quest_category_btn_1
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+
+    ms.Click(ms.quest_category_btn_1)
+    ms.Click(ms.quest_get_reward_btn_0)
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+    ms.sleep(delay_sec)
+    ms.Click(ms.quest_get_reward_btn_0)
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+
+    ms.Click(ms.quest_category_btn_2)
+    ms.Click(ms.quest_get_reward_btn_0)
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+    ms.sleep(delay_sec)
+    ms.Click(ms.quest_get_reward_btn_0)
+    ms.sleep(delay_sec)
+    ms.Click(ms.centerPos)
+
+    ms.ResetFirst()
 # def GoCharacterSelectPage():
 #     ms.ResetFirst()
 #     ms.Move(ms.menuPos4)
@@ -810,7 +840,24 @@ def 카드먹기_라이브():
 #     ms.Move(ms.goCharacterSelectPageBtn)
 #     ms.Move(ms.okPos)
 
+def 맨뒤캐릭터접속():
+    ms.Move(ms.menuPos4)
+    ms.Move(ms.menuPos20)
+    ms.sleep(0.1)
+    ms.Move(ms.menuMiddleUpperTab5)
+    ms.Move(ms.goCharacterSelectPageBtn)
+    ms.sleep(0.01)
+    ms.Move(ms.okPos)
+    ms.sleep(0.2)
 
+    ms.sleep(1.5)
+
+    
+    ms.Move(ms.characterPageBtn1)
+    #ms.sleep(0.01)
+    ms.Move(ms.characterSlotBtn1)
+
+    ms.Move(ms.characterCreateBtn)
 
 if __name__ == "__main__" : 
     multicommand()

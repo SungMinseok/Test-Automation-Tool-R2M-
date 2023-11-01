@@ -1,6 +1,7 @@
 ITEM_SLOT_COUNT = 21
 CUSTOM_CMD_SLOT_COUNT = 27
 ITEM_CHECK_BOX_COUNT = 26
+DATA_SLOT_COUNT = 12 
 app_type = 0
 #currentAppName = ""
 
@@ -11,9 +12,14 @@ import os
 path_resource = "./resource"
 if not os.path.isdir(path_resource):                                                           
     os.mkdir(path_resource)
+    
+log_folder = "./log"
+if not os.path.isdir(log_folder):                                                           
+    os.mkdir(log_folder)
 
 
 from enum import Enum
+import random
 
 class 직업(Enum):
     나이트 = 0
@@ -57,7 +63,7 @@ class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-
+        self.set_button_styles(2)
         # QTimer를 사용하여 5분마다 export_cache 함수 실행
         self.auto_cache_save_timer = QTimer(self)#check_autoCacheSave
         self.auto_cache_save_timer.timeout.connect(self.export_cache)
@@ -251,7 +257,7 @@ class WindowClass(QMainWindow, form_class) :
 
     
     
-        self.btn_temp_0.clicked.connect(self.testTemp)
+        self.btn_temp_0.clicked.connect(lambda : self.set_button_styles(2))
         
         #221013
         self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
@@ -274,6 +280,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_subbtn_0.clicked.connect(lambda : self.executeCommand("cleanupinventory"))
         self.btn_subbtn_1.clicked.connect(lambda : self.executeCommand("additem 999 100000000"))
         self.btn_subbtn_2.clicked.connect(lambda : self.executeCommand("addcurrency 25 100000"))
+        
+        self.btn_subbtn_7.clicked.connect(multi.맨뒤캐릭터접속)#카드먹기_라이브
+        self.btn_subbtn_8.clicked.connect(multi.카드먹기_라이브)#카드먹기_라이브
     
     #Tab [Item]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -378,6 +387,15 @@ class WindowClass(QMainWindow, form_class) :
                 continue
 
             #set_check_box_state
+
+    #Tab [Character]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        '''
+        TAB - DATA
+        '''    
+        for i in range(0,DATA_SLOT_COUNT) :
+            getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+            getattr(self, f'btn_findData_openDir_{i}').clicked.connect(lambda _, x=i : self.데이터폴더열기(x))
+            
 #endregion
 
     #[App Window]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -497,7 +515,10 @@ class WindowClass(QMainWindow, form_class) :
 
 
 
-#[Functions : ITEM]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+#
+    '''
+    Functions - ITEM ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+    '''
 
     def searchItem(self):
         itemType = self.comboBox_itemType.currentText()  
@@ -636,7 +657,7 @@ class WindowClass(QMainWindow, form_class) :
             try: 
                 os.startfile(os.path.abspath(filePath))
             except:
-                print("파일 없음 : "+filePath)    
+                self.popUp(desText="파일 없음 : "+filePath)    
             
     def openFileWithNoException(self,filePath):
         os.startfile(filePath)
@@ -803,9 +824,11 @@ class WindowClass(QMainWindow, form_class) :
 
 
 
+#▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
-#Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+    '''
+    Functions - Custom
+    '''
     def customCommand(self, slotNum) :
         cmd = getattr(self, f'input_custom_cmd_{slotNum}').text()
 #        count = getattr(self, f'input_custom_count_{slotNum}').text()
@@ -818,8 +841,11 @@ class WindowClass(QMainWindow, form_class) :
 
 
 
-    #Tab [Character]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
+    '''
+    Functions - Character ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+    '''
     
     def setClass(self) :
         classNum = 0
@@ -981,6 +1007,9 @@ class WindowClass(QMainWindow, form_class) :
             getattr(self, f'{attr_str}{i}').setCheckState(state)
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+    '''
+    Functions - Character ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+    '''
             
     def applyCmdTextFile(self) :
         try:
@@ -992,21 +1021,16 @@ class WindowClass(QMainWindow, form_class) :
         self.plainTextEdit_cmd.insertPlainText(lines)
 
     def executeMultiCommand(self) :
-        headerText = self.input_cmd_header.text()
+        headerText = self.combo_cmdHeader.currentText()
+        footerText = self.combo_cmdHeader_2.currentText()
         commandText = self.plainTextEdit_cmd.toPlainText()
         if commandText == "" :
             return
-        repeatCount = self.input_cmd_repeatCount.text()
-        repeatDelay = self.input_cmd_repeatDelay.text()
+        repeatCount = int(self.input_cmd_repeatCount.text()) if self.input_cmd_repeatCount.text() != "" else 1
+        repeatDelay = int(self.input_cmd_repeatDelay.text()) if self.input_cmd_repeatDelay.text() != "" else 0
+        repeatDelay2 = int(self.input_cmd_repeatDelay_2.text()) if self.input_cmd_repeatDelay_2.text() != "" else 0
 
-        if repeatCount == "":
-            repeatCount = 1
-        else :
-            repeatCount = int(repeatCount)
-        if repeatDelay == "":
-            repeatDelay = 0
-        else :
-            repeatDelay = int(repeatDelay)
+    
 
         lines = commandText.splitlines()
         startTime = ms.GetElapsedTimeAuto(0)
@@ -1021,10 +1045,11 @@ class WindowClass(QMainWindow, form_class) :
             # self.progressBar_cmd.setValue(int(i/repeatCount*100))
             # QtWidgets.QApplication.processEvents()
             for line in lines:
-                if not headerText == "" :
-                    line = headerText + " " + line
+                line = f'{headerText} {line} {footerText}'.strip()
+                # if not headerText == "" :
+                #     line = headerText + " " + line
                 ms.Command(line,0.5)
-            
+                ms.sleep(repeatDelay2)
             if i < (repeatCount - 1) :
                 ms.sleep(repeatDelay)
 
@@ -1159,6 +1184,35 @@ class WindowClass(QMainWindow, form_class) :
         
 #endregion
     
+
+
+
+
+
+
+
+    def 데이터파일열기(self, slotNum):
+        source_folder = self.input_dataSourcePath.text()
+        file_name = getattr(self, f'input_findData_{slotNum}').text()
+        #source_path = os.path.join(source_folder,file_name)
+
+        file_path = ms.get_latest_file_in_directory(source_folder,file_name)
+
+        self.파일열기(f'{file_path}')
+    
+    def 데이터폴더열기(self, slotNum):
+        source_folder = self.input_dataSourcePath.text()
+        file_name = getattr(self, f'input_findData_{slotNum}').text()
+        #source_path = os.path.join(source_folder,file_name)
+
+        folder_path = ms.get_directory_of_latest_file(source_folder,file_name)
+
+        self.파일열기(f'{folder_path}')
+
+
+
+
+
     #Functions━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     def setFilePath(self,target):
@@ -1180,7 +1234,7 @@ class WindowClass(QMainWindow, form_class) :
     #     except :
     #         self.popUp("실패","경로 오류!\n")
 
-    def popUp(self,titleText,desText,type = "about"):
+    def popUp(self,titleText="",desText ="",type = "about"):
         #if type == "about" :
         msg = QtWidgets.QMessageBox()  
         msg.setGeometry(1520,28,400,2000)
@@ -1225,6 +1279,38 @@ class WindowClass(QMainWindow, form_class) :
         
         self.popUp("테스트 결과",result,"report")
 
+    def set_button_styles(self, theme_option):
+        color_bg = f'{random.randrange(0,256)},{random.randrange(0,256)},{random.randrange(0,256)}'
+        
+        
+        '''
+        1:기본
+        2:랜덤
+        3:고급
+        '''
+        style_options_others = {
+            1: f"background-color: rgb(58, 117, 181);\ncolor: rgb(255, 255, 255);\nfont: bold",
+            2: f"background-color: rgb({color_bg});\ncolor: rgb(255, 255, 255);\nfont: bold",
+            # Add more themes as needed
+        }
+        style_options_main = {
+            1: f"background-color: rgb(221, 235, 247);",
+            2: f"background-color: rgb({color_bg});",#
+            # Add more themes as needed
+        }
+        style_others = style_options_others.get(theme_option)
+        style_main = style_options_main.get(theme_option)
+
+        #if style:
+        for widget in self.findChildren(QPushButton):
+            widget.setStyleSheet(style_others)
+        for widget in self.findChildren(QLabel):
+            widget.setStyleSheet(style_others)
+        #for widget in self.findChildren(QMainWindow):
+        self.setStyleSheet(style_main)
+        #else:
+        #    print("Invalid theme option")
+    
     def testTemp(self):
 #아이템 이름 포함된 것 모두 찾기
         result = ms.findAllValInDataFrame(df_item,"mName","포션","mID")
@@ -1292,6 +1378,18 @@ class WindowClass(QMainWindow, form_class) :
             except:
                 continue
 
+        for i in range(0,DATA_SLOT_COUNT):
+            try:
+
+                val0 = df_cache[f'findData_{i}']['value0']
+                val1 = df_cache[f'findData_{i}']['value1']
+                if val0 != 0:
+                    getattr(self, f'input_findData_{i}').setText(str(val0))
+                if val1 != 0 :
+                    getattr(self, f'input_findData_comment_{i}').setText(str(val1))
+            except:
+                continue
+
     def export_cache(self, isForced = False):
         if not isForced : 
             if not self.check_autoCacheSave.isChecked() :
@@ -1337,6 +1435,15 @@ class WindowClass(QMainWindow, form_class) :
                 'value1': tempVal1,
             }
 
+        for i in range(0,DATA_SLOT_COUNT):
+            tempVal0 = getattr(self, f'input_findData_{i}').text()
+            tempVal1 = getattr(self, f'input_findData_comment_{i}').text()
+            
+            key = f'findData_{i}'
+            data[key] = {
+                'value0': tempVal0,
+                'value1': tempVal1,
+            }
 
         # for i in range(0,3):
         #     tempVal0 = getattr(self, f'plainText_event_{i}').text()
@@ -1369,6 +1476,8 @@ class WindowClass(QMainWindow, form_class) :
     #         await self.scedules()
     #         await asyncio.sleep(1)  # 5분(300초) 대기 후 다시 실행
 
+
+
 import msdata as ms
 import multicommand as multi
 import setclass as sc
@@ -1384,6 +1493,7 @@ import pyautogui as pag
 import time
 import re
 import pyperclip as pc
+import traceback
 
 #endregion
 # if __name__ == "__main__":
@@ -1394,9 +1504,49 @@ import pyperclip as pc
     #ui.setupUi(MainWindow)
     #MainWindow.show()
     #sys.exit(app.exec_())
+def make_log(msg, log_type : str = 'error', auto_open :bool = False):
+    '''
+    log_type : str = error / execute
+    '''
+
+
+    
+    user_name = os.getlogin()
+    log_file = fr".\log\log_{log_type}.txt"
+    #error_message = traceback.format_exc()
+    with open(log_file, "a") as file:
+        file.write(f'\
+date={time.strftime("%Y-%m-%d %H:%M:%S")}\n\
+user={user_name}\n\
+    {msg}\n\
+────────────────────────────────────────\n')
+    #print(f'생성실패 : {e}')
+    if auto_open :
+        os.startfile(log_file)
+
+class ExceptionHandler:
+    def __init__(self, original_hook):
+        self.original_hook = original_hook
+
+    def custom_hook(self, exc_type, exc_value, exc_traceback):
+        # Handle the exception here
+        print("An unhandled exception occurred:")
+        msg = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        formatted_msg = ''.join(msg)
+        make_log(formatted_msg,auto_open=True)
+
+        # Optionally, save the traceback to a log file or perform other actions
+
+        # Call the original exception hook
+        if self.original_hook:
+            self.original_hook(exc_type, exc_value, exc_traceback)
+
+    def __call__(self, exc_type, exc_value, exc_traceback):
+        self.custom_hook(exc_type, exc_value, exc_traceback)
 
 if __name__ == "__main__" :
     #QApplication : 프로그램을 실행시켜주는 클래스
+    #try:
     app = QApplication(sys.argv) 
 
     #WindowClass의 인스턴스 생성
@@ -1404,6 +1554,10 @@ if __name__ == "__main__" :
 
     #프로그램 화면을 보여주는 코드
     myWindow.show()
-
     #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-    app.exec_()
+    #app.exec_()
+    sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
+    sys.exit(app.exec_()) 
+    # except Exception as e:
+    #     msg = traceback.format_exc()
+    #     make_log(msg,auto_open=True)

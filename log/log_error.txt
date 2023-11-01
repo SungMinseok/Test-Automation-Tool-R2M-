@@ -1,0 +1,110 @@
+        date=2023-11-01 11:39:58
+        user=mssung
+        Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1018, in executeMultiCommand
+    headerText = self.input_cmd_header.text()
+AttributeError: 'WindowClass' object has no attribute 'input_cmd_header'
+
+    date=2023-11-01 11:40:28
+    user=mssung
+        Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1018, in executeMultiCommand
+    headerText = self.input_cmd_header.text()
+AttributeError: 'WindowClass' object has no attribute 'input_cmd_header'
+
+    date=2023-11-01 11:41:45
+    user=mssung
+        Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 649, in 파일열기
+    os.startfile(filePath)
+FileNotFoundError: [WinError 2] 지정된 파일을 찾을 수 없습니다: 'None'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 652, in 파일열기
+    os.startfile(os.path.abspath(filePath))
+FileNotFoundError: [WinError 2] 지정된 파일을 찾을 수 없습니다: 'D:\\R2A\\None'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 390, in <lambda>
+    getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+  File "D:\R2A\R2A.py", line 1199, in 데이터파일열기
+    self.파일열기(f'{file_path}')
+  File "D:\R2A\R2A.py", line 654, in 파일열기
+    self.popUp("파일 없음 : "+filePath)
+TypeError: popUp() missing 1 required positional argument: 'desText'
+
+    date=2023-11-01 12:05:56
+    user=mssung
+        Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1018, in executeMultiCommand
+    headerText = self.input_cmd_header.text()
+AttributeError: 'WindowClass' object has no attribute 'input_cmd_header'
+
+date=2023-11-01 12:07:19
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1018, in executeMultiCommand
+    headerText = self.input_cmd_header.text()
+AttributeError: 'WindowClass' object has no attribute 'input_cmd_header'
+
+────────────────────────────────────────date=2023-11-01 12:07:22
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1018, in executeMultiCommand
+    headerText = self.input_cmd_header.text()
+AttributeError: 'WindowClass' object has no attribute 'input_cmd_header'
+
+────────────────────────────────────────date=2023-11-01 12:34:07
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1438, in closeEvent
+    self.export_cache(isForced= True)
+  File "D:\R2A\R2A.py", line 1410, in export_cache
+    tempVal0 = getattr(self, f'input_findData_{i}').isChecked()
+AttributeError: 'QLineEdit' object has no attribute 'isChecked'
+
+────────────────────────────────────────
+date=2023-11-01 12:34:40
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1438, in closeEvent
+    self.export_cache(isForced= True)
+  File "D:\R2A\R2A.py", line 1411, in export_cache
+    tempVal1 = getattr(self, f'input_findData_comment_{i}').text()
+AttributeError: 'WindowClass' object has no attribute 'input_findData_comment_1'
+
+────────────────────────────────────────
+date=2023-11-01 12:36:11
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1524, in <module>
+    myWindow = WindowClass()
+  File "D:\R2A\R2A.py", line 395, in __init__
+    getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+AttributeError: 'WindowClass' object has no attribute 'btn_findData_openFile_4'
+
+────────────────────────────────────────
+date=2023-11-01 12:36:24
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1524, in <module>
+    myWindow = WindowClass()
+  File "D:\R2A\R2A.py", line 395, in __init__
+    getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+AttributeError: 'WindowClass' object has no attribute 'btn_findData_openFile_4'
+
+────────────────────────────────────────
+date=2023-11-01 12:36:30
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1524, in <module>
+    myWindow = WindowClass()
+  File "D:\R2A\R2A.py", line 395, in __init__
+    getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+AttributeError: 'WindowClass' object has no attribute 'btn_findData_openFile_4'
+
+────────────────────────────────────────

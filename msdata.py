@@ -36,7 +36,8 @@ from dropCheck import DropCheck
 from itemInfoCheck import ItemInfoCheck
 from probTest import ProbTest
 import time
-import datetime
+from datetime import datetime, timedelta
+
 import pandas as pd
 
 import pyperclip as pc
@@ -350,6 +351,8 @@ exitQuestDialogueBtn=[0.907,0.677]
 okTeleportBtn = [0.585,0.78]
 tutoMonPos =[0.418,0.288]
 attackBtn = [0.903,0.765]
+characterPageBtn1 = [0.362,0.0621]
+characterSlotBtn1 = [0.1268,0.3851]
 
 #거래소
 market_enterServerType0=[0.057,0.166]
@@ -446,6 +449,9 @@ cashshop_result_ok_btn = [0.5008,0.6248]
 
 #퀘스트UI
 quest_get_reward_btn_0 = [0.9244,0.2385]
+quest_category_btn_0 = [0.105,0.2099]
+quest_category_btn_1 = [0.105,0.313]
+quest_category_btn_2 = [0.105,0.4087]
 
 #endregion
 
@@ -995,21 +1001,21 @@ def SetMainUI(_nameText,_verText,_dateText,_makerText,_desText,_warnText):
 
 def GetElapsedTime(_time):
         
-    now = datetime.datetime.now()
+    now = datetime.now()
     #print((now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S'))
     
     #pyqt5버전
     #return (now+datetime.timedelta(seconds=_time))#.strftime('%m-%d %H:%M:%S')
     #cmd버전
-    return (now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S')
+    return (now+timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S')
 
 def GetElapsedTimeAuto(_time):
         
-    now = datetime.datetime.now()
+    now = datetime.now()
     #print((now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S'))
     
     #pyqt5버전
-    return (now+datetime.timedelta(seconds=_time))#.strftime('%m-%d %H:%M:%S')
+    return (now+timedelta(seconds=_time))#.strftime('%m-%d %H:%M:%S')
     #cmd버전
     #return (now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S')
 
@@ -1044,12 +1050,12 @@ def ChangeSetValue(txtFileName, setMsg):
 
 def GetCurrentTime():
         
-    return datetime.datetime.now()#.strftime('%m-%d %H:%M:%S')
+    return datetime.now()#.strftime('%m-%d %H:%M:%S')
 
 
 def GetConsumedTime(_startTime):
         
-    now = datetime.datetime.now()
+    now = datetime.now()
     #return (now - datetime.timedelta(seconds=_startTime)).strftime('%m-%d %H:%M:%S')
     return (now -_startTime)#.timedelta(seconds)#.strftime('%S')
 
@@ -1316,6 +1322,55 @@ def 플레이어변경(player_name):
         currentPlayer = Player.LDPlayer
     elif player_name == "Mirroid" :
         currentPlayer = Player.Mirroid
+    
+def get_latest_file_in_directory(source_path, target_file):
+
+    def find_latest_file(folder):
+        latest_file = None
+        latest_time = datetime.min
+
+        for root, dirs, files in os.walk(folder):
+            if target_file in files:
+                file_path = os.path.join(root, target_file)
+                modified_time = datetime.fromtimestamp(os.path.getmtime(file_path))
+                if modified_time > latest_time:
+                    latest_file = file_path
+                    latest_time = modified_time
+
+        return latest_file
+
+    latest_file_path = find_latest_file(source_path)
+    return latest_file_path
+
+
+
+
+def get_directory_of_latest_file(source_path, target_file):
+    def find_latest_file(folder):
+        latest_file = None
+        latest_time = datetime.min
+
+        for root, dirs, files in os.walk(folder):
+            if target_file in files:
+                file_path = os.path.join(root, target_file)
+                modified_time = datetime.fromtimestamp(os.path.getmtime(file_path))
+                if modified_time > latest_time:
+                    latest_file = file_path
+
+        if latest_file:
+            return os.path.dirname(latest_file)  # Return the directory of the latest file
+        else:
+            return None  # Handle the case when the file doesn't exist in the source_path
+
+    latest_file_path = find_latest_file(source_path)
+    return latest_file_path
+
+
+
+
+
+
+
 
 # if __name__ == "__main__" : 
 #     최신파일찾고열기()
