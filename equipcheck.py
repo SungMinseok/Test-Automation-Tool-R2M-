@@ -336,6 +336,10 @@ def EquipCheck4():
     
     loopCount = 1
     resultTxtFileName = f'{path}/equipCheckResult_{time.strftime("_%y%m%d_%H%M%S")}.txt'
+    merge_path = fr'{path}\merge_{time.strftime("%y%m%d_%H%M%S")}'
+        
+    if not os.path.isdir(merge_path):                                                           
+        os.mkdir(merge_path)   
     
     for itemNum in lines:
         print("실행 중... (예상 소요 시간 : 알 수 없음)")
@@ -369,6 +373,7 @@ def EquipCheck4():
             print(targetStr)
             finalStr = f"{format_stats_ingame(targetStr,curItemID)}"
             print(finalStr)
+            ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_0")
             
             ms.Move(ms.invenExitBtn)
             #print(f'{equipStatNameList=}')
@@ -386,6 +391,7 @@ def EquipCheck4():
             with open(resultTxtFileName,'a',encoding='utf-8') as f:
                 #f.write('\n'.join(finalStr))    
                 f.write(finalStr)    
+        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path)
             
         #mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)
 

@@ -6,9 +6,10 @@ def 직과금결제_미러로이드():
 
     ms.currentPlayer = ms.Player.Mirroid
     R2A.WindowClass.optimizeCurrentAppPos(R2A.WindowClass)
+    ms.sleep(0.2)
 
     ms.Click(ms.cashshop_last_slot)
-    ms.sleep(0.2)
+    ms.sleep(0.5)
     ms.Click(ms.cashshop_ok_btn)
     ms.sleep(2)
     
@@ -40,5 +41,5 @@ if __name__ == "__main__" :
     ms.appX, ms.appY, ms.appW, ms.appH = 145,33,1194,677
     R2A.currentAppName = "SM-N971N"
 
-    for i in range(0,9):
+    for i in range(0,3):
         직과금결제_미러로이드()

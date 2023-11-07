@@ -444,7 +444,7 @@ summon_npc_position = [0.3466,0.2969]
 cashshop_last_slot= [0.8869,0.5953]
 cashshop_ok_btn = [0.572,0.8833]
 cashshop_module_box = [0.4975*appW+appX,0.6352*appH+appY,0.3367*appW,0.7415*appH]
-cashshop_module_ok_btn = [0.572,0.8833]
+cashshop_module_ok_btn = [0.4724,0.8257]
 cashshop_result_ok_btn = [0.5008,0.6248]
 
 #퀘스트UI
@@ -586,6 +586,8 @@ def CaptureEngraveRes(fileName):
     #timestr = time.strftime("_%Y%m%d_%H%M%S")
     pag.screenshot(fileName  + ".jpg", region=(engraveResultBox[0],engraveResultBox[1],engraveResultBox[2],engraveResultBox[3]))
     sleep(0.1)
+
+    return f'{fileName}.jpg'
 def CaptureCenterChatBox(fileName):
     sleep(0.1)
     #timestr = time.strftime("_%Y%m%d_%H%M%S")
@@ -687,6 +689,10 @@ def captureSomeBox4(ratio_list,resultPath):
     return resultJPGFileName
 
 def Command(command, delay = 0):
+    if delay == 0:
+        temp_len = len(command)
+        print(f'{temp_len}')
+        delay = temp_len / 100
 
     try :
         command =command.replace('\n','')
@@ -713,7 +719,7 @@ def Command(command, delay = 0):
 
     elif currentPlayer == Player.Mirroid :    
 
-        sleep(0.2)
+        sleep(0.4)
         Click(joy_cmd_pos)
         sleep(0.2)
 
@@ -1365,12 +1371,81 @@ def get_directory_of_latest_file(source_path, target_file):
     latest_file_path = find_latest_file(source_path)
     return latest_file_path
 
+def save_df_to_excel(output_file_name, df, autoOpen = True , combine = True):
+    
+    if combine :
+        if os.path.exists(output_file_name):
+            # 파일이 이미 존재하면 기존 내용을 불러옵니다
+            existing_df = pd.read_excel(output_file_name)
+            # 기존 DataFrame에 이어붙입니다 (column은 제외)
+            combined_df = pd.concat([existing_df, df], axis=0, ignore_index=True)
+        else:
+            # 파일이 존재하지 않으면 새 파일로 저장
+            combined_df = df
+    else : 
+        combined_df = df
 
 
+    combined_df.to_excel(output_file_name, index=False)
+    print(f"Data saved to {output_file_name}")
 
+    if autoOpen : 
+        os.startfile(output_file_name)
 
+def get_last_modified_date(file_path):
+    '''
+    os.path.realpath(__file__))
+    '''
+    try:
+        # 파일의 수정 날짜 가져오기
+        modified_time = os.path.getmtime(file_path)
 
+        # 수정 날짜를 날짜 및 시간 형식으로 변환
+        modified_datetime = datetime.fromtimestamp(modified_time)
 
+        # 날짜와 시간을 문자열로 변환
+        formatted_date = modified_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
-# if __name__ == "__main__" : 
-#     최신파일찾고열기()
+        return f'최종 수정일 : {formatted_date}'
+    except FileNotFoundError:
+        return "파일을 찾을 수 없음"
+
+# .py 파일을 모두 찾아내는 함수
+def get_recent_file_list(directory):
+    '''
+    os.getcwd()
+
+    
+    #print(list(file_dict.keys())[0])
+    #print(list(file_dict.values())[0])
+    '''
+    
+    current_directory = directory
+
+    def find_py_files(directory):
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                if file.endswith('.py'):
+                    yield os.path.join(root, file)
+
+    # .py 파일 중에서 수정 날짜가 최신인 순으로 정렬
+    py_files = list(find_py_files(current_directory))
+    py_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+
+    file_dict = {}
+
+    # 최신 수정 날짜를 가진 .py 파일 출력
+    for file in py_files:
+        modified_time = os.path.getmtime(file)
+        modified_date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(modified_time))
+        #print(f"{file}: {modified_date}")
+        file_dict[file] = modified_date
+
+    #print(list(file_dict.keys())[0])
+    #print(list(file_dict.values())[0])
+    return file_dict
+    
+
+if __name__ == "__main__" : 
+    #get_recent_file_list(os.getcwd())
+    print(os.path.basename(__file__).split('.')[0])

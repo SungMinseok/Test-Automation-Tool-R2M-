@@ -1641,7 +1641,7 @@ def getOnlyNumberFromImg(imgName):#숫자만 읽기
 from PIL import Image
 import pytesseract
 
-def extract_korean_text_from_image(image_file):
+def extract_text_from_image(image_file, lang_code):
     try:
         # 이미지 파일을 열기
         image = Image.open(image_file)
@@ -1653,7 +1653,7 @@ def extract_korean_text_from_image(image_file):
         # Tesseract 옵션 설정
         custom_config = r'--oem 3 --psm 6'  # --psm 6은 한줄씩 읽도록 설정
         # 이미지로부터 한글 텍스트 추출
-        extracted_text = pytesseract.image_to_string(image, lang='kor+eng', config=custom_config)
+        extracted_text = pytesseract.image_to_string(image, lang=lang_code, config=custom_config)#chi_tra ,kor
         extracted_text = extracted_text.replace('\n\n','\n')
         # 추출된 텍스트 반환
         return extracted_text

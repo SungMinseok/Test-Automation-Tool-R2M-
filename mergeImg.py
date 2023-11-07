@@ -27,9 +27,11 @@ def imwrite(filename, img, params =None) :
         return False
 
 
-def MergeImg_Equip(_itemNum,_equipType,_extraPath):
+def MergeImg_Equip(_itemNum,_equipType,_extraPath,isSolo = False):
     
     for k in range(0,4):
+        if isSolo and k==1 :
+            break
         if k == 3 and _equipType != 3:
             break
         target = [0 for i in range(14)]

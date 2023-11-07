@@ -529,7 +529,7 @@ def EnchantSoul():
         columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률']
         result_df = pd.DataFrame(data, columns=columns)
         
-        save_df_to_excel(output_file_name,result_df)
+        ms.save_df_to_excel(output_file_name,result_df)
         #result_df = pd.DataFrame(data, columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률'])
 
         #result_df.to_excel(output_file_name, index=False)

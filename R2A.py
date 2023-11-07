@@ -71,7 +71,10 @@ class WindowClass(QMainWindow, form_class) :
 #region 복붙시작 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 #region Main UI
-        self.setWindowTitle("R2A 4.0")
+        file_dict = ms.get_recent_file_list(os.getcwd())
+        last_modified_date = list(file_dict.values())[0]
+
+        self.setWindowTitle(f"R2A 5.0 | {last_modified_date}")
         self.statusLabel = QLabel(self.statusbar)
 
         self.setGeometry(1470,28,400,400)
@@ -168,7 +171,7 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         #XLSX파일 연동■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        print('아이템 파일 로드 중')
+        #print('아이템 파일 로드 중')
 
         global df_item
         global df_tran
@@ -187,7 +190,9 @@ class WindowClass(QMainWindow, form_class) :
 
         try:
             df_item = pd.read_csv(itemFileName)
+            print('아이템 파일 로드 성공...')
         except FileNotFoundError:
+            print('아이템 파일 캐시 생성 중...')
             df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3,23])
             df_item.to_csv(itemFileName, index=False)
         
@@ -258,6 +263,7 @@ class WindowClass(QMainWindow, form_class) :
     
     
         self.btn_temp_0.clicked.connect(lambda : self.set_button_styles(2))
+        self.btn_temp_1.clicked.connect(lambda : self.set_button_styles(999))
         
         #221013
         self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
@@ -324,6 +330,8 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_cmd_setFile.clicked.connect(lambda : self.setFilePath(self.input_cmd_name))
         self.btn_cmd_apply.clicked.connect(self.applyCmdTextFile)
         self.btn_cmd_execute.clicked.connect(self.executeMultiCommand)
+        for i in range(0,3) :
+            getattr(self, f'btn_cmd_plus_{i}').clicked.connect(lambda _, x=i : self.control_multi_cmd(x))
         #self.btn_cmdBookMark_execute_0.clicked.connect(lambda : self.executeCommand(self.input_cmdBookMark_0.text()))
         #self.btn_cmdBookMark_execute_1.clicked.connect(lambda : self.executeCommand(self.input_cmdBookMark_1.text()))
         
@@ -341,7 +349,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_skillGroup_execute.clicked.connect(lambda : self.executeCommand(\
             "changeskillenchant "+\
             self.input_skillGroup_id.text()+" "+\
-            self.input_skillGroup_level.text()+" "\
+            self.spinBox_skillGroup_level.text()+" "\
             ))
         self.btn_customCmd_0.clicked.connect(lambda : self.executeCommandByID(0))
         self.btn_customCmd_1.clicked.connect(lambda : self.executeCommandByID(1))
@@ -923,7 +931,8 @@ class WindowClass(QMainWindow, form_class) :
             #print(mapName)
             if self.comboBox_skillGroup.currentText() == skillName :
                 self.input_skillGroup_id.setText(skillGroupID)
-                self.input_skillGroup_level.setText(maxEnchantValue)
+                #self.input_skillGroup_level.setText(maxEnchantValue)
+                self.spinBox_skillGroup_level.setValue(int(maxEnchantValue))
                 return
 
 
@@ -1072,6 +1081,27 @@ class WindowClass(QMainWindow, form_class) :
             ,consumedTime#.strftime('%H:%M:%S')
             )
 
+    #231103
+    def control_multi_cmd(self, num):
+        total_text = self.plainTextEdit_cmd.toPlainText()
+        if total_text == "" :
+            return
+        cur_text = total_text.splitlines()[len(total_text.splitlines())-1]
+
+        if num == 0 :
+            total_text += f'\n{int(cur_text)+1}'
+        elif num == 1 :
+            total_text += f'\n{int(cur_text)+10}'
+        elif num == 2 :
+            total_text += f'\n{int(cur_text)+100}'
+
+        self.plainTextEdit_cmd.clear()
+        self.plainTextEdit_cmd.insertPlainText(total_text)
+    
+    
+    
+    
+    
     def applyTestCaseList(self) :
      
         with open("./data/etc/testCaseList.txt",encoding='UTF-8') as f:
@@ -1108,6 +1138,11 @@ class WindowClass(QMainWindow, form_class) :
 
         except :
             self.popUp("오류","테스트 케이스 실행 불가")
+
+    
+
+
+
 #region Tab [Settings]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     def getMousePos(self,item):
@@ -1291,11 +1326,13 @@ class WindowClass(QMainWindow, form_class) :
         style_options_others = {
             1: f"background-color: rgb(58, 117, 181);\ncolor: rgb(255, 255, 255);\nfont: bold",
             2: f"background-color: rgb({color_bg});\ncolor: rgb(255, 255, 255);\nfont: bold",
+            999 : f"background-color: rgb({color_bg});\ncolor: rgb(255, 255, 255);\nfont: bold",
             # Add more themes as needed
         }
         style_options_main = {
             1: f"background-color: rgb(221, 235, 247);",
             2: f"background-color: rgb({color_bg});",#
+            999 : f"background-color: rgb({color_bg});",#
             # Add more themes as needed
         }
         style_others = style_options_others.get(theme_option)
@@ -1303,9 +1340,18 @@ class WindowClass(QMainWindow, form_class) :
 
         #if style:
         for widget in self.findChildren(QPushButton):
-            widget.setStyleSheet(style_others)
+            if theme_option != 999 :
+                widget.setStyleSheet(style_others)
+            else:
+                rand_color = f'{random.randrange(0,256)},{random.randrange(0,256)},{random.randrange(0,256)}'                
+                widget.setStyleSheet(f"background-color: rgb({rand_color});\ncolor: rgb(255,255,255);\nfont: bold")
+
         for widget in self.findChildren(QLabel):
-            widget.setStyleSheet(style_others)
+            if theme_option != 999 :
+                widget.setStyleSheet(style_others)
+            else:                
+                widget.setStyleSheet(f"background-color: rgb({rand_color});\ncolor: rgb(255,255,255);\nfont: bold")
+
         #for widget in self.findChildren(QMainWindow):
         self.setStyleSheet(style_main)
         #else:

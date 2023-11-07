@@ -607,11 +607,14 @@ def 캐릭터생성_라이브():
     
     tempText = ""
 
-    while tempText != "벨리타" :
-        print("텍스트 대기 중:", tempText)
-        belitaBoxName = ms.captureSomeBox("belitaBox")
-        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
-        sleep(1)
+    for i in range(5) :
+        if tempText != "벨리타" :
+            print("텍스트 대기 중:", tempText)
+            belitaBoxName = ms.captureSomeBox("belitaBox")
+            tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+            sleep(1)
+        else:
+            break
 
     ms.Move(ms.centerPos)
     ms.sleep(0.5)
@@ -733,11 +736,15 @@ def 캐릭터생성_알파():#명령어사용
     
     tempText = ""
 
-    while tempText != "벨리타" :
-        print("텍스트 대기 중:", tempText)
-        belitaBoxName = ms.captureSomeBox("belitaBox")
-        tempText = i2s.Indiv_Kor_Return(belitaBoxName)
-        sleep(1)
+
+    for i in range(5) :
+        if tempText != "벨리타" :
+            print("텍스트 대기 중:", tempText)
+            belitaBoxName = ms.captureSomeBox("belitaBox")
+            tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+            sleep(1)
+        else:
+            break
 
     ms.Move(ms.centerPos)
     ms.sleep(0.5)
@@ -790,7 +797,7 @@ def 캐릭터생성_알파():#명령어사용
     # ms.Move(ms.attackBtn)
     # ms.sleep(0.5)
 
-    ms.Command("lv 80")
+    ms.Command("lv 99")
 
 def 카드먹기_라이브():
     ms.Click(ms.quickBtn1)
