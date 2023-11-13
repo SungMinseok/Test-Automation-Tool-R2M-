@@ -209,3 +209,83 @@ user=mssung
 AttributeError: 'WindowClass' object has no attribute 'input_skillGroup_level'
 
 式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 17:36:29
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 326, in <lambda>
+    self.btn_cmd_preset_save.clicked.connect(lambda : self.make_preset('cmd'))
+  File "D:\R2A\R2A.py", line 1461, in make_preset
+    pm.save_preset(preset_name, df)
+  File "D:\R2A\PresetManager.py", line 16, in save_preset
+    dataframe.to_excel(file_path, index=False)
+  File "C:\Python39\lib\site-packages\pandas\core\generic.py", line 2284, in to_excel
+    formatter.write(
+  File "C:\Python39\lib\site-packages\pandas\io\formats\excel.py", line 834, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+  File "C:\Python39\lib\site-packages\pandas\io\excel\_xlsxwriter.py", line 191, in __init__
+    super().__init__(
+  File "C:\Python39\lib\site-packages\pandas\io\excel\_base.py", line 925, in __init__
+    self.handles = get_handle(
+  File "C:\Python39\lib\site-packages\pandas\io\common.py", line 711, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: './data/preset\\preset_item_33.xlsx'
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 17:52:34
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 327, in <lambda>
+    self.btn_cmd_preset_load.clicked.connect(lambda : self.load_preset('cmd'))
+  File "D:\R2A\R2A.py", line 1493, in load_preset
+    df = df.set_index('key').T.to_dict()
+  File "C:\Python39\lib\site-packages\pandas\util\_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Python39\lib\site-packages\pandas\core\frame.py", line 5451, in set_index
+    raise KeyError(f"None of {missing} are in the columns")
+KeyError: "None of ['key'] are in the columns"
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 17:52:47
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 327, in <lambda>
+    self.btn_cmd_preset_load.clicked.connect(lambda : self.load_preset('cmd'))
+  File "D:\R2A\R2A.py", line 1493, in load_preset
+    df = df.set_index('key').T.to_dict()
+  File "C:\Python39\lib\site-packages\pandas\util\_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Python39\lib\site-packages\pandas\core\frame.py", line 5451, in set_index
+    raise KeyError(f"None of {missing} are in the columns")
+KeyError: "None of ['key'] are in the columns"
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 18:27:11
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 324, in <lambda>
+    getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
+  File "D:\R2A\R2A.py", line 844, in customCommand
+    count = getattr(self, f'input_custom_count_{slotNum}').text()
+AttributeError: 'WindowClass' object has no attribute 'input_custom_count_1'
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 18:27:16
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 324, in <lambda>
+    getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
+  File "D:\R2A\R2A.py", line 844, in customCommand
+    count = getattr(self, f'input_custom_count_{slotNum}').text()
+AttributeError: 'WindowClass' object has no attribute 'input_custom_count_0'
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-13 18:28:09
+user=mssung
+    Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 324, in <lambda>
+    getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
+  File "D:\R2A\R2A.py", line 844, in customCommand
+    count = getattr(self, f'input_custom_count_{slotNum}').text()
+AttributeError: 'WindowClass' object has no attribute 'input_custom_count_0'
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式

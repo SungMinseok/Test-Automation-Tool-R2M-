@@ -1,8 +1,9 @@
 ITEM_SLOT_COUNT = 21
-CUSTOM_CMD_SLOT_COUNT = 27
+CUSTOM_CMD_SLOT_COUNT = 20
 ITEM_CHECK_BOX_COUNT = 26
 DATA_SLOT_COUNT = 12 
 app_type = 0
+import PresetManager as pm
 #currentAppName = ""
 
 '''
@@ -136,7 +137,7 @@ class WindowClass(QMainWindow, form_class) :
 
         #print(os.getcwd() + self.input_itemBookMark_name.text())
         self.applyTestCaseList()
-
+        self.applyPresetList()
 
         for i in range(0,CUSTOM_CMD_SLOT_COUNT) :
             getattr(self, f'label_custom_count_{i}').setText('0')
@@ -321,8 +322,13 @@ class WindowClass(QMainWindow, form_class) :
     
         for i in range(0,CUSTOM_CMD_SLOT_COUNT) :
             getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
+            if i<12 :
+                getattr(self, f'btn_custom_execute_{i}').setText(f'실행 F{i+1}')
+            else:
+                getattr(self, f'btn_custom_execute_{i}').setText(f'실행')
 
-    
+        self.btn_cmd_preset_save.clicked.connect(lambda : self.save_preset('cmd'))
+        self.btn_cmd_preset_load.clicked.connect(lambda : self.load_preset('cmd'))
     
     
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -835,18 +841,37 @@ class WindowClass(QMainWindow, form_class) :
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
     '''
-    Functions - Custom
+    Functions - Custom ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
     '''
     def customCommand(self, slotNum) :
         cmd = getattr(self, f'input_custom_cmd_{slotNum}').text()
-#        count = getattr(self, f'input_custom_count_{slotNum}').text()
+        count = getattr(self, f'label_custom_count_{slotNum}').text()
+        getattr(self, f'label_custom_count_{slotNum}').setText(str(int(count)+1))
         
         #print(itemID, itemAmount)
         #multi.Command_Text(itemID, itemAmount)
         #ms.Command(cmd)
         self.executeCommand(cmd)
 
+    def applyPresetList(self) :
+        preset_item_list = []
+        preset_cmd_list = []
 
+        directory_path = fr"D:\R2A\data\preset"
+        for filename in os.listdir(directory_path):
+            if filename.startswith("preset_item_") and filename.endswith(".xlsx"):
+                preset_name = filename.replace("preset_item_", "").replace(".xlsx", "")
+                preset_item_list.append(preset_name)
+            elif filename.startswith("preset_cmd_") and filename.endswith(".xlsx"):
+                preset_name = filename.replace("preset_cmd_", "").replace(".xlsx", "")
+                preset_cmd_list.append(preset_name)
+
+        self.combo_item_preset_0.clear()
+        for val in preset_item_list:
+            self.combo_item_preset_0.addItem(val)
+        self.comboBox_cmd_preset.clear()
+        for val in preset_cmd_list:
+            self.comboBox_cmd_preset.addItem(val)
 
 
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -1435,7 +1460,7 @@ class WindowClass(QMainWindow, form_class) :
                     getattr(self, f'input_findData_comment_{i}').setText(str(val1))
             except:
                 continue
-
+    
     def export_cache(self, isForced = False):
         if not isForced : 
             if not self.check_autoCacheSave.isChecked() :
@@ -1506,6 +1531,63 @@ class WindowClass(QMainWindow, form_class) :
         df.to_csv(cache_path, index_label='key',encoding='utf-8')
 
         print('export data successfully...')
+
+
+
+    def save_preset(self, preset_type : str) :
+        data = {}
+        if preset_type == 'cmd' : 
+
+            preset_name = self.input_cmd_preset.text() 
+            if preset_name == "":
+                print('need to insert preset name')
+                return
+
+
+            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+                tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
+                tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
+                tempVal2 = getattr(self, f'label_custom_count_{i}').text()
+                
+                key = f'cmd_{i}'
+                data[key] = {
+                    'value0': tempVal0,
+                    'value1': tempVal1,
+                    'value2': tempVal2
+                }
+
+        df = pd.DataFrame(data).T
+        pm.save_preset(f'{preset_type}_{preset_name}', df)
+        self.applyPresetList()
+
+    def load_preset(self, preset_type : str) :
+
+        if preset_type == "cmd" :
+            preset_name = self.comboBox_cmd_preset.currentText()
+            if preset_name == "":                
+                print('need to select preset name')
+
+                return
+            
+            df = pm.load_preset(f'{preset_type}_{preset_name}')
+            df = df.fillna('')
+            #df = df.set_index('key').T.to_dict()
+            df = df.T.to_dict()
+            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+                try:
+
+                    val0 = df[i]['value0']
+                    val1 = df[i]['value1']
+                    val2 = df[i]['value2']
+                    #if val0 != 0 :
+                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
+                    #if val1 != 0 :
+                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
+                    #if val2 != 0 :
+                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
+                except:
+                    continue
+
 
     def closeEvent(self,event):
         print("end")
