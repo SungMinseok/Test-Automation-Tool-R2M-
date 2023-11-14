@@ -1,9 +1,10 @@
-ITEM_SLOT_COUNT = 21
+ITEM_SLOT_COUNT = 15
 CUSTOM_CMD_SLOT_COUNT = 20
 ITEM_CHECK_BOX_COUNT = 26
 DATA_SLOT_COUNT = 12 
 app_type = 0
 import PresetManager as pm
+import xlrd
 #currentAppName = ""
 
 '''
@@ -210,7 +211,7 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
         # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        self.import_cache()
+        #self.import_cache()
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
        
@@ -291,8 +292,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_subbtn_7.clicked.connect(multi.맨뒤캐릭터접속)#카드먹기_라이브
         self.btn_subbtn_8.clicked.connect(multi.카드먹기_라이브)#카드먹기_라이브
     
-    #Tab [Item]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+        '''
+        [Tab] - ITEM ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+        '''
         #아이템 검색■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         self.btn_searchItemName_all.clicked.connect(self.searchItemAll)
@@ -317,9 +319,11 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_item_txt_3.clicked.connect(lambda:self.additemText("makeitem"))
 
     
-    
-    #Tab [Custom]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    
+        
+        '''
+        [Tab] - Custom ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+        '''
+            
         for i in range(0,CUSTOM_CMD_SLOT_COUNT) :
             getattr(self, f'btn_custom_execute_{i}').clicked.connect(lambda _, x=i : self.customCommand(x))
             if i<12 :
@@ -329,9 +333,18 @@ class WindowClass(QMainWindow, form_class) :
 
         self.btn_cmd_preset_save.clicked.connect(lambda : self.save_preset('cmd'))
         self.btn_cmd_preset_load.clicked.connect(lambda : self.load_preset('cmd'))
-    
-    
-    #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    #btn_cmd_preset_3
+        self.btn_cmd_preset_3.clicked.connect(self.addCmdPresetBookmark)
+        for i in range(0,5) :
+            getattr(self, f'btn_cmd_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.loadCmdPresetByBookmark(x))
+        self.btn_cmd_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_cmd_preset_path.text(),\
+                                                                              f'preset_cmd_{self.comboBox_cmd_preset.currentText()}.xlsx')))
+        self.btn_cmd_preset_1.clicked.connect(lambda : self.파일열기(self.input_cmd_preset_path.text()))
+        
+        
+        '''
+        [Tab] - Command ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+        '''
         self.btn_cmd_openFile.clicked.connect(lambda : self.파일열기(self.input_cmd_name.text()))
         self.btn_cmd_setFile.clicked.connect(lambda : self.setFilePath(self.input_cmd_name))
         self.btn_cmd_apply.clicked.connect(self.applyCmdTextFile)
@@ -665,13 +678,18 @@ class WindowClass(QMainWindow, form_class) :
         #     filePath = "/"+ filePath
         # os.startfile(os.getcwd() + "/"+ filePath)
         print(os.getcwd())
+        origin_path = os.getcwd()
         try:
             os.startfile(filePath)
         except : 
             try: 
                 os.startfile(os.path.abspath(filePath))
             except:
-                self.popUp(desText="파일 없음 : "+filePath)    
+                try:
+                
+                    os.startfile(os.path.join(origin_path,filePath))
+                except:
+                    self.popUp(desText="파일 없음 : "+filePath)    
             
     def openFileWithNoException(self,filePath):
         os.startfile(filePath)
@@ -694,22 +712,31 @@ class WindowClass(QMainWindow, form_class) :
 
         if slotNum != 0 :
             line_edit = getattr(self, f'input_additem_itemName_{slotNum}')
-
+            image_label = getattr(self, f'item_img_{slotNum}')
 
         try:
             rarity = ms.DF값불러오기(df_item, "mID", itemID, "mRarity")
             if rarity == 0:
-                line_edit.setStyleSheet("color: #b2b2b2;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 0
+                color_code = '#b2b2b2'
+                #line_edit.setStyleSheet("color: #b2b2b2;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 0
             elif rarity == 1:
-                line_edit.setStyleSheet("color: #62c5b1;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 1
+                color_code = '#62c5b1'
+                #line_edit.setStyleSheet("color: #62c5b1;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 1
             elif rarity == 2:
-                line_edit.setStyleSheet("color: #0e9bd9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 2
+                color_code = '#0e9bd9'
+                #line_edit.setStyleSheet("color: #0e9bd9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 2
             elif rarity == 3:
-                line_edit.setStyleSheet("color: #b343d9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 3
+                color_code = '#b343d9'
+                #line_edit.setStyleSheet("color: #b343d9;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 3
             elif rarity == 4:
-                line_edit.setStyleSheet("color: #ff0000;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 4
+                color_code = '#ff0000'
+                #line_edit.setStyleSheet("color: #ff0000;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 4
             elif rarity == 5:
-                line_edit.setStyleSheet("color: #fdb300;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 5
+                color_code = '#fdb300'
+                #line_edit.setStyleSheet("color: #fdb300;background-color: rgb(0, 0, 0);")  # Set font color for rarity level 5
+            line_edit.setStyleSheet(f"color: {color_code};background-color: rgb(0, 0, 0);")  # Set font color for rarity level 5
+            image_label.setStyleSheet(f"background-color: {color_code};")  # Set font color for rarity level 5
+        
         except:
             if slotNum != 0 :
 
@@ -866,12 +893,24 @@ class WindowClass(QMainWindow, form_class) :
                 preset_name = filename.replace("preset_cmd_", "").replace(".xlsx", "")
                 preset_cmd_list.append(preset_name)
 
-        self.combo_item_preset_0.clear()
+        self.comboBox_item_preset.clear()
         for val in preset_item_list:
-            self.combo_item_preset_0.addItem(val)
+            self.comboBox_item_preset.addItem(val)
         self.comboBox_cmd_preset.clear()
         for val in preset_cmd_list:
             self.comboBox_cmd_preset.addItem(val)
+
+    def addCmdPresetBookmark(self):
+        cur_preset_name = self.comboBox_cmd_preset.currentText()
+        if cur_preset_name == "":
+            print('choose preset first')
+            return
+        target_preset_num = self.spinBox_preset.value()
+        getattr(self, f'btn_cmd_preset_bookmark_{target_preset_num-1}').setText(cur_preset_name)
+
+    def loadCmdPresetByBookmark(self,num:int):
+        preset_name = getattr(self, f'btn_cmd_preset_bookmark_{num}').text()
+        self.load_preset('cmd',preset_name)
 
 
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -1375,6 +1414,9 @@ class WindowClass(QMainWindow, form_class) :
             if theme_option != 999 :
                 widget.setStyleSheet(style_others)
             else:                
+                if 'item_img' in widget.objectName() :
+                    #print(widget.objectName)
+                    continue
                 widget.setStyleSheet(f"background-color: rgb({rand_color});\ncolor: rgb(255,255,255);\nfont: bold")
 
         #for widget in self.findChildren(QMainWindow):
@@ -1386,6 +1428,11 @@ class WindowClass(QMainWindow, form_class) :
 #아이템 이름 포함된 것 모두 찾기
         result = ms.findAllValInDataFrame(df_item,"mName","포션","mID")
         self.popUp("검색",str(result),"about")
+
+
+    '''
+    Functions - Cache 캐시 (import/export) ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+    '''
 
     def import_cache(self) :
         global df_cache
@@ -1437,6 +1484,14 @@ class WindowClass(QMainWindow, form_class) :
             except:
                 continue
 
+
+        for i in range(0,5):
+            try:
+                val0 = df_cache[f'cmd_preset_bookmark_{i}']['value0']
+                if val0 != 0 :
+                    getattr(self, f'btn_cmd_preset_bookmark_{i}').setText(str(val0))
+            except:
+                continue
         for i in range(0,ITEM_CHECK_BOX_COUNT):
             try:
 
@@ -1460,7 +1515,22 @@ class WindowClass(QMainWindow, form_class) :
                     getattr(self, f'input_findData_comment_{i}').setText(str(val1))
             except:
                 continue
-    
+
+    def export_cache_all(self):
+        
+        data = {}
+
+        for widget in self.findChildren(QLineEdit):
+            value = widget.text()
+            if value != "":
+                key = widget.objectName()
+                data[key] = widget.text()
+                #print(widget.objectName(), widget.text())
+
+        df = pd.DataFrame.from_dict(data, orient='index', columns=['value'])
+        df.index.name = 'key'
+        df.to_csv(cache_path, sep='\t', encoding='utf-16')
+        
     def export_cache(self, isForced = False):
         if not isForced : 
             if not self.check_autoCacheSave.isChecked() :
@@ -1494,6 +1564,14 @@ class WindowClass(QMainWindow, form_class) :
                 'value0': tempVal0,
                 'value1': tempVal1,
                 'value2': tempVal2
+            }        
+            
+        for i in range(0,5):
+            tempVal0 = getattr(self, f'btn_cmd_preset_bookmark_{i}').text()
+            
+            key = f'cmd_preset_bookmark_{i}'
+            data[key] = {
+                'value0': tempVal0,
             }
 
         for i in range(0,ITEM_CHECK_BOX_COUNT):
@@ -1560,14 +1638,16 @@ class WindowClass(QMainWindow, form_class) :
         pm.save_preset(f'{preset_type}_{preset_name}', df)
         self.applyPresetList()
 
-    def load_preset(self, preset_type : str) :
+    def load_preset(self, preset_type : str, preset_name = "") :
 
         if preset_type == "cmd" :
-            preset_name = self.comboBox_cmd_preset.currentText()
             if preset_name == "":                
-                print('need to select preset name')
+                try:
+                    preset_name = self.comboBox_cmd_preset.currentText()
+                except:
+                    print('need to select preset name')
 
-                return
+                    return
             
             df = pm.load_preset(f'{preset_type}_{preset_name}')
             df = df.fillna('')
@@ -1587,13 +1667,13 @@ class WindowClass(QMainWindow, form_class) :
                     getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
                 except:
                     continue
-
+            self.input_cmd_preset.setText(preset_name)
 
     def closeEvent(self,event):
         print("end")
 
-        self.export_cache(isForced= True)
-
+        #self.export_cache(isForced= True)
+        self.export_cache_all()
 
     # async def schedules(self):
     #     await print("스케쥴")
@@ -1641,13 +1721,22 @@ def make_log(msg, log_type : str = 'error', auto_open :bool = False):
     
     user_name = os.getlogin()
     log_file = fr".\log\log_{log_type}.txt"
-    #error_message = traceback.format_exc()
-    with open(log_file, "a") as file:
+    
+    # Check if the log file exists
+    if not os.path.exists(log_file):
+        with open(log_file, "w"):
+            pass  # Create the file if it doesn't exist
+    with open(log_file, "r") as file:
+        existing_logs = file.read()
+
+    with open(log_file, "w") as file:
         file.write(f'\
 date={time.strftime("%Y-%m-%d %H:%M:%S")}\n\
-user={user_name}\n\
-    {msg}\n\
-────────────────────────────────────────\n')
+user={user_name}\n\n\
+{msg}\n\n\
+────────────────────────────────────────\n\
+{existing_logs}\
+')
     #print(f'생성실패 : {e}')
     if auto_open :
         os.startfile(log_file)

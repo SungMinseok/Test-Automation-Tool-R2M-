@@ -1,5 +1,5 @@
 import os
-
+import xlrd
 
 import pandas as pd
 default_path = "./data/preset"
@@ -19,7 +19,10 @@ def save_preset(name, dataframe):
 def load_preset(name):
     file_path = os.path.join(default_path, f"preset_{name}.xlsx")
     if os.path.exists(file_path):
-        return pd.read_excel(file_path)
+        try:
+            return pd.read_excel(file_path)
+        except xlrd.biffh.XLRDError as e:
+            return -1
     else:
         print(f"Error: Preset '{name}' not found.")
         return None
