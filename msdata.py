@@ -97,7 +97,7 @@ def getBoxPos(x,y,w,h):
 
 # f.close()
 
-appX, appY, appW, appH = 0,33,1428,805
+appX, appY, appW, appH = 1,1,1,1
 
 #region mouse position
 joyPos=[0.1092,0.805]
@@ -657,9 +657,9 @@ def captureSomeBox2(boxName : str,resultPath):
     return resultJPGFileName
 
 def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
-
-    timestr = time.strftime("_%Y%m%d_%H%M%S")
+    timestr = time.strftime("%Y%m%d_%H%M%S")
     resultJPGFileName = f"./screenshot/temp/{timestr}.jpg"
+    #current_app_pos_info = 
     #print(boxName)
     #pag.screenshot(resultJPGFileName, region=(getattr(self, boxName)[0],getattr(self,boxName)[1],getattr(self,boxName)[2],getattr(self,boxName)[3]))
     pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
@@ -686,6 +686,13 @@ def captureSomeBox4(ratio_list,resultPath):
                 break
 
     pag.screenshot(resultJPGFileName, region=(ratio_list[0],ratio_list[1],ratio_list[2],ratio_list[3]))
+    return resultJPGFileName
+
+def Capture_1(boxName):
+    xRatio, yRatio, wRatio, hRatio = getBoxPos(globals()[boxName][0],globals()[boxName][1],globals()[boxName][2],globals()[boxName][3])
+    timestr = time.strftime("%Y%m%d_%H%M%S")
+    resultJPGFileName = f"./screenshot/temp/{timestr}.jpg"
+    pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
     return resultJPGFileName
 
 def Command(command, delay = 0):

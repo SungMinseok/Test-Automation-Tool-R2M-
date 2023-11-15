@@ -53,7 +53,7 @@ class ImageTooltip(QWidget):
         layout.addWidget(label)
         self.setLayout(layout)
 
-cache_path = f'./cache/cache.csv'
+cache_path = f'./cache/cache_v5.csv'
 history_item_path = f'./data/etc/itemHistory.txt'
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
@@ -68,16 +68,16 @@ class WindowClass(QMainWindow, form_class) :
         self.set_button_styles(2)
         # QTimer를 사용하여 5분마다 export_cache 함수 실행
         self.auto_cache_save_timer = QTimer(self)#check_autoCacheSave
-        self.auto_cache_save_timer.timeout.connect(self.export_cache)
+        self.auto_cache_save_timer.timeout.connect(self.export_cache_all)
         self.auto_cache_save_timer.start(300000)  # 300000 밀리초 = 5분
-#region 복붙시작 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 #region Main UI
         file_dict = ms.get_recent_file_list(os.getcwd())
         last_modified_date = list(file_dict.values())[0]
 
         self.setWindowTitle(f"R2A 5.0 | {last_modified_date}")
-        self.statusLabel = QLabel(self.statusbar)
+        #self.statusLabel = QLabel(self.statusbar)
 
         self.setGeometry(1470,28,400,400)
         self.setFixedSize(450,1020)
@@ -212,6 +212,7 @@ class WindowClass(QMainWindow, form_class) :
         
         # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         #self.import_cache()
+        self.import_cache_all()
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
        
@@ -318,7 +319,19 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_item_txt_2.clicked.connect(lambda:self.additemText("additems"))
         self.btn_item_txt_3.clicked.connect(lambda:self.additemText("makeitem"))
 
-    
+        self.btn_item_3.clicked.connect(self.reset_item_slot)
+        self.btn_item_0.clicked.connect(lambda : self.set_check_box_state("check_item_",999,2,start_num=1))
+        self.btn_item_1.clicked.connect(lambda : self.set_check_box_state("check_item_",999,0,start_num=1))
+        
+        self.btn_item_preset_save.clicked.connect(lambda : self.save_preset('item'))
+        self.comboBox_item_preset.currentTextChanged.connect(lambda : self.load_preset('item'))
+    #btn_item_preset_3
+        self.btn_item_preset_2.clicked.connect(lambda : self.add_preset_bookmark('item'))
+        for i in range(0,5) :
+            getattr(self, f'btn_item_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.load_preset_by_bookmark(x, 'item'))
+        self.btn_item_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_preset_path.text(),\
+                                                                              f'preset_item_{self.comboBox_item_preset.currentText()}.xlsx')))
+        self.btn_item_preset_1.clicked.connect(lambda : self.파일열기(self.input_preset_path.text()))
         
         '''
         [Tab] - Custom ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -332,15 +345,19 @@ class WindowClass(QMainWindow, form_class) :
                 getattr(self, f'btn_custom_execute_{i}').setText(f'실행')
 
         self.btn_cmd_preset_save.clicked.connect(lambda : self.save_preset('cmd'))
-        self.btn_cmd_preset_load.clicked.connect(lambda : self.load_preset('cmd'))
+        self.comboBox_cmd_preset.currentTextChanged.connect(lambda : self.load_preset('cmd'))
     #btn_cmd_preset_3
-        self.btn_cmd_preset_3.clicked.connect(self.addCmdPresetBookmark)
+        self.btn_cmd_preset_3.clicked.connect(lambda : self.add_preset_bookmark('cmd'))
         for i in range(0,5) :
-            getattr(self, f'btn_cmd_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.loadCmdPresetByBookmark(x))
-        self.btn_cmd_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_cmd_preset_path.text(),\
-                                                                              f'preset_cmd_{self.comboBox_cmd_preset.currentText()}.xlsx')))
-        self.btn_cmd_preset_1.clicked.connect(lambda : self.파일열기(self.input_cmd_preset_path.text()))
+            getattr(self, f'btn_cmd_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.load_preset_by_bookmark(x, 'cmd'))
+        self.btn_cmd_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_preset_path.text(),\
+                                                                              f'preset_cmd_{self.comboBox_cmd_preset.currentText()}.csv')))
+        self.btn_cmd_preset_1.clicked.connect(lambda : self.파일열기(self.input_preset_path.text()))
         
+        self.btn_cmd_1.clicked.connect(lambda : self.set_check_box_state("check_cmd_",999,2))
+        self.btn_cmd_2.clicked.connect(lambda : self.set_check_box_state("check_cmd_",999,0))
+        
+        self.btn_item_preset_3.clicked.connect(lambda : self.delete_preset("item"))
         
         '''
         [Tab] - Command ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -358,6 +375,11 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_testCase_apply.clicked.connect(self.applyTestCaseList)
         self.comboBox_testCase.currentTextChanged.connect(self.applyCurrentTestCase)
         self.btn_testCase_execute.clicked.connect(self.executeTestCase)
+    
+        self.btn_cmd_0.clicked.connect(self.reset_cmd_slot)
+        self.btn_cmd_preset_4.clicked.connect(lambda : self.delete_preset("cmd"))
+    
+    
     #Tab [Character]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         #self.btn_setClass.clicked.connect(self.setClass)
         self.combo_setclass_3.currentTextChanged.connect(self.applySkillGroupList)
@@ -496,23 +518,6 @@ class WindowClass(QMainWindow, form_class) :
         
         #ms.CMD_DoTeleport(self.comboBox_teleport.currentText())
 
-    # def setTeleportPoint(self,item):
-    #     if item == "바이런성" :
-    #         ms.setTeleportNum = 3
-    #     elif item == "푸리에성" :
-    #         ms.setTeleportNum = 4   
-    #     elif item == "로덴성" :
-    #         ms.setTeleportNum = 5   
-    #     elif item == "블랙랜드성" :
-    #         ms.setTeleportNum = 6   
-    #     elif item == "그렘린숲" :
-    #         ms.setTeleportNum = 7   
-
-    # def executeCommand(self,cmd) :
-    #     self.setCurrentAppTop()
-
-    #     ms.Command(cmd)
-
     def executeCommandByID(self,cmdID) :
         cmd = ""
         if cmdID == 0 :
@@ -565,9 +570,6 @@ class WindowClass(QMainWindow, form_class) :
     def additemGoods(self) :
         multi.autoAddItem(ms.searchItemByName("", self.comboBox_goods.currentText()),self.input_goods_count.text())
 
-    #def additem(self) :
-    #    multi.autoAddItem(self.input_additem_id.text(),self.input_additem_count.text())
-
     def 아이템생성(self, slotNum) :
         
         cmdStr = self.comboBox_itemcmd.currentText()
@@ -592,6 +594,7 @@ class WindowClass(QMainWindow, form_class) :
         #multi.autoAddItem(itemID, itemAmount)
 
         self.executeCommand(f'additem {itemID} {itemAmount}')
+    
     def additemAll(self) :
 
         try:
@@ -627,10 +630,6 @@ class WindowClass(QMainWindow, form_class) :
         
         ms.Command(cmd,delay)
 
-
-
-    
-
     def applyItemBookMarkList(self) :
      
         with open("./data/items/itemBookMarkList.txt",encoding='UTF-8') as f:
@@ -641,7 +640,6 @@ class WindowClass(QMainWindow, form_class) :
         for line in lines:
             self.comboBox_goods.addItem(line)
 
-            
     def applyTeleportBookMarkList(self) :
      
         with open("./data/etc/teleportPos.txt",encoding='UTF-8') as f:
@@ -694,6 +692,7 @@ class WindowClass(QMainWindow, form_class) :
     def openFileWithNoException(self,filePath):
         os.startfile(filePath)
 
+    
     def getItemNameByInput(self,slotNum):
         itemID = getattr(self, f'input_additem_itemid_{slotNum}').text()
         
@@ -765,7 +764,6 @@ class WindowClass(QMainWindow, form_class) :
         # except :
         #     getattr(self, f'input_additem_itemid_{slotNum}').setText("Item ID")
 
-    #230118
     def copyText(self, target:str):
 
         if target == "item":
@@ -781,7 +779,6 @@ class WindowClass(QMainWindow, form_class) :
                 self.applyHistory("item")
                 pc.copy(self.input_itemid.text())
 
-    #230118
     def applyHistory(self, target:str) :
         fileName = ""
         #try:
@@ -799,7 +796,6 @@ class WindowClass(QMainWindow, form_class) :
                     #self.comboBox_itemhistory.addItem(x[0])
                     self.comboBox_itemhistory.addItem(line)
 
-    #230119
     def applyHistoryID(self,target:str):#target = item/tran/serv
         if target == "item":
             try: 
@@ -808,11 +804,7 @@ class WindowClass(QMainWindow, form_class) :
                 self.input_additem_itemid_0.setText(str(itemID))
             except:
                 print(f"no {target} name")
-
-    #230712
-    # def 리소스로드(self):
-
-    #230712        
+  
     def 이미지로드(self,slot_num):
         #image_path = './resource/Accessory_Cash_002.png'
 
@@ -840,7 +832,6 @@ class WindowClass(QMainWindow, form_class) :
             getattr(self, f'item_img_{slot_num}').setPixmap(empty_pixmap)
             return
         
-    #230717
     def 아이템북마크추가(self, slot_num):
         if slot_num == 0:
             return
@@ -851,7 +842,6 @@ class WindowClass(QMainWindow, form_class) :
         ms.텍스트파일_내용추가(history_item_path,item_name)
         self.applyHistory("item")
     
-    #230717
     def 아이템북마크제거(self, slot_num):
         #if slot_num != 0 :
         #    return
@@ -861,9 +851,155 @@ class WindowClass(QMainWindow, form_class) :
 
         ms.텍스트파일_내용삭제(history_item_path,item_name)
         self.applyHistory("item")
+
+    def reset_item_slot(self):
+        for i in range(0,ITEM_SLOT_COUNT):
+            getattr(self, f'input_additem_itemid_{i}').setText('')
+            getattr(self, f'input_additem_amount_{i}').setText('')
+        
+
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
+#PRESET
 
+    def applyPresetList(self) :
+        preset_item_list = []
+        preset_cmd_list = []
 
+        directory_path = os.path.join(os.getcwd(),self.input_preset_path.text())
+        for filename in os.listdir(directory_path):
+            if filename.startswith("preset_item_") and filename.endswith(".csv"):
+                preset_name = filename.replace("preset_item_", "").replace(".csv", "")
+                preset_item_list.append(preset_name)
+            elif filename.startswith("preset_cmd_") and filename.endswith(".csv"):
+                preset_name = filename.replace("preset_cmd_", "").replace(".csv", "")
+                preset_cmd_list.append(preset_name)
+
+        self.comboBox_item_preset.clear()
+        for val in preset_item_list:
+            self.comboBox_item_preset.addItem(val)
+        self.comboBox_cmd_preset.clear()
+        for val in preset_cmd_list:
+            self.comboBox_cmd_preset.addItem(val)
+
+    def add_preset_bookmark(self,preset_type:str):
+        cur_preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+        if cur_preset_name == "":
+            self.show_statusbar_msg('choose preset first')
+            return
+        target_preset_num = getattr(self, f'spinBox_{preset_type}_preset').value()
+        getattr(self, f'btn_{preset_type}_preset_bookmark_{target_preset_num-1}').setText(cur_preset_name)
+
+    def load_preset_by_bookmark(self,num:int,preset_type:str):
+        preset_name = getattr(self, f'btn_{preset_type}_preset_bookmark_{num}').text()
+        self.load_preset(preset_type,preset_name)
+
+    def delete_preset(self,preset_type:str):
+        preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+        if preset_name == "" :
+            self.popUp(desText='프리셋명을 지정하세요.')
+            return
+
+        preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+        directory_path = os.path.join(os.getcwd(),self.input_preset_path.text(),
+                                      f'preset_{preset_type}_{preset_name}.xlsx')
+        os.remove(directory_path)
+        self.applyPresetList()
+
+        
+    def save_preset(self, preset_type : str) :
+        data = {}
+        if preset_type == 'cmd' : 
+
+            preset_name = self.input_cmd_preset.text() 
+            if preset_name == "":
+                self.show_statusbar_msg('need to insert preset name')
+                return
+
+            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+                tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
+                tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
+                tempVal2 = getattr(self, f'label_custom_count_{i}').text()
+                
+                key = f'cmd_{i}'
+                data[key] = {
+                    'value0': tempVal0,
+                    'value1': tempVal1,
+                    'value2': tempVal2
+                }
+        elif preset_type == 'item' : 
+
+            preset_name = self.input_item_preset.text() 
+            if preset_name == "":
+                self.show_statusbar_msg('need to insert preset name')
+                return
+
+            for i in range(1,ITEM_SLOT_COUNT):
+                tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
+                tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
+                
+                key = f'item_{i}'
+                data[key] = {
+                    'value0': tempVal0,
+                    'value1': tempVal1,
+                }
+
+        df = pd.DataFrame(data).T
+        pm.save_preset(f'{preset_type}_{preset_name}', df)
+        self.applyPresetList()
+
+    def load_preset(self, preset_type : str, preset_name = "") :
+
+        if preset_type == "cmd" :
+            if preset_name == "":                
+                try:
+                    preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+                except:
+                    self.show_statusbar_msg('need to select preset name')
+                    return
+            
+            df = pm.load_preset(f'{preset_type}_{preset_name}')            
+            # if pd.isna(df) : 
+
+            #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
+            #     self.popUp(desText=f'No preset name : {preset_name}')
+            #     return
+            df = df.fillna('')
+            df = df.T.to_dict()
+            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+                try:
+                    val0 = df[i]['value0']
+                    val1 = df[i]['value1']
+                    val2 = df[i]['value2']
+                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
+                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
+                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
+                except:
+                    continue
+            self.input_cmd_preset.setText(preset_name)        
+        elif preset_type == "item" :
+            if preset_name == "":                
+                try:
+                    preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+                except:
+                    self.show_statusbar_msg('need to select preset name')
+                    return
+            df = pm.load_preset(f'{preset_type}_{preset_name}')
+            
+            # if pd.isna(df) : 
+            #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
+            #     self.popUp(desText=f'No preset name : {preset_name}')
+            #     return
+            df = df.fillna('')
+            df = df.T.to_dict()
+            for i in range(1,ITEM_SLOT_COUNT):
+                try:
+                    val0 = df[i]['value0']
+                    val1 = df[i]['value1']
+                    getattr(self, f'input_additem_itemid_{i}').setText(str(val0))
+                    getattr(self, f'input_additem_amount_{i}').setText(str(val1))
+                except:
+                    continue
+            getattr(self, f'input_{preset_type}_preset').setText(preset_name)
 
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
@@ -880,39 +1016,11 @@ class WindowClass(QMainWindow, form_class) :
         #ms.Command(cmd)
         self.executeCommand(cmd)
 
-    def applyPresetList(self) :
-        preset_item_list = []
-        preset_cmd_list = []
-
-        directory_path = fr"D:\R2A\data\preset"
-        for filename in os.listdir(directory_path):
-            if filename.startswith("preset_item_") and filename.endswith(".xlsx"):
-                preset_name = filename.replace("preset_item_", "").replace(".xlsx", "")
-                preset_item_list.append(preset_name)
-            elif filename.startswith("preset_cmd_") and filename.endswith(".xlsx"):
-                preset_name = filename.replace("preset_cmd_", "").replace(".xlsx", "")
-                preset_cmd_list.append(preset_name)
-
-        self.comboBox_item_preset.clear()
-        for val in preset_item_list:
-            self.comboBox_item_preset.addItem(val)
-        self.comboBox_cmd_preset.clear()
-        for val in preset_cmd_list:
-            self.comboBox_cmd_preset.addItem(val)
-
-    def addCmdPresetBookmark(self):
-        cur_preset_name = self.comboBox_cmd_preset.currentText()
-        if cur_preset_name == "":
-            print('choose preset first')
-            return
-        target_preset_num = self.spinBox_preset.value()
-        getattr(self, f'btn_cmd_preset_bookmark_{target_preset_num-1}').setText(cur_preset_name)
-
-    def loadCmdPresetByBookmark(self,num:int):
-        preset_name = getattr(self, f'btn_cmd_preset_bookmark_{num}').text()
-        self.load_preset('cmd',preset_name)
-
-
+    def reset_cmd_slot(self):
+        for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+            getattr(self, f'input_custom_cmd_{i}').setText('')
+            getattr(self, f'input_custom_comment_{i}').setText('')
+            getattr(self, f'label_custom_count_{i}').setText('0')
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
 
     '''
@@ -1075,9 +1183,13 @@ class WindowClass(QMainWindow, form_class) :
     #         check_box_dict[i] = temp_val
 
     #     txt_file_list = []
-    def set_check_box_state(self,attr_str,count,state):
-        for i in range(0,count):
-            getattr(self, f'{attr_str}{i}').setCheckState(state)
+    def set_check_box_state(self,attr_str,count,state,start_num = 0):
+        try:
+            for i in range(start_num,count):
+                getattr(self, f'{attr_str}{i}').setCheckState(state)
+        except AttributeError as e:
+            #print(e)
+            return
     #Tab [Command]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     '''
@@ -1161,7 +1273,10 @@ class WindowClass(QMainWindow, form_class) :
 
         self.plainTextEdit_cmd.clear()
         self.plainTextEdit_cmd.insertPlainText(total_text)
-    
+            # 커서를 맨 끝으로 이동
+        cursor = self.plainTextEdit_cmd.textCursor()
+        cursor.movePosition(cursor.End)
+        self.plainTextEdit_cmd.setTextCursor(cursor)
     
     
     
@@ -1180,6 +1295,7 @@ class WindowClass(QMainWindow, form_class) :
             self.comboBox_testCase.addItem(line[0])
             #self.input_testCase_moduleName.setText(line[1])
             #self.input_testCase_funcName.setText(line[2])
+    
     def applyCurrentTestCase(self):
         with open("./data/etc/testCaseList.txt",encoding='UTF-8') as f:
             lines = f.read().splitlines()
@@ -1434,240 +1550,233 @@ class WindowClass(QMainWindow, form_class) :
     Functions - Cache 캐시 (import/export) ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
     '''
 
-    def import_cache(self) :
-        global df_cache
-        try :
-            df_cache = pd.read_csv(f'{cache_path}',encoding='utf-8')
-        except Exception as e: 
+    # def import_cache(self) :
+    #     global df_cache
+    #     try :
+    #         df_cache = pd.read_csv(f'{cache_path}',encoding='utf-8')
+    #     except Exception as e: 
             
-            if not os.path.isdir('./cache'):                                                           
-                os.mkdir('./cache')
-            print(e)
-            return
+    #         if not os.path.isdir('./cache'):                                                           
+    #             os.mkdir('./cache')
+    #         print(e)
+    #         return
 
-        df_cache = df_cache.fillna(0)
-        df_cache = df_cache.set_index('key').T.to_dict()
+    #     df_cache = df_cache.fillna(0)
+    #     df_cache = df_cache.set_index('key').T.to_dict()
 
+    #     try:
+    #         x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
+    #         sas.applyNewAppSize(x,y,w,h)
+    #         self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(ms.appX,ms.appY,ms.appW,ms.appH))
+
+    #     except:
+    #         pass
+
+
+    #     for i in range(0,ITEM_SLOT_COUNT):
+    #         try:
+
+    #             val0 = df_cache[f'item_{i}']['value0']
+    #             val1 = df_cache[f'item_{i}']['value1']
+    #             if val0 != 0 :
+    #                 getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
+    #             if val1 != 0 :
+    #                 getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
+    #         except:
+    #             continue
+
+    #     for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+    #         try:
+
+    #             val0 = df_cache[f'cmd_{i}']['value0']
+    #             val1 = df_cache[f'cmd_{i}']['value1']
+    #             val2 = df_cache[f'cmd_{i}']['value2']
+    #             if val0 != 0 :
+    #                 getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
+    #             if val1 != 0 :
+    #                 getattr(self, f'input_custom_comment_{i}').setText(str(val1))
+    #             if val2 != 0 :
+    #                 getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
+    #         except:
+    #             continue
+
+
+    #     for i in range(0,5):
+    #         try:
+    #             val0 = df_cache[f'cmd_preset_bookmark_{i}']['value0']
+    #             if val0 != 0 :
+    #                 getattr(self, f'btn_cmd_preset_bookmark_{i}').setText(str(val0))
+    #         except:
+    #             continue
+    #     for i in range(0,ITEM_CHECK_BOX_COUNT):
+    #         try:
+
+    #             val0 = df_cache[f'setclass_cmd_{i}']['value0']
+    #             val1 = df_cache[f'setclass_cmd_{i}']['value1']
+    #             if val0 == "True":
+    #                 getattr(self, f'check_setclass_{i}').setCheckState(2)
+    #             if val1 != 0 :
+    #                 getattr(self, f'input_setclass_{i}').setText(str(val1))
+    #         except:
+    #             continue
+
+    #     for i in range(0,DATA_SLOT_COUNT):
+    #         try:
+
+    #             val0 = df_cache[f'findData_{i}']['value0']
+    #             val1 = df_cache[f'findData_{i}']['value1']
+    #             if val0 != 0:
+    #                 getattr(self, f'input_findData_{i}').setText(str(val0))
+    #             if val1 != 0 :
+    #                 getattr(self, f'input_findData_comment_{i}').setText(str(val1))
+    #         except:
+    #             continue
+    
+    def import_cache_all(self):
         try:
-            x,y,w,h = str(df_cache['apppos_default']['value0']).split(',')
-            sas.applyNewAppSize(x,y,w,h)
-            self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(ms.appX,ms.appY,ms.appW,ms.appH))
+            # Load CSV file with tab delimiter and utf-16 encoding
+            df = pd.read_csv(cache_path, sep='\t', encoding='utf-16', index_col='key')
+            all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
 
-        except:
-            pass
+            for widget in all_widgets:
+                object_name = widget.objectName()
+                if object_name in df.index:
+                    value = str(df.loc[object_name, 'value'])
+                    if isinstance(widget, (QLineEdit,QLabel,QPushButton)):
+                        widget.setText(value)
+                    elif isinstance(widget, QComboBox):
+                        # Set selected index based on the value, adjust as needed
+                        index = widget.findText(value)
+                        if index != -1:
+                            widget.setCurrentIndex(index)
+                    elif isinstance(widget, QCheckBox):
+                        widget.setChecked(value.lower() == 'true')
+                    elif isinstance(widget, QPlainTextEdit):
+                        widget.setPlainText(value)
 
-
-        for i in range(0,ITEM_SLOT_COUNT):
-            try:
-
-                val0 = df_cache[f'item_{i}']['value0']
-                val1 = df_cache[f'item_{i}']['value1']
-                if val0 != 0 :
-                    getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
-                if val1 != 0 :
-                    getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
-            except:
-                continue
-
-        for i in range(0,CUSTOM_CMD_SLOT_COUNT):
-            try:
-
-                val0 = df_cache[f'cmd_{i}']['value0']
-                val1 = df_cache[f'cmd_{i}']['value1']
-                val2 = df_cache[f'cmd_{i}']['value2']
-                if val0 != 0 :
-                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
-                if val1 != 0 :
-                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
-                if val2 != 0 :
-                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
-            except:
-                continue
-
-
-        for i in range(0,5):
-            try:
-                val0 = df_cache[f'cmd_preset_bookmark_{i}']['value0']
-                if val0 != 0 :
-                    getattr(self, f'btn_cmd_preset_bookmark_{i}').setText(str(val0))
-            except:
-                continue
-        for i in range(0,ITEM_CHECK_BOX_COUNT):
-            try:
-
-                val0 = df_cache[f'setclass_cmd_{i}']['value0']
-                val1 = df_cache[f'setclass_cmd_{i}']['value1']
-                if val0 == "True":
-                    getattr(self, f'check_setclass_{i}').setCheckState(2)
-                if val1 != 0 :
-                    getattr(self, f'input_setclass_{i}').setText(str(val1))
-            except:
-                continue
-
-        for i in range(0,DATA_SLOT_COUNT):
-            try:
-
-                val0 = df_cache[f'findData_{i}']['value0']
-                val1 = df_cache[f'findData_{i}']['value1']
-                if val0 != 0:
-                    getattr(self, f'input_findData_{i}').setText(str(val0))
-                if val1 != 0 :
-                    getattr(self, f'input_findData_comment_{i}').setText(str(val1))
-            except:
-                continue
+        except Exception as e:
+            print(f"Error importing cache: {e}")
 
     def export_cache_all(self):
+        try:
+            data = {'key': [], 'value': []}
+
+            all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
+
+            for widget in all_widgets:
+                value = ""
+                if isinstance(widget, (QLineEdit,QLabel,QPushButton)) :
+                    value = widget.text()
+                elif isinstance(widget, QComboBox):
+                    value = widget.currentText()
+                elif isinstance(widget, QCheckBox):
+                    value = str(widget.isChecked())
+                elif isinstance(widget, QPlainTextEdit):
+                    value = widget.toPlainText()
+
+                if value != "":
+                    key = widget.objectName()
+                    data['key'].append(key)
+                    data['value'].append(value)
+
+            df = pd.DataFrame(data)
+            df.set_index('key', inplace=True)
+            df.to_csv(cache_path, sep='\t', encoding='utf-16')
+        except Exception as e:
+            print(f"Error exporting cache: {e}")
+        # data = {}
+
+        # for widget in self.findChildren(QLineEdit):
+        #     value = widget.text()
+        #     if value != "":
+        #         key = widget.objectName()
+        #         data[key] = widget.text()
+        #         #print(widget.objectName(), widget.text())
+
+        # df = pd.DataFrame.from_dict(data, orient='index', columns=['value'])
+        # df.index.name = 'key'
+        # df.to_csv(cache_path, sep='\t', encoding='utf-16')
         
-        data = {}
+    # def export_cache(self, isForced = False):
+    #     if not isForced : 
+    #         if not self.check_autoCacheSave.isChecked() :
+    #             return
 
-        for widget in self.findChildren(QLineEdit):
-            value = widget.text()
-            if value != "":
-                key = widget.objectName()
-                data[key] = widget.text()
-                #print(widget.objectName(), widget.text())
+    #     data = {}
 
-        df = pd.DataFrame.from_dict(data, orient='index', columns=['value'])
-        df.index.name = 'key'
-        df.to_csv(cache_path, sep='\t', encoding='utf-16')
-        
-    def export_cache(self, isForced = False):
-        if not isForced : 
-            if not self.check_autoCacheSave.isChecked() :
-                return
-
-        data = {}
-
-        key = f'apppos_default'
-        data[key] = {
-            'value0': '0,0,1469,838',
-        }
+    #     key = f'apppos_default'
+    #     data[key] = {
+    #         'value0': '0,0,1469,838',
+    #     }
 
         
-        for i in range(0,ITEM_SLOT_COUNT):
-            tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
-            tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
+    #     for i in range(0,ITEM_SLOT_COUNT):
+    #         tempVal0 = getattr(self, f'input_additem_itemid_{i}').text()
+    #         tempVal1 = getattr(self, f'input_additem_amount_{i}').text()
             
-            key = f'item_{i}'
-            data[key] = {
-                'value0': tempVal0,
-                'value1': tempVal1
-            }
+    #         key = f'item_{i}'
+    #         data[key] = {
+    #             'value0': tempVal0,
+    #             'value1': tempVal1
+    #         }
 
-        for i in range(0,CUSTOM_CMD_SLOT_COUNT):
-            tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
-            tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
-            tempVal2 = getattr(self, f'label_custom_count_{i}').text()
+    #     for i in range(0,CUSTOM_CMD_SLOT_COUNT):
+    #         tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
+    #         tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
+    #         tempVal2 = getattr(self, f'label_custom_count_{i}').text()
             
-            key = f'cmd_{i}'
-            data[key] = {
-                'value0': tempVal0,
-                'value1': tempVal1,
-                'value2': tempVal2
-            }        
+    #         key = f'cmd_{i}'
+    #         data[key] = {
+    #             'value0': tempVal0,
+    #             'value1': tempVal1,
+    #             'value2': tempVal2
+    #         }        
             
-        for i in range(0,5):
-            tempVal0 = getattr(self, f'btn_cmd_preset_bookmark_{i}').text()
+    #     for i in range(0,5):
+    #         tempVal0 = getattr(self, f'btn_cmd_preset_bookmark_{i}').text()
             
-            key = f'cmd_preset_bookmark_{i}'
-            data[key] = {
-                'value0': tempVal0,
-            }
+    #         key = f'cmd_preset_bookmark_{i}'
+    #         data[key] = {
+    #             'value0': tempVal0,
+    #         }
 
-        for i in range(0,ITEM_CHECK_BOX_COUNT):
-            tempVal0 = getattr(self, f'check_setclass_{i}').isChecked()
-            tempVal1 = getattr(self, f'input_setclass_{i}').text()
+    #     for i in range(0,ITEM_CHECK_BOX_COUNT):
+    #         tempVal0 = getattr(self, f'check_setclass_{i}').isChecked()
+    #         tempVal1 = getattr(self, f'input_setclass_{i}').text()
             
-            key = f'setclass_cmd_{i}'
-            data[key] = {
-                'value0': tempVal0,
-                'value1': tempVal1,
-            }
+    #         key = f'setclass_cmd_{i}'
+    #         data[key] = {
+    #             'value0': tempVal0,
+    #             'value1': tempVal1,
+    #         }
 
-        for i in range(0,DATA_SLOT_COUNT):
-            tempVal0 = getattr(self, f'input_findData_{i}').text()
-            tempVal1 = getattr(self, f'input_findData_comment_{i}').text()
+    #     for i in range(0,DATA_SLOT_COUNT):
+    #         tempVal0 = getattr(self, f'input_findData_{i}').text()
+    #         tempVal1 = getattr(self, f'input_findData_comment_{i}').text()
             
-            key = f'findData_{i}'
-            data[key] = {
-                'value0': tempVal0,
-                'value1': tempVal1,
-            }
+    #         key = f'findData_{i}'
+    #         data[key] = {
+    #             'value0': tempVal0,
+    #             'value1': tempVal1,
+    #         }
 
-        # for i in range(0,3):
-        #     tempVal0 = getattr(self, f'plainText_event_{i}').text()
+    #     # for i in range(0,3):
+    #     #     tempVal0 = getattr(self, f'plainText_event_{i}').text()
             
-        #     key = f'event_{i}'
-        #     data[key] = {
-        #         'value0': tempVal0
-        #     }
+    #     #     key = f'event_{i}'
+    #     #     data[key] = {
+    #     #         'value0': tempVal0
+    #     #     }
         
-        df = pd.DataFrame(data).T
+    #     df = pd.DataFrame(data).T
 
   
-        #df.to_csv(cache_path, index_label='Item')
-        df.to_csv(cache_path, index_label='key',encoding='utf-8')
+    #     #df.to_csv(cache_path, index_label='Item')
+    #     df.to_csv(cache_path, index_label='key',encoding='utf-8')
 
-        print('export data successfully...')
-
-
-
-    def save_preset(self, preset_type : str) :
-        data = {}
-        if preset_type == 'cmd' : 
-
-            preset_name = self.input_cmd_preset.text() 
-            if preset_name == "":
-                print('need to insert preset name')
-                return
+    #     print('export data successfully...')
 
 
-            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
-                tempVal0 = getattr(self, f'input_custom_cmd_{i}').text()
-                tempVal1 = getattr(self, f'input_custom_comment_{i}').text()
-                tempVal2 = getattr(self, f'label_custom_count_{i}').text()
-                
-                key = f'cmd_{i}'
-                data[key] = {
-                    'value0': tempVal0,
-                    'value1': tempVal1,
-                    'value2': tempVal2
-                }
-
-        df = pd.DataFrame(data).T
-        pm.save_preset(f'{preset_type}_{preset_name}', df)
-        self.applyPresetList()
-
-    def load_preset(self, preset_type : str, preset_name = "") :
-
-        if preset_type == "cmd" :
-            if preset_name == "":                
-                try:
-                    preset_name = self.comboBox_cmd_preset.currentText()
-                except:
-                    print('need to select preset name')
-
-                    return
-            
-            df = pm.load_preset(f'{preset_type}_{preset_name}')
-            df = df.fillna('')
-            #df = df.set_index('key').T.to_dict()
-            df = df.T.to_dict()
-            for i in range(0,CUSTOM_CMD_SLOT_COUNT):
-                try:
-
-                    val0 = df[i]['value0']
-                    val1 = df[i]['value1']
-                    val2 = df[i]['value2']
-                    #if val0 != 0 :
-                    getattr(self, f'input_custom_cmd_{i}').setText(str(val0))
-                    #if val1 != 0 :
-                    getattr(self, f'input_custom_comment_{i}').setText(str(val1))
-                    #if val2 != 0 :
-                    getattr(self, f'label_custom_count_{i}').setText(str(int(val2)))
-                except:
-                    continue
-            self.input_cmd_preset.setText(preset_name)
 
     def closeEvent(self,event):
         print("end")
@@ -1675,6 +1784,8 @@ class WindowClass(QMainWindow, form_class) :
         #self.export_cache(isForced= True)
         self.export_cache_all()
 
+    def show_statusbar_msg(self,msg):
+        self.statusbar.showMessage(msg)
     # async def schedules(self):
     #     await print("스케쥴")
     #     self.export_cache()
@@ -1703,15 +1814,7 @@ import re
 import pyperclip as pc
 import traceback
 
-#endregion
-# if __name__ == "__main__":
-#     import sys
-    #app = QtWidgets.QApplication(sys.argv)
-    #MainWindow = MyWindow()#QtWidgets.QMainWindow()
-    #ui = Ui_MainWindow()
-    #ui.setupUi(MainWindow)
-    #MainWindow.show()
-    #sys.exit(app.exec_())
+
 def make_log(msg, log_type : str = 'error', auto_open :bool = False):
     '''
     log_type : str = error / execute

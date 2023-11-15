@@ -2,8 +2,9 @@ Lib/
 Include/
 Scripts/
 pyvenv.cfg
-__pycache__/
+__pycache__/*
 resource/
 upload.log
 pypkg/
 screenshot/
+pkgs/
