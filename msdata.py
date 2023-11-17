@@ -1,5 +1,6 @@
 
 import os
+target_app_pos_txt_file = f'target_app_pos.txt'
 
 #####기본 세팅(폴더생성)
 path_screenshot = "./screenshot"
@@ -31,7 +32,7 @@ from statperlv import StatPerLv
 from setclass import SetClass
 from equipcheck import EquipCheck
 from reincheck import ReinCheck
-from engraveCheck import EngraveCheck
+#from engraveCheck import EngraveCheck
 from dropCheck import DropCheck
 from itemInfoCheck import ItemInfoCheck
 from probTest import ProbTest
@@ -98,6 +99,7 @@ def getBoxPos(x,y,w,h):
 # f.close()
 
 appX, appY, appW, appH = 1,1,1,1
+appX, appY, appW, appH = 0,33,1428,805
 
 #region mouse position
 joyPos=[0.1092,0.805]
@@ -394,6 +396,8 @@ logoutBtn = [0.5868,0.6035]
 
 #캐릭터 선택 창 내 캐릭터 선택
 selectCharacterNameBox = [0.1082*appW+appX,0.0299*appH+appY,0.1223*appW,0.0599*appH]#왼쪽위X,왼쪽위Y,가로,세로
+box_select_character = [0.1134,0.0348,0.1184,0.0584]
+box_webview_x = [0.8917,0.1093,0.0392,0.0609]
 
 #네비게이션
 acceptQuestInNavigation = [0.2593,0.3005]
@@ -452,6 +456,8 @@ quest_get_reward_btn_0 = [0.9244,0.2385]
 quest_category_btn_0 = [0.105,0.2099]
 quest_category_btn_1 = [0.105,0.313]
 quest_category_btn_2 = [0.105,0.4087]
+
+r2a_app_pos = [1.05,-0.02]
 
 #endregion
 
@@ -686,6 +692,14 @@ def captureSomeBox4(ratio_list,resultPath):
                 break
 
     pag.screenshot(resultJPGFileName, region=(ratio_list[0],ratio_list[1],ratio_list[2],ratio_list[3]))
+    return resultJPGFileName
+
+def captureSomeBox5(ratio_list,app_pos):
+    '''2023-11-17'''
+    timestr = time.strftime("%Y%m%d_%H%M%S")
+    resultJPGFileName = f"./screenshot/temp/{timestr}.jpg"
+    xRatio, yRatio, wRatio, hRatio = ratio_list[0],ratio_list[1],ratio_list[2],ratio_list[3]
+    pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
     return resultJPGFileName
 
 def Capture_1(boxName):
@@ -1452,6 +1466,11 @@ def get_recent_file_list(directory):
     #print(list(file_dict.values())[0])
     return file_dict
     
+def get_target_app_pos():
+    with open(target_app_pos_txt_file,'r',encoding='UTF-8') as f:
+        lines = f.readlines()
+        return [int(x) for x in lines[0].strip().split(',')], lines[1].strip()
+        #f.write(self.label_appPos.text())
 
 if __name__ == "__main__" : 
     #get_recent_file_list(os.getcwd())

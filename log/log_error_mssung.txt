@@ -1,0 +1,21 @@
+date=2023-11-17 17:56:39
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1337, in executeTestCase
+    self.openFileWithNoException(self.input_testCase_moduleName.text()+".exe")
+  File "D:\R2A\R2A.py", line 717, in openFileWithNoException
+    os.startfile(filePath)
+FileNotFoundError: [WinError 2] 지정된 파일을 찾을 수 없습니다: 'engrave.exe'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1341, in executeTestCase
+    self.openFileWithNoException(self.input_testCase_moduleName.text()+".py")
+  File "D:\R2A\R2A.py", line 717, in openFileWithNoException
+    os.startfile(filePath)
+FileNotFoundError: [WinError 2] 지정된 파일을 찾을 수 없습니다: 'engrave.py'
+
+
+────────────────────────────────────────

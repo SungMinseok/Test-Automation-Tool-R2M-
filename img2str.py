@@ -1636,12 +1636,13 @@ def getOnlyNumberFromImg(imgName):#숫자만 읽기
     
     #if not data :
     #    data = "0"
+    print(data)
 
     return data
 from PIL import Image
 import pytesseract
 
-def extract_text_from_image(image_file, lang_code):
+def extract_text_from_image(image_file, lang_code = 'kor'):
     try:
         # 이미지 파일을 열기
         image = Image.open(image_file)
@@ -1656,6 +1657,7 @@ def extract_text_from_image(image_file, lang_code):
         extracted_text = pytesseract.image_to_string(image, lang=lang_code, config=custom_config)#chi_tra ,kor
         extracted_text = extracted_text.replace('\n\n','\n')
         # 추출된 텍스트 반환
+        print(extracted_text)
         return extracted_text
 
     except Exception as e:

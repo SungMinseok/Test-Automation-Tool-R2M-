@@ -8,33 +8,33 @@ import time
 import img2str as i2s
 import random
 import string
-
-
-def multicommand():
-    while True : 
-        ms.PrintUB_Bold()
-        print("※멀티 커맨드")
-        ms.PrintUB()      
-        print("[1]Item ID 입력 : +0 ~ +13강 장비 생성\n[2]TXT 파일 실행 : Item ID\n[3]TXT 파일 실행 : 명령어\n[4]Item ID 입력 : 직접 입력")
-        ms.PrintUB()      
-        print("[0]메인메뉴")
-        ms.PrintUB()      
-        num2 = int(ms.InputNum(5))
-        ms.clear()
-        if num2==0:
-            break
-        elif num2 ==1:
-            Command_Additem()
-        elif num2 ==2:
-            Command_Additems_Text()
-        elif num2 ==3:
-            Command_Text()
-        elif num2 ==4:
-            Command_Additems()
-    #elif num2 ==5:
-    #    Command_Direct2()
+#import R2A
+app_pos = [0,33,1428,805]
+# def multicommand():
+#     while True : 
+#         ms.PrintUB_Bold()
+#         print("※멀티 커맨드")
+#         ms.PrintUB()      
+#         print("[1]Item ID 입력 : +0 ~ +13강 장비 생성\n[2]TXT 파일 실행 : Item ID\n[3]TXT 파일 실행 : 명령어\n[4]Item ID 입력 : 직접 입력")
+#         ms.PrintUB()      
+#         print("[0]메인메뉴")
+#         ms.PrintUB()      
+#         num2 = int(ms.InputNum(5))
+#         ms.clear()
+#         if num2==0:
+#             break
+#         elif num2 ==1:
+#             Command_Additem()
+#         elif num2 ==2:
+#             Command_Additems_Text()
+#         elif num2 ==3:
+#             Command_Text()
+#         elif num2 ==4:
+#             Command_Additems()
+#     elif num2 ==5:
+#        Command_Direct2()
     
-    #multicommand()
+#     #multicommand()
 
 
 def Command_Additem():
@@ -855,9 +855,15 @@ def 맨뒤캐릭터접속():
     ms.Move(ms.goCharacterSelectPageBtn)
     ms.sleep(0.01)
     ms.Move(ms.okPos)
-    ms.sleep(0.2)
+    ms.sleep(1)
 
-    ms.sleep(1.5)
+    for i in range(0,4):
+        if '캐릭터 선택' in i2s.extract_text_from_image(ms.captureSomeBox5(ms.box_select_character,app_pos)) :
+            break
+        ms.sleep(1)
+
+        
+
 
     
     ms.Move(ms.characterPageBtn1)
@@ -866,5 +872,143 @@ def 맨뒤캐릭터접속():
 
     ms.Move(ms.characterCreateBtn)
 
-if __name__ == "__main__" : 
-    multicommand()
+def 카드먹기_반복():
+    count = input('반복횟수(마을에서 대기)')
+
+    for i in range(0,int(count)):
+        맨뒤캐릭터접속()
+        ms.sleep(8)
+        for i in range(0,4):
+            if 'x' in i2s.extract_text_from_image(ms.captureSomeBox5(ms.box_webview_x,app_pos),'eng') :
+                break
+            ms.sleep(1)
+        카드먹기_라이브()
+
+
+from PIL import Image, ImageDraw
+import pytesseract
+
+def find_text_coordinates():
+    def visualize_text_boxes(image_path, text_bbox):
+        try:
+            # Open the image
+            with Image.open(image_path) as img:
+                # Create a drawing object
+                draw = ImageDraw.Draw(img)
+
+                # Draw rectangles around each character
+                for bbox in text_bbox.splitlines():
+                    bbox = bbox.split()
+                    left, top, right, bottom = int(bbox[1]), int(bbox[2]), int(bbox[3]), int(bbox[4])
+                    draw.rectangle([left, top, right, bottom], outline="red", width=2)
+
+                # Save or show the image with bounding boxes
+                img.save("visualized_image.jpg")
+                img.show()
+
+        except Exception as e:
+            print(f"Error visualizing text boxes: {e}")
+    # Example: Find the coordinates of the center of '상점' in the image
+    image_path = "screenshot/temp/20231117_145944.jpg"
+    target_text = input('target_text : ')
+    try:
+        # Open the image
+        with Image.open(image_path) as img:
+            # Use pytesseract to extract text
+            extracted_text = i2s.extract_text_from_image(image_path,'kor+eng')#pytesseract.image_to_string(img, lang='kor')
+
+            # Find the position of the target text
+            target_position = extracted_text.find(target_text)
+
+            if target_position != -1:
+                # If the target text is found, get the bounding box of the text
+                text_bbox = pytesseract.image_to_boxes(img, lang='kor+eng')
+                target_bbox = [bbox.split() for bbox in text_bbox.splitlines() if target_text in bbox]
+
+                if target_bbox:                    
+                    visualize_text_boxes(image_path, text_bbox)
+                    # Calculate the center coordinates of the target text
+                    center_x = (int(target_bbox[0][1]) + int(target_bbox[0][3])) // 2
+                    center_y = (int(target_bbox[0][2]) + int(target_bbox[0][4])) // 2
+                    print(center_x,center_y)
+                    return center_x, center_y
+                else:
+                    print(f"Bounding box not found for the target text: {target_text}")
+            else:
+                print(f"Target text not found: {target_text}")
+
+    except Exception as e:
+        print(f"Error processing the image: {e}")
+
+    return None
+
+#coordinates = find_text_coordinates(image_path, target_text)
+
+    if coordinates:
+        print(f"Center coordinates of '{target_text}': {coordinates}")
+    else:
+        print(f"Failed to find '{target_text}' in the image.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import inspect
+
+def display_menu():
+    functions = [func for func in globals() if callable(globals()[func]) and inspect.isfunction(globals()[func])]
+
+    print("Menu:")
+    for i, func_name in enumerate(functions, start=1):
+        print(f"[{i}] {func_name}")
+
+def execute_function_by_index(index):
+    functions = [func for func in globals() if callable(globals()[func]) and inspect.isfunction(globals()[func])]
+
+    if 1 <= index <= len(functions):
+        selected_func_name = functions[index - 1]
+        selected_func = globals()[selected_func_name]
+        selected_func()
+    else:
+        print("Invalid index. Please select a valid option.")
+        
+if __name__ == "__main__":
+    #import R2A
+    #app_pos = R2A.app_pos_by_r2a
+    app_pos, app_type = ms.get_target_app_pos()
+    print(app_pos, app_type)
+    ms.appX, ms.appY, ms.appW, ms.appH = app_pos[0],app_pos[1],app_pos[2],app_pos[3]
+    ms.플레이어변경(app_type)
+
+    while True:
+        display_menu()
+        user_input = input("Enter the index of the function to execute (or 'q' to quit): ")
+
+        if user_input.lower() == 'q':
+            break
+
+        try:
+            index = int(user_input)
+            execute_function_by_index(index)
+        except ValueError:
+            print("Invalid input. Please enter a number.")

@@ -3,6 +3,8 @@ CUSTOM_CMD_SLOT_COUNT = 20
 ITEM_CHECK_BOX_COUNT = 26
 DATA_SLOT_COUNT = 12 
 app_type = 0
+target_app_pos_txt_file = f'target_app_pos.txt'
+#app_pos_by_r2a = []
 import PresetManager as pm
 import xlrd
 #currentAppName = ""
@@ -18,6 +20,9 @@ if not os.path.isdir(path_resource):
 log_folder = "./log"
 if not os.path.isdir(log_folder):                                                           
     os.mkdir(log_folder)
+cache_folder = "./cache"
+if not os.path.isdir(cache_folder):                                                           
+    os.mkdir(cache_folder)
 
 
 from enum import Enum
@@ -71,6 +76,9 @@ class WindowClass(QMainWindow, form_class) :
         self.auto_cache_save_timer.timeout.connect(self.export_cache_all)
         self.auto_cache_save_timer.start(300000)  # 300000 밀리초 = 5분
 
+        # self.unlock_screen_timer = QTimer(self)#check_autoCacheSave
+        # self.unlock_screen_timer.timeout.connect(lambda : ms.Click(ms.r2a_app_pos))
+        # self.unlock_screen_timer.start(5000)  # 300000 밀리초 = 5분
 
 #region Main UI
         file_dict = ms.get_recent_file_list(os.getcwd())
@@ -210,10 +218,6 @@ class WindowClass(QMainWindow, form_class) :
 
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         
-        # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
-        #self.import_cache()
-        self.import_cache_all()
-        #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
   
        
         #창 불러오기■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
@@ -230,6 +234,16 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
 
+        # Cache파일 로드 (Load Cache)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+        #self.import_cache()
+        self.import_cache_all()
+        self.set_target_app_size()
+        플레이어변경(self.comboBox_apptype.currentText())
+        self.applyNewAppNameList()
+        '''any_widget : [QLineEdit,'input_00']'''
+        self.import_cache_all([QComboBox,'comboBox_appNameList'])
+       # print(app_pos_by_r2a)
+        #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
 
         self.applyHistory("item")
@@ -448,8 +462,17 @@ class WindowClass(QMainWindow, form_class) :
 #endregion
 
     #[App Window]▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
-    def getCurrentAppSize():
-        print()
+    def getCurrentAppSize(self):
+        #print()
+        #cur_pos = self.label_appPos.text().split(',')
+        label_app_pos = [int(x) for x in self.label_appPos.text().split(',')]
+
+        return label_app_pos
+    def set_target_app_size(self):
+        with open(target_app_pos_txt_file,'w',encoding='UTF-8') as f:
+            f.write(self.label_appPos.text())
+            f.write('\n')
+            f.write(self.comboBox_apptype.currentText())
 
     def alignCurrentAppPos():
         print()
@@ -482,7 +505,8 @@ class WindowClass(QMainWindow, form_class) :
             return
         
         x,y,w,h = sas.applyNewAppSize(a.left,a.top,a.right,a.bottom)
-        self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(x,y,w,h))
+        #self.label_appPos.setText("현재 앱 좌표(x,y,w,h) : {0}, {1}, {2}, {3}".format(x,y,w,h))
+        self.label_appPos.setText(f'{x},{y},{w},{h}')
 
     def setCurrentAppTop(self):
         currentAppName = self.comboBox_appNameList.currentText()
@@ -1632,11 +1656,17 @@ class WindowClass(QMainWindow, form_class) :
     #         except:
     #             continue
     
-    def import_cache_all(self):
+    def import_cache_all(self,any_widget = None):
+        '''any_widget : [QLineEdit,'input_00']'''
+
         try:
             # Load CSV file with tab delimiter and utf-16 encoding
             df = pd.read_csv(cache_path, sep='\t', encoding='utf-16', index_col='key')
-            all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
+            if any_widget == None :
+                all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
+            else:
+                all_widgets = [self.findChild(any_widget[0] ,any_widget[1])]
+            #all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
 
             for widget in all_widgets:
                 object_name = widget.objectName()
@@ -1665,8 +1695,13 @@ class WindowClass(QMainWindow, form_class) :
 
             for widget in all_widgets:
                 value = ""
-                if isinstance(widget, (QLineEdit,QLabel,QPushButton)) :
+                if isinstance(widget, (QLineEdit,QLabel)) :
                     value = widget.text()
+                elif isinstance(widget, (QPushButton)) :
+                    if 'preset_bookmark' in widget.objectName() : 
+                        value = widget.text()
+                    else : 
+                        continue
                 elif isinstance(widget, QComboBox):
                     value = widget.currentText()
                 elif isinstance(widget, QCheckBox):
@@ -1815,7 +1850,7 @@ import pyperclip as pc
 import traceback
 
 
-def make_log(msg, log_type : str = 'error', auto_open :bool = False):
+def make_log(msg, log_type : str = 'error', auto_open :bool = False, auto_upload :bool = True):
     '''
     log_type : str = error / execute
     '''
@@ -1823,13 +1858,13 @@ def make_log(msg, log_type : str = 'error', auto_open :bool = False):
 
     
     user_name = os.getlogin()
-    log_file = fr".\log\log_{log_type}.txt"
+    log_file = fr".\log\log_{log_type}_{user_name}.txt"
     
     # Check if the log file exists
     if not os.path.exists(log_file):
         with open(log_file, "w"):
             pass  # Create the file if it doesn't exist
-    with open(log_file, "r") as file:
+    with open(log_file, "r") as file:        
         existing_logs = file.read()
 
     with open(log_file, "w") as file:
@@ -1843,6 +1878,8 @@ user={user_name}\n\n\
     #print(f'생성실패 : {e}')
     if auto_open :
         os.startfile(log_file)
+    if auto_upload :
+        os.startfile(os.path.join(log_folder,'upload_log.bat'))
 
 class ExceptionHandler:
     def __init__(self, original_hook):
