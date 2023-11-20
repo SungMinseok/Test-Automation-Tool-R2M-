@@ -1,21 +1,275 @@
-date=2023-11-17 17:56:39
+date=2023-11-20 16:38:47
 user=mssung
 
 Traceback (most recent call last):
-  File "D:\R2A\R2A.py", line 1337, in executeTestCase
+  File "D:\R2A\R2A.py", line 361, in <lambda>
+    self.btn_item_preset_3.clicked.connect(lambda : self.delete_preset("item"))
+  File "D:\R2A\R2A.py", line 916, in delete_preset
+    os.remove(directory_path)
+FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'D:\\R2A\\data\\preset\\preset_item_ehs.xlsx'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 16:29:36
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 328, in <lambda>
+    self.comboBox_item_preset.currentTextChanged.connect(lambda : self.load_preset('item'))
+  File "D:\R2A\R2A.py", line 1003, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 16:13:10
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 341, in <lambda>
+    self.comboBox_item_preset.currentTextChanged.connect(lambda : self.load_preset('item'))
+  File "D:\R2A\R2A.py", line 1016, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 15:05:34
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 362, in <lambda>
+    self.comboBox_cmd_preset.currentTextChanged.connect(lambda : self.load_preset('cmd'))
+  File "D:\R2A\R2A.py", line 990, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 14:57:12
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 362, in <lambda>
+    self.comboBox_cmd_preset.currentTextChanged.connect(lambda : self.load_preset('cmd'))
+  File "D:\R2A\R2A.py", line 990, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 14:57:12
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 341, in <lambda>
+    self.comboBox_item_preset.currentTextChanged.connect(lambda : self.load_preset('item'))
+  File "D:\R2A\R2A.py", line 1016, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 14:52:15
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 374, in <lambda>
+    self.btn_item_preset_3.clicked.connect(lambda : self.delete_preset("item"))
+  File "D:\R2A\R2A.py", line 929, in delete_preset
+    os.remove(directory_path)
+FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'D:\\R2A\\data\\preset\\preset_item_ehs.xlsx'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 10:37:07
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 484, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 10:37:05
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 484, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 10:37:05
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 484, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 10:37:04
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 484, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-20 10:37:01
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 484, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 16:19:12
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 481, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 15:33:29
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 258, in <lambda>
+    self.comboBox_apptype.currentTextChanged.connect(lambda : Ы溯檜橫滲唳(self.comboBox_apptype.currentText()))
+NameError: name 'Ы溯檜橫滲唳' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 15:33:28
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 258, in <lambda>
+    self.comboBox_apptype.currentTextChanged.connect(lambda : Ы溯檜橫滲唳(self.comboBox_apptype.currentText()))
+NameError: name 'Ы溯檜橫滲唳' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 14:05:35
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1320, in executeTestCase
     self.openFileWithNoException(self.input_testCase_moduleName.text()+".exe")
-  File "D:\R2A\R2A.py", line 717, in openFileWithNoException
+  File "D:\R2A\R2A.py", line 700, in openFileWithNoException
     os.startfile(filePath)
-FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'engrave.exe'
+FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'multicommand.py.exe'
 
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "D:\R2A\R2A.py", line 1341, in executeTestCase
+  File "D:\R2A\R2A.py", line 1324, in executeTestCase
     self.openFileWithNoException(self.input_testCase_moduleName.text()+".py")
-  File "D:\R2A\R2A.py", line 717, in openFileWithNoException
+  File "D:\R2A\R2A.py", line 700, in openFileWithNoException
     os.startfile(filePath)
-FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'engrave.py'
+FileNotFoundError: [WinError 2] 雖薑脹 だ橾擊 瓊擊 熱 橈蝗棲棻: 'multicommand.py.py'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:54:56
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:54:54
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:54:54
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:54:53
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:54:51
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:53:32
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:52:47
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:52:41
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 464, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-17 10:49:35
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 461, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
 
 
 式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式

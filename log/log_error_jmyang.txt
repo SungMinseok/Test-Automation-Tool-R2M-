@@ -1,0 +1,15 @@
+date=2023-11-16 18:55:38
+user=jmyang
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1362, in takePicture
+    self.input_screenShot_fileName.setText(ms.captureSomeBox3(
+                                           ^^^^^^^^^^^^^^^^^^^
+  File "D:\R2A\msdata.py", line 665, in captureSomeBox3
+    pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
+  File "C:\Python311\Lib\site-packages\pyscreeze\__init__.py", line 541, in _screenshot_win32
+    assert isinstance(region[0], int) and isinstance(region[1], int) and isinstance(region[2], int) and isinstance(region[3], int), 'region argument must be a tuple of four ints'
+AssertionError: region argument must be a tuple of four ints
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式

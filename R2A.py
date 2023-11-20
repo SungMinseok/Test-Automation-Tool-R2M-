@@ -4,6 +4,9 @@ ITEM_CHECK_BOX_COUNT = 26
 DATA_SLOT_COUNT = 12 
 app_type = 0
 target_app_pos_txt_file = f'target_app_pos.txt'
+import os
+user_name = os.getlogin()
+
 #app_pos_by_r2a = []
 import PresetManager as pm
 import xlrd
@@ -97,30 +100,18 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_customCmd_16.clicked.connect(multi.서드파티창)
 
         '''메뉴탭■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
-        self.menu_patchnote.triggered.connect(lambda : self.파일열기("패치노트_R2A.txt"))
+        self.menu_patchnote.triggered.connect(lambda : self.파일열기("release_note_R2A.xlsx"))
+        self.actionLog.triggered.connect(lambda : self.파일열기(fr"log\log_error_{user_name}.txt"))
 
-        # for i in range(0, 20):
-        #     shortcut = QShortcut(Qt.Key_F1 + i, self)
-        #     shortcut.activated.connect(getattr(self, f'btn_additem_execute_{i}').click)
-        # for i in range(0, 12):
-        #     shortcut = QShortcut(Qt.Key_F1 + i, self)
-        #     shortcut.activated.connect(getattr(self, f'btn_custom_execute_{i}').click)
         '''단축키■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
 
-        # for i in range(0, 12):
-        #     button_name = f'btn_additem_execute_{i}'
-        #     if hasattr(self, button_name):
-        #         shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
-        #         button = getattr(self, button_name)
-        #         shortcut.activated.connect(lambda : self.button.click)
-
-        for i in range(0, ITEM_SLOT_COUNT):
+        for i in range(1, ITEM_SLOT_COUNT):
             button_name = f'btn_additem_execute_{i}'
             if hasattr(self, button_name):
                 #shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
                 button = getattr(self, button_name)
-                if i <= 11 :
-                    button.setText(f"생성 F{i+1}")
+                if i <= 12 :
+                    button.setText(f"생성 F{i}")
                 else : 
                     button.setText(f"생성")
 
@@ -344,7 +335,7 @@ class WindowClass(QMainWindow, form_class) :
         for i in range(0,5) :
             getattr(self, f'btn_item_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.load_preset_by_bookmark(x, 'item'))
         self.btn_item_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_preset_path.text(),\
-                                                                              f'preset_item_{self.comboBox_item_preset.currentText()}.xlsx')))
+                                                                              f'preset_item_{self.comboBox_item_preset.currentText()}.csv')))
         self.btn_item_preset_1.clicked.connect(lambda : self.파일열기(self.input_preset_path.text()))
         
         '''
@@ -727,7 +718,7 @@ class WindowClass(QMainWindow, form_class) :
         #print(itemName)
             getattr(self, f'input_additem_itemName_{slotNum}').setText(itemName)
         except :
-            print(f"no item ID : {itemID}")
+            #print(f"no item ID : {itemID}")
             try:
                 getattr(self, f'input_additem_itemName_{slotNum}').setText("no name")
             except:
@@ -850,7 +841,7 @@ class WindowClass(QMainWindow, form_class) :
             # QLabel 위젯에 이미지 설정
             getattr(self, f'item_img_{slot_num}').setPixmap(pixmap)
         except Exception as e :
-            print(e)
+            #print(e)
             empty_pixmap = QPixmap(1, 1)  # Create a QPixmap object with width and height of 1 pixel
             empty_pixmap.fill(QColor(0, 0, 0, 0))  # Fill the QPixmap with a transparent color
             getattr(self, f'item_img_{slot_num}').setPixmap(empty_pixmap)
@@ -925,9 +916,16 @@ class WindowClass(QMainWindow, form_class) :
 
         preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
         directory_path = os.path.join(os.getcwd(),self.input_preset_path.text(),
-                                      f'preset_{preset_type}_{preset_name}.xlsx')
-        os.remove(directory_path)
-        self.applyPresetList()
+                                      f'preset_{preset_type}_{preset_name}.csv')
+        
+        if self.popup2(f'Do you really want to delete preset : {preset_name}?') == QtWidgets.QMessageBox.Ok :
+
+        
+            os.remove(directory_path)
+            self.applyPresetList()
+        
+        else :
+            QStyleHintReturnVariant
 
         
     def save_preset(self, preset_type : str) :
@@ -973,22 +971,34 @@ class WindowClass(QMainWindow, form_class) :
 
     def load_preset(self, preset_type : str, preset_name = "") :
 
-        if preset_type == "cmd" :
+        if preset_name == "":                
+            #try:
+            preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
             if preset_name == "":                
-                try:
-                    preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
-                except:
-                    self.show_statusbar_msg('need to select preset name')
-                    return
+            #except:
+                self.show_statusbar_msg('need to select preset name')
+                return
+        
+        df = pm.load_preset(f'{preset_type}_{preset_name}')            
+        df = df.fillna('')
+        df = df.T.to_dict()
+        if preset_type == "cmd" :
+            # if preset_name == "":                
+            #     #try:
+            #     preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+            #     if preset_name == "":                
+            #     #except:
+            #         self.show_statusbar_msg('need to select preset name')
+            #         return
             
-            df = pm.load_preset(f'{preset_type}_{preset_name}')            
-            # if pd.isna(df) : 
+            # df = pm.load_preset(f'{preset_type}_{preset_name}')            
+            # # if pd.isna(df) : 
 
-            #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
-            #     self.popUp(desText=f'No preset name : {preset_name}')
-            #     return
-            df = df.fillna('')
-            df = df.T.to_dict()
+            # #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
+            # #     self.popUp(desText=f'No preset name : {preset_name}')
+            # #     return
+            # df = df.fillna('')
+            # df = df.T.to_dict()
             for i in range(0,CUSTOM_CMD_SLOT_COUNT):
                 try:
                     val0 = df[i]['value0']
@@ -1001,28 +1011,34 @@ class WindowClass(QMainWindow, form_class) :
                     continue
             self.input_cmd_preset.setText(preset_name)        
         elif preset_type == "item" :
-            if preset_name == "":                
-                try:
-                    preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
-                except:
-                    self.show_statusbar_msg('need to select preset name')
-                    return
-            df = pm.load_preset(f'{preset_type}_{preset_name}')
+            # if preset_name == "":                
+            #     #try:
+            #     preset_name = getattr(self, f'comboBox_{preset_type}_preset').currentText()
+            #     if preset_name == "":                
+            #     #except:
+            #         self.show_statusbar_msg('need to select preset name')
+            #         return
+            # df = pm.load_preset(f'{preset_type}_{preset_name}')
             
-            # if pd.isna(df) : 
-            #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
-            #     self.popUp(desText=f'No preset name : {preset_name}')
-            #     return
-            df = df.fillna('')
-            df = df.T.to_dict()
+            # # if pd.isna(df) : 
+            # #     #self.show_statusbar_msg(f'No preset name : {preset_name}')
+            # #     self.popUp(desText=f'No preset name : {preset_name}')
+            # #     return
+            # df = df.fillna('')
+            # df = df.T.to_dict()
             for i in range(1,ITEM_SLOT_COUNT):
                 try:
-                    val0 = df[i]['value0']
-                    val1 = df[i]['value1']
-                    getattr(self, f'input_additem_itemid_{i}').setText(str(val0))
-                    getattr(self, f'input_additem_amount_{i}').setText(str(val1))
-                except:
-                    continue
+                    val0 = df[i-1]['value0']
+                    val1 = df[i-1]['value1']
+                    getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
+                    getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
+                except Exception as e:
+                    #print(e)
+                    
+                    getattr(self, f'input_additem_itemid_{i}').setText('')
+                    getattr(self, f'input_additem_amount_{i}').setText('')
+                
+                    #continue
             getattr(self, f'input_{preset_type}_preset').setText(preset_name)
 
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -1478,7 +1494,6 @@ class WindowClass(QMainWindow, form_class) :
         msg = QtWidgets.QMessageBox()  
         msg.setGeometry(1520,28,400,2000)
 
-        #msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
         if type == "report" :
@@ -1487,8 +1502,7 @@ class WindowClass(QMainWindow, form_class) :
             
         if type == "searchItem" :
             msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-            #msg.buttonClicked.connect(self.messageBoxButton,desText)
-        #msg.setIcon(QtWidgets.QMessageBox.Information)
+            #msg.buttonClicked.connect(self.messageBoxBut
         msg.setWindowTitle(titleText)
 
         if type == "searchItem" :
@@ -1501,6 +1515,18 @@ class WindowClass(QMainWindow, form_class) :
         if type == "searchItem" :
             if x == QtWidgets.QMessageBox.Ok and desText.isnumeric():
                 multi.autoAddItem(desText,"1")
+
+        return x
+    
+    def popup2(self, des_text = ""):
+
+        msg = QtWidgets.QMessageBox()  
+        msg.setGeometry(1520,28,400,2000)
+        msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        msg.setText(des_text)
+
+        return msg.exec_()
       
         #elif type == "question" :
     # def messageBoxButton(self, i, desText):
@@ -1857,7 +1883,6 @@ def make_log(msg, log_type : str = 'error', auto_open :bool = False, auto_upload
 
 
     
-    user_name = os.getlogin()
     log_file = fr".\log\log_{log_type}_{user_name}.txt"
     
     # Check if the log file exists

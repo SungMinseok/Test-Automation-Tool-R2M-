@@ -1,3 +1,13 @@
+date=2023-11-17 10:45:08
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 461, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
 date=2023-11-15 17:42:00
 user=mssung
 

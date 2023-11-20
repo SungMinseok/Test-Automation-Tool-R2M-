@@ -770,7 +770,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -1558,7 +1558,7 @@ color: rgb(255, 255, 255);
 font: bold</string>
                </property>
                <property name="text">
-                <string>즐찾추가</string>
+                <string>즐찾등록</string>
                </property>
                <property name="shortcut">
                 <string>Ctrl+C</string>
@@ -2084,13 +2084,13 @@ font: bold</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>150</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>333</width>
               <height>999</height>
              </size>
             </property>
@@ -2148,13 +2148,13 @@ font: bold</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>35</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>65</width>
               <height>16777215</height>
              </size>
             </property>
@@ -2193,13 +2193,13 @@ font: bold</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>35</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>65</width>
               <height>16777215</height>
              </size>
             </property>
@@ -2238,13 +2238,13 @@ font: bold</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>35</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>65</width>
               <height>16777215</height>
              </size>
             </property>
@@ -2283,13 +2283,13 @@ font: bold</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>35</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>65</width>
               <height>16777215</height>
              </size>
             </property>
@@ -6252,7 +6252,7 @@ color: rgb(255, 255, 255);
 font: bold</string>
                </property>
                <property name="text">
-                <string>즐찾추가</string>
+                <string>즐찾등록</string>
                </property>
                <property name="shortcut">
                 <string>Ctrl+C</string>
@@ -7056,7 +7056,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -7220,7 +7220,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -7384,7 +7384,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -7563,7 +7563,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -7727,7 +7727,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -7891,7 +7891,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8055,7 +8055,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8219,7 +8219,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8383,7 +8383,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8547,7 +8547,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8711,7 +8711,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -8875,7 +8875,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9039,7 +9039,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9200,7 +9200,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9361,7 +9361,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9522,7 +9522,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9683,7 +9683,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -9844,7 +9844,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -10005,7 +10005,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -10166,7 +10166,7 @@ text-align: center;</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
+              <width>50</width>
               <height>16777215</height>
              </size>
             </property>
@@ -16202,7 +16202,7 @@ font : bold</string>
              <string>0</string>
             </property>
             <property name="readOnly">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="placeholderText">
              <string>x:ratio</string>
@@ -16233,7 +16233,7 @@ font : bold</string>
              <string>0</string>
             </property>
             <property name="readOnly">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="placeholderText">
              <string>y:ratio</string>
@@ -16264,7 +16264,7 @@ font : bold</string>
              <string>0</string>
             </property>
             <property name="readOnly">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="placeholderText">
              <string>w:ratio</string>
@@ -16295,7 +16295,7 @@ font : bold</string>
              <string>0</string>
             </property>
             <property name="readOnly">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="placeholderText">
              <string>h:ratio</string>
@@ -20870,10 +20870,34 @@ font: bold</string>
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>현재 앱 좌표(x,y,w,h) : 0 , 0 , 0 , 0</string>
+         <string>0 , 0 , 0 , 0</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="check_unlockscreen">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>맑은 고딕</family>
+         </font>
+        </property>
+        <property name="text">
+         <string>화면잠금 방지</string>
         </property>
        </widget>
       </item>
@@ -21203,16 +21227,10 @@ font: bold</string>
     <property name="title">
      <string>메뉴</string>
     </property>
-    <widget class="QMenu" name="menu_2">
-     <property name="title">
-      <string>색</string>
-     </property>
-     <addaction name="actionttt"/>
-    </widget>
-    <addaction name="menu_2"/>
     <addaction name="menu_about"/>
     <addaction name="separator"/>
     <addaction name="menu_patchnote"/>
+    <addaction name="actionLog"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -21235,6 +21253,11 @@ font: bold</string>
   <action name="menu_patchnote">
    <property name="text">
     <string>패치노트</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="text">
+    <string>Log</string>
    </property>
   </action>
  </widget>
