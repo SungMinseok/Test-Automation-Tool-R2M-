@@ -8,6 +8,8 @@ import time
 import mergeImg
 import pandas
 import img2str as i2s
+from datetime import datetime
+import re
 #import img2
 
 
@@ -336,13 +338,18 @@ def EquipCheck4():
     
     loopCount = 1
     resultTxtFileName = f'{path}/equipCheckResult_{time.strftime("_%y%m%d_%H%M%S")}.txt'
+    output_file_name = f'{path}/EquipCheck_Result{time.strftime("_%y%m%d_%H%M%S")}.xlsx'
     merge_path = fr'{path}\merge_{time.strftime("%y%m%d_%H%M%S")}'
         
     if not os.path.isdir(merge_path):                                                           
         os.mkdir(merge_path)   
-    
+
+    #print(f"3초 후 시작합니다...")
+    #ms.sleep(3)
+    how_time = 44 * len(lines)
+    start_time = datetime.now()
+    print(f"총 예상 소요 시간 : {ms.GetElapsedTime(how_time)}\n총 예상 종료 시각 : {ms.GetElapsedTime(how_time)}")
     for itemNum in lines:
-        print("실행 중... (예상 소요 시간 : 알 수 없음)")
         print(str(loopCount) + "/" + str(len(lines)))
 
         totalList = [str]
@@ -365,33 +372,66 @@ def EquipCheck4():
         curItemID = 0
 
         for i in range(0,14):
+            data = []
             curItemID = int(itemNum) + i
             ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
             ms.Move(ms.invenBtnDown2)
             sleep(1.3)
             targetStr = i2s.getNumbersInColumnFromImg_0(ms.captureSomeBox("equipStatAmountBox")).strip()
-            print(targetStr)
-            finalStr = f"{format_stats_ingame(targetStr,curItemID)}"
-            print(finalStr)
-            ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_0")
-            
-            ms.Move(ms.invenExitBtn)
-            #print(f'{equipStatNameList=}')
-            #print(f'{equipStatAmountList=}')
-            # tempStr = ""
-            # for i in range(0,len(equipStatAmountList)) :
-            #     tempStr += (f'{equipStatNameList[i]}{equipStatAmountList[i]}/')
-            
-            # tempStr = tempStr.replace('력','')
-            # tempStr = tempStr.replace(' ','')
-            #totalList.append(tempStr)
-            #totalList.append("\n")
-            
+            stat_amount_str = f"{format_stats_ingame(targetStr,curItemID)}"
+            stat_amount_list = stat_amount_str.strip().split('/')
+            stat_count = len(stat_amount_list)#스탯개수
 
-            with open(resultTxtFileName,'a',encoding='utf-8') as f:
-                #f.write('\n'.join(finalStr))    
-                f.write(finalStr)    
-        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path)
+            allStatNameStr = i2s.getStringFromImg2(ms.captureSomeBox("equipStatNameBox"), 'kor+eng').strip()
+            #allStatNameStr = allStatNameStr.replace('\n','/')
+            tempList = allStatNameStr.split('\n')
+            normal_stat_name_list = []
+            special_stat_type_list = [] #슬레인/프로텍트 타입명
+            special_stat_name_list = [] #슬레인/프로텍트 타입명
+            special_stat_check = 0 #1로 바꾸면 그때부터 슬레인/프로텍트 능력치
+            for statName in tempList :
+
+                tempName = re.sub(r'[\d@]', ' ', statName).strip()
+
+                tempName = change_stat_name(tempName)
+                if tempName.endswith('인') or tempName.endswith('트'):
+                    special_stat_type_list.append(tempName)
+                    special_stat_check = 1
+                elif special_stat_check == 0 :
+                    if '최소' in tempName :
+                        continue
+                    else:
+                        normal_stat_name_list.append(tempName)
+                elif special_stat_check == 1 :
+                    special_stat_name_list.append(tempName)
+
+            normal_stat_count = len(normal_stat_name_list)
+            normal_stat_list = []
+            special_stat_list = []
+
+            for j in range(0,stat_count):
+                if j < normal_stat_count :
+                    normal_stat_list.append(f'{normal_stat_name_list[j]}{stat_amount_list[j]}')
+                else:
+                    special_stat_list.append(f'{special_stat_name_list[j-normal_stat_count]}{stat_amount_list[j]}')
+
+
+            
+            ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_0")
+            ms.Move(ms.invenExitBtn)
+
+
+            data = [[str(curItemID),'/'.join(normal_stat_list),'/'.join(special_stat_list),'/'.join(special_stat_type_list),stat_amount_str]]
+            columns=['ID','normal_stat','special_stat','special_type','only_amount']
+            result_df = pandas.DataFrame(data,columns=columns)
+            ms.save_df_to_excel(output_file_name,result_df,autoOpen=False)
+
+            # with open(resultTxtFileName,'a',encoding='utf-8') as f:
+            #     #f.write('\n'.join(finalStr))    
+            #     f.write(finalStr)   
+            # 
+        equipType = 1 if curItemID < 400000 else 2 
+        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path,isSolo=True)
             
         #mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)
 
@@ -402,6 +442,7 @@ def EquipCheck4():
 
         #print("스샷 경로 : "+extraPath)
         loopCount = loopCount +1
+    print(f"총 실제 소요 시간 : {ms.GetConsumedTime(start_time)}")
 
 #장신구 : 50초, 무기  : 64초
 def format_stats_ingame(input_str : str,itemID : int):
@@ -448,7 +489,9 @@ def format_stats_ingame(input_str : str,itemID : int):
                 if not value[0].isdigit() and not '%' in line:
                     continue
                 if '%' in value :
-                    total = value.replace('%','')
+                    total = value.replace('.00%','')
+                    total = total.replace('0%','')
+                    total = total.replace('%','')
                 else:
                     total = value
             except :
@@ -457,7 +500,25 @@ def format_stats_ingame(input_str : str,itemID : int):
         if total != 0 :
             result_list.append(total)
     
-    return f'{itemID}/' + '/'.join(str(x) for x in result_list) + "\n"
+    #return f'{itemID}/' + '/'.join(str(x) for x in result_list) + "\n"
+    return '/'.join(str(x) for x in result_list) + "\n"
+
+def change_stat_name(stat_name):
+    substitutions = {
+        ' ':'',
+        '몰': '물',
+        '물리공격력(최대)': '물리공격',
+        '공격속도': '공속',
+        '명중력': '명중',
+        '공격력': '공격',
+        '원거리':'원',
+        '근접':'근',
+        # Add more substitutions as needed
+    }
+
+    for original, replacement in substitutions.items():
+        stat_name = stat_name.replace(original, replacement)
+    return stat_name
 
 if __name__ == "__main__" : 
     EquipCheck4()

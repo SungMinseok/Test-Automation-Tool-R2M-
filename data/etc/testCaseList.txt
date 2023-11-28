@@ -3,6 +3,7 @@
 장비수치확인,equipcheck
 분해테스트,resolution
 드롭 확률 테스트,dropCheck
+멀티커맨드,multicommand
 레벨/스탯확인
 임의의 캐릭터 생성
 튜토리얼 자동 진행(비명령어)

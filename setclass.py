@@ -472,6 +472,8 @@ def 캐릭터아이템모음생성(class_name,txt_list) :
         temp_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
         temp_1 = os.path.join(defaultDirectory,f'{txt_name}_{class_name}.txt')
         #file_name_0 = os.path.join(defaultDirectory,f'{txt_name}.txt')
+        
+        #텍스트 파일 존재 여부 체크
         if not os.path.isfile(temp_1) : 
             file_name = temp_0    
             if not os.path.isfile(temp_0) : 
@@ -485,21 +487,27 @@ def 캐릭터아이템모음생성(class_name,txt_list) :
         f.close()
 
         if '명령어' in file_name :
-
             for line in lines:
                 ms.Command(line)
-
         else:
-
             temp_0 = "additems"
             temp_1 = ""
+            material_list = [] # 매터리얼용
             for line in lines:
+                #7000번대 매터리얼 id일 경우, 별도로 뺌
+                if int(line) >= 7000 and int(line) < 8000 :
+                    material_list.append(line)
+                    continue
                 temp_1 += f' {str(int(line))}'
 
-            cmd = f'{temp_0}{temp_1}'
-            #print(cmd)
-            delay_time = len(lines) / 10
-            ms.Command(cmd,delay_time)
+            if temp_1 != "":
+                cmd = f'{temp_0}{temp_1}'
+                delay_time = len(lines) / 10
+                ms.Command(cmd,delay_time)
+
+            if len(material_list) != 0 :
+                for material in material_list :
+                    ms.Command(f'addmaterial {material} 1')
 
 
 #[매터리얼]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

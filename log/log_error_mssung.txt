@@ -1,3 +1,81 @@
+date=2023-11-23 11:40:53
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 380, in <lambda>
+    getattr(self, f'btn_item_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.load_preset_by_bookmark(x, 'item'))
+  File "D:\R2A\R2A.py", line 953, in load_preset_by_bookmark
+    self.load_preset(preset_type,preset_name)
+  File "D:\R2A\R2A.py", line 1033, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 19:26:47
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 365, in <lambda>
+    getattr(self, f'btn_item_preset_bookmark_{i}').clicked.connect(lambda _, x=i : self.load_preset_by_bookmark(x, 'item'))
+  File "D:\R2A\R2A.py", line 938, in load_preset_by_bookmark
+    self.load_preset(preset_type,preset_name)
+  File "D:\R2A\R2A.py", line 1018, in load_preset
+    df = df.fillna('')
+AttributeError: 'NoneType' object has no attribute 'fillna'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 19:15:11
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1376, in applyCurrentTestCase
+    self.input_testCase_moduleName.setText(line[1])
+IndexError: list index out of range
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 11:58:13
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 475, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 11:58:05
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 475, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 11:58:04
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 475, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-11-22 11:58:02
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 475, in optimizeCurrentAppPos
+    if currentAppName == "" :
+NameError: name 'currentAppName' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
 date=2023-11-20 16:38:47
 user=mssung
 

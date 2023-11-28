@@ -8,8 +8,13 @@ import os
 user_name = os.getlogin()
 
 #app_pos_by_r2a = []
-import PresetManager as pm
-import xlrd
+
+import subprocess
+#import engraveCheck
+import importlib
+import pandas as pd
+import pyautogui as pag
+#import clipboard as cb
 #currentAppName = ""
 
 '''
@@ -28,8 +33,30 @@ if not os.path.isdir(cache_folder):
     os.mkdir(cache_folder)
 
 
+cache_path = f'./cache/cache_v5.csv'
+try:
+    df_cache = pd.read_csv(cache_path, sep='\t', encoding='utf-16', index_col='key')
+except FileNotFoundError as e:
+    print(f'{e} : 캐시 파일 없음')
+currentAppName = ""
+
+
+import PresetManager as pm
+import xlrd
+import msdata as ms
+import multicommand as multi
+import setclass as sc
+import setappsize as sas
+import img2str as i2s
+import os
+import translate as tl
+import time
+import re
+import pyperclip as pc
+import traceback
 from enum import Enum
 import random
+import datetime
 
 class 직업(Enum):
     나이트 = 0
@@ -45,10 +72,10 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QKeySequence,QPixmap, QColor
-from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
+#from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QVBoxLayout
 from msdata import 플레이어변경, Player
 #import asyncio
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QDateTime
 
 # Connect the QAction button to the open_patch_notes function
 
@@ -61,24 +88,26 @@ class ImageTooltip(QWidget):
         layout.addWidget(label)
         self.setLayout(layout)
 
-cache_path = f'./cache/cache_v5.csv'
 history_item_path = f'./data/etc/itemHistory.txt'
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
 form_class = uic.loadUiType(f'./etc/R2A_UI.ui')[0]
-
+app_starttime = QDateTime.currentDateTime()#datetime.datetime.today()#.strftime("%Y-%m-%d %H:%M:%S")
+print(f'{app_starttime=}')
 
 #화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-        self.set_button_styles(2)
+        print(999)
+        #self.set_button_styles(2)
         # QTimer를 사용하여 5분마다 export_cache 함수 실행
         self.auto_cache_save_timer = QTimer(self)#check_autoCacheSave
         self.auto_cache_save_timer.timeout.connect(self.export_cache_all)
         self.auto_cache_save_timer.start(300000)  # 300000 밀리초 = 5분
 
+        self.dateTimeEdit_app_starttime.setDateTime(app_starttime)
         # self.unlock_screen_timer = QTimer(self)#check_autoCacheSave
         # self.unlock_screen_timer.timeout.connect(lambda : ms.Click(ms.r2a_app_pos))
         # self.unlock_screen_timer.start(5000)  # 300000 밀리초 = 5분
@@ -193,16 +222,16 @@ class WindowClass(QMainWindow, form_class) :
             df_item = pd.read_csv(itemFileName)
             print('아이템 파일 로드 성공...')
         except FileNotFoundError:
-            print('아이템 파일 캐시 생성 중...')
+            print('아이템 파일 캐시 생성 중...(1분 미만 소요)')
             df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3,23])
             df_item.to_csv(itemFileName, index=False)
-        
-            # 이전 날짜의 아이템 파일 삭제
-            for file in os.listdir("./data"):
-                if file.endswith(".csv"):
-                    file_date = re.findall(r'\d{6}', file)[0]
-                    if file_date < today:
-                        os.remove(os.path.join("./data", file))
+    
+        # 이전 날짜의 아이템 파일 삭제
+        for file in os.listdir("./data"):
+            if file.endswith(".csv"):
+                file_date = re.findall(r'\d{6}', file)[0]
+                if file_date < today:
+                    os.remove(os.path.join("./data", file))
 
 
 
@@ -235,10 +264,30 @@ class WindowClass(QMainWindow, form_class) :
         self.import_cache_all([QComboBox,'comboBox_appNameList'])
        # print(app_pos_by_r2a)
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
+        '''패치노트'''
+        try: 
+            last_starttime_str = self.import_cache_all([QDateTimeEdit,'dateTimeEdit_app_starttime'])
+            last_starttime = QDateTime.fromString(last_starttime_str, Qt.ISODate)
+            patch_note_check = self.import_cache_all([QCheckBox,'check_option_1'])
+            is_next_day = app_starttime.date() > last_starttime.date()
+            print(f'{is_next_day=}')
+            print(f'{last_starttime=}')
+            print(f'{patch_note_check=}')
 
+            if patch_note_check.lower() == 'true' or ( patch_note_check.lower() == 'false' and is_next_day): 
+                x, patch_see_again = self.popup2(des_text=
+                                            f"업데이트 일자 : {last_modified_date}\n\n최신 업데이트 항목 10개\n\n{ms.read_patch_notes('release_note_R2A.xlsx')}", popup_type='patchnote')
+            
+                self.check_option_1.setChecked(not patch_see_again)
+        except:
+            pass
+        #print(patch_see_again)
+        # if x == QtWidgets.QMessageBox.Open :
+        #     self.파일열기('release_note_R2A.xlsx')
+
+        #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         self.applyHistory("item")
-
 
 
 
@@ -432,13 +481,13 @@ class WindowClass(QMainWindow, form_class) :
             except:
                 continue
 
-        for i in range(0,3) :
-            getattr(self, f'btn_setskill_{i}').clicked.connect(lambda _, x=i : self.open_skill_file(x))
-        for i in range(0,ITEM_CHECK_BOX_COUNT) :
-            try:
-                getattr(self, f'btn_setclass_{i}').clicked.connect(lambda _, x=i : self.open_item_file(x))
-            except:
-                continue
+        # for i in range(0,3) :
+        #     getattr(self, f'btn_setskill_{i}').clicked.connect(lambda _, x=i : self.open_skill_file(x))
+        # for i in range(0,ITEM_CHECK_BOX_COUNT) :
+        #     try:
+        #         getattr(self, f'btn_setclass_{i}').clicked.connect(lambda _, x=i : self.open_item_file(x))
+        #     except:
+        #         continue
 
             #set_check_box_state
 
@@ -924,15 +973,18 @@ class WindowClass(QMainWindow, form_class) :
             os.remove(directory_path)
             self.applyPresetList()
         
-        else :
-            QStyleHintReturnVariant
+        # else :
+        #     QStyleHintReturnVariant
 
         
-    def save_preset(self, preset_type : str) :
+    def save_preset(self, preset_type : str, preset_name = "") :
         data = {}
+        if preset_name == "":
+            preset_name = getattr(self, f'input_{preset_type}_preset').text()
+
+
         if preset_type == 'cmd' : 
 
-            preset_name = self.input_cmd_preset.text() 
             if preset_name == "":
                 self.show_statusbar_msg('need to insert preset name')
                 return
@@ -950,7 +1002,6 @@ class WindowClass(QMainWindow, form_class) :
                 }
         elif preset_type == 'item' : 
 
-            preset_name = self.input_item_preset.text() 
             if preset_name == "":
                 self.show_statusbar_msg('need to insert preset name')
                 return
@@ -970,6 +1021,10 @@ class WindowClass(QMainWindow, form_class) :
         self.applyPresetList()
 
     def load_preset(self, preset_type : str, preset_name = "") :
+        
+        # dump_preset_name = getattr(self, f'input_{preset_type}_preset').text()
+        # if dump_preset_name != "" :
+        #     self.save_preset(preset_type, dump_preset_name)
 
         if preset_name == "":                
             #try:
@@ -1258,8 +1313,8 @@ class WindowClass(QMainWindow, form_class) :
     
 
         lines = commandText.splitlines()
-        startTime = ms.GetElapsedTimeAuto(0)
-        endTime = ms.GetElapsedTimeAuto((len(lines)*2+repeatDelay)*repeatCount)
+        #startTime = ms.GetElapsedTimeAuto(0)
+        #endTime = ms.GetElapsedTimeAuto((len(lines)*2+repeatDelay)*repeatCount)
 
         # self.label_cmd_startTime.setText("시작 시각 : {0}".format(startTime.strftime('%m-%d %H:%M:%S')))
         # self.label_cmd_endTime.setText("예상 종료 시각 : {0}".format(endTime.strftime('%m-%d %H:%M:%S')))
@@ -1278,7 +1333,7 @@ class WindowClass(QMainWindow, form_class) :
             if i < (repeatCount - 1) :
                 ms.sleep(repeatDelay)
 
-        consumedTime = ms.GetConsumedTime(startTime)
+        #consumedTime = ms.GetConsumedTime(startTime)
         #isTesting = 0
 
         # self.progressBar_cmd.setValue(100)
@@ -1518,15 +1573,29 @@ class WindowClass(QMainWindow, form_class) :
 
         return x
     
-    def popup2(self, des_text = ""):
+    def popup2(self, des_text = "", popup_type = ''):
 
         msg = QtWidgets.QMessageBox()  
-        msg.setGeometry(1520,28,400,2000)
+        #msg.setGeometry(1470,58,300,2000)
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
-        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
-        msg.setText(des_text)
+        
+        if popup_type == "":
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+            msg.setText(des_text)
+            return msg.exec_()
+        elif popup_type == 'patchnote' :
+                        # Create a checkbox
+            checkbox = QtWidgets.QCheckBox("오늘은 그만 보기", msg)
+            #msg.setStandardButtons(QtWidgets.QMessageBox.Open | QtWidgets.QMessageBox.Cancel)
+            msg.setStandardButtons(QtWidgets.QMessageBox.Cancel)
 
-        return msg.exec_()
+            msg.setCheckBox(checkbox)
+            msg.setText(des_text)
+            #print(checkbox.isChecked())
+            return msg.exec_(), checkbox.isChecked()
+
+            #msg.setStandardButtons(QtWidgets.QMessageBox.checkBox | QtWidgets.QMessageBox.Cancel)
+
       
         #elif type == "question" :
     # def messageBoxButton(self, i, desText):
@@ -1686,12 +1755,16 @@ class WindowClass(QMainWindow, form_class) :
         '''any_widget : [QLineEdit,'input_00']'''
 
         try:
+            if df_cache is None :
             # Load CSV file with tab delimiter and utf-16 encoding
-            df = pd.read_csv(cache_path, sep='\t', encoding='utf-16', index_col='key')
+                df = pd.read_csv(cache_path, sep='\t', encoding='utf-16', index_col='key')
+            else :
+                df = df_cache
             if any_widget == None :
                 all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
             else:
                 all_widgets = [self.findChild(any_widget[0] ,any_widget[1])]
+                #return 
             #all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
 
             for widget in all_widgets:
@@ -1710,6 +1783,8 @@ class WindowClass(QMainWindow, form_class) :
                     elif isinstance(widget, QPlainTextEdit):
                         widget.setPlainText(value)
 
+            if any_widget != None :
+                return value
         except Exception as e:
             print(f"Error importing cache: {e}")
 
@@ -1717,7 +1792,7 @@ class WindowClass(QMainWindow, form_class) :
         try:
             data = {'key': [], 'value': []}
 
-            all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton))
+            all_widgets = self.findChildren((QLineEdit, QLabel, QComboBox, QCheckBox, QPlainTextEdit,QPushButton, QDateTimeEdit))
 
             for widget in all_widgets:
                 value = ""
@@ -1734,6 +1809,8 @@ class WindowClass(QMainWindow, form_class) :
                     value = str(widget.isChecked())
                 elif isinstance(widget, QPlainTextEdit):
                     value = widget.toPlainText()
+                elif isinstance(widget, QDateTimeEdit):
+                    value = widget.dateTime().toString(Qt.ISODate)
 
                 if value != "":
                     key = widget.objectName()
@@ -1858,22 +1935,6 @@ class WindowClass(QMainWindow, form_class) :
 
 
 
-import msdata as ms
-import multicommand as multi
-import setclass as sc
-import setappsize as sas
-import img2str as i2s
-import os
-import translate as tl
-#import engraveCheck
-import importlib
-import pandas as pd
-import pyautogui as pag
-#import clipboard as cb
-import time
-import re
-import pyperclip as pc
-import traceback
 
 
 def make_log(msg, log_type : str = 'error', auto_open :bool = False, auto_upload :bool = True):
@@ -1926,20 +1987,20 @@ class ExceptionHandler:
     def __call__(self, exc_type, exc_value, exc_traceback):
         self.custom_hook(exc_type, exc_value, exc_traceback)
 
-if __name__ == "__main__" :
+#if __name__ == "__main__" :
     #QApplication : 프로그램을 실행시켜주는 클래스
-    #try:
-    app = QApplication(sys.argv) 
+#try:
+app = QApplication(sys.argv) 
 
-    #WindowClass의 인스턴스 생성
-    myWindow = WindowClass() 
+#WindowClass의 인스턴스 생성
+myWindow = WindowClass() 
 
-    #프로그램 화면을 보여주는 코드
-    myWindow.show()
-    #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-    #app.exec_()
-    sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
-    sys.exit(app.exec_()) 
-    # except Exception as e:
+#프로그램 화면을 보여주는 코드
+myWindow.show()
+#프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
+#app.exec_()
+sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
+sys.exit(app.exec_()) 
+# except Exception as e:
     #     msg = traceback.format_exc()
     #     make_log(msg,auto_open=True)

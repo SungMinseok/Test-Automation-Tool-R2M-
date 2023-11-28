@@ -427,8 +427,9 @@ cardSpotActivateOkBtn = [0.5833,0.6297]
 cardSpotEnchantResultBox = [0.3591*appW+appX,0.2319*appH+appY,0.3022*appW,0.0798*appH]
 
 #장비 능력치창
-equipStatNameBox = getBoxPos(0.7003,0.3093,0.1386,0.5466)
+equipStatNameBox = getBoxPos(0.7003,0.3193,0.1526,0.5366)
 equipStatAmountBox = getBoxPos(0.8438,0.3093,0.0855,0.5466)
+#equipStatAmountBox = getBoxPos(0.8438,0.3093,0.0855,0.5466)
 
 #채팅관련
 mainhud_chat_btn = [0.0252,0.677] #채팅버튼, 채팅인풋박스
@@ -1027,7 +1028,7 @@ def SetMainUI(_nameText,_verText,_dateText,_makerText,_desText,_warnText):
     # print("└" + "┘".rjust(107,'─'))
 
 def GetElapsedTime(_time):
-        
+    '''예상종료시각 프린트'''
     now = datetime.now()
     #print((now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S'))
     
@@ -1035,6 +1036,18 @@ def GetElapsedTime(_time):
     #return (now+datetime.timedelta(seconds=_time))#.strftime('%m-%d %H:%M:%S')
     #cmd버전
     return (now+timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S')
+
+
+def GetConsumeTime(_time):
+    '''예상실행시간'''
+    return
+    #now = datetime.now()
+    #print((now+datetime.timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S'))
+    
+    #pyqt5버전
+    #return (now+datetime.timedelta(seconds=_time))#.strftime('%m-%d %H:%M:%S')
+    #cmd버전
+    return (timedelta(seconds=_time)).strftime('%m-%d %H:%M:%S')
 
 def GetElapsedTimeAuto(_time):
         
@@ -1081,7 +1094,7 @@ def GetCurrentTime():
 
 
 def GetConsumedTime(_startTime):
-        
+    '''실행 소요 시간'''
     now = datetime.now()
     #return (now - datetime.timedelta(seconds=_startTime)).strftime('%m-%d %H:%M:%S')
     return (now -_startTime)#.timedelta(seconds)#.strftime('%S')
@@ -1408,7 +1421,7 @@ def save_df_to_excel(output_file_name, df, autoOpen = True , combine = True):
 
 
     combined_df.to_excel(output_file_name, index=False)
-    print(f"Data saved to {output_file_name}")
+    #print(f"Data saved to {output_file_name}")
 
     if autoOpen : 
         os.startfile(output_file_name)
@@ -1472,6 +1485,49 @@ def get_target_app_pos():
         return [int(x) for x in lines[0].strip().split(',')], lines[1].strip()
         #f.write(self.label_appPos.text())
 
+
+
+def read_patch_notes(file_path):
+    try:
+        # Read the Excel file
+        df = pd.read_excel(file_path)
+
+        # Sort the DataFrame by the 'Date' column in descending order
+        df.sort_values(by='Date', inplace=True, ascending=False)
+        # Assuming 'isNotice' is a column in your DataFrame
+        filtered_df = df[df['isNotice'] == True]
+
+        # Display the top 3 rows from the filtered DataFrame
+        top_3_updates = filtered_df.head(5)
+
+        # Print the result
+        #print(top_3_updates)
+
+
+        # Get the top 3 rows
+        #top_3_updates = df.head(10)
+
+        result = []
+
+        # Print the updates in the specified format
+        for _, row in top_3_updates.iterrows():
+            result.append(f"[{row['Date'].strftime('%y-%m-%d')}] {row['Update']}")
+            
+            # print(f"\n{row['Date']}")
+            # print(row['Update'])
+        #print('\n'.join(result))    
+        #print()
+        return '\n'.join(result)
+
+    except Exception as e:
+        print(f"Error reading the patch notes: {e}")
+
+    return None
+
+
+
+print('야야야2')
 if __name__ == "__main__" : 
     #get_recent_file_list(os.getcwd())
-    print(os.path.basename(__file__).split('.')[0])
+    #print(os.path.basename(__file__).split('.')[0])
+    read_patch_notes(f'release_note_R2A.xlsx')

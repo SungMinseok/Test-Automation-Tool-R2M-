@@ -445,7 +445,7 @@ def 각인보정():
     
     data_df = data_df.replace(correction_dict, regex=True)
     # 수정된 내용을 새 파일로 저장
-    data_df.to_excel(target_file_path, index=False)
+    data_df.to_excel(output_file_path, index=False)
     
     print("각인 데이터가 보정되었습니다.")
     # except Exception as e:

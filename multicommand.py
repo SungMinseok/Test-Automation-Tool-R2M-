@@ -741,7 +741,11 @@ def 캐릭터생성_알파():#명령어사용
         if tempText != "벨리타" :
             print("텍스트 대기 중:", tempText)
             belitaBoxName = ms.captureSomeBox("belitaBox")
-            tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+            try:
+                tempText = i2s.Indiv_Kor_Return(belitaBoxName)
+            except:
+                print('no tesseract may be')
+                pass
             sleep(1)
         else:
             break

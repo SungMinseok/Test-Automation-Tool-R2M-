@@ -9,3 +9,4 @@ pypkg/
 screenshot/
 pkgs/
 install/
+.upload.log
