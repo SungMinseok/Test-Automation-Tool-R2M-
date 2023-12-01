@@ -322,17 +322,30 @@ def EquipCheck4():
     인벤토리 내 장비 수치 스크린샷+숫자인식 > 텍스트 파일생성
     """
     ms.PrintUB()
-    fileName = input("txt 파일명 입력(기본 : 장비수치)([0]돌아가기) : ")
-
-    if fileName =="0":
+    fileName = "장비수치.txt"
+    #while fileName == "" :
+    isFileOpen = input("txt 파일명 입력(기본 : 장비수치)([0]돌아가기)([1]파일열기) : ")
+        #isFileOpen = input('1 입력 시 각인.txt 파일 오픈(각인석 id 미입력 시 자동 축각)')
+    
+    if isFileOpen =="0":
         EquipCheck()
-    elif fileName =="":
-        fileName = "장비수치"
-    try :
-        with open(fileName +".txt") as f:
-            lines = f.read().splitlines()
-    except : 
-        EquipCheck4()
+    elif isFileOpen == '1':
+        os.startfile(fileName)
+
+    #lang_check = input('[0]국내 [1]대만')
+    lang_code = 'kor+eng' if input('[0]국내 [1]대만') == "0" else 'chi_tra'
+
+    with open(fileName) as f:
+        lines = f.read().splitlines()
+    # if fileName =="0":
+    #     EquipCheck()
+    # elif fileName =="":
+    #     fileName = "장비수치"
+    # try :
+    #     with open(fileName +".txt") as f:
+    #         lines = f.read().splitlines()
+    # except : 
+    #     EquipCheck4()
 
     ms.clear()
     
@@ -351,6 +364,8 @@ def EquipCheck4():
     print(f"총 예상 소요 시간 : {ms.GetElapsedTime(how_time)}\n총 예상 종료 시각 : {ms.GetElapsedTime(how_time)}")
     for itemNum in lines:
         print(str(loopCount) + "/" + str(len(lines)))
+        itemCount = 14 if int(itemNum) < 400000 or int(itemNum) >= 500000 else 10
+        equipType = 1 if int(itemNum) < 400000 or int(itemNum) >= 500000 else 2 
 
         totalList = [str]
         totalList.clear()
@@ -359,7 +374,7 @@ def EquipCheck4():
         ms.Command("cleanupinventory")
 
         cmdStr= "additems"
-        for j in range(0,14):
+        for j in range(0,itemCount):
             cmdStr += " " + str(int(itemNum)+j)
         ms.Command(cmdStr,1)
         sleep(0.01)
@@ -371,7 +386,7 @@ def EquipCheck4():
 
         curItemID = 0
 
-        for i in range(0,14):
+        for i in range(0,itemCount):
             data = []
             curItemID = int(itemNum) + i
             ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
@@ -382,7 +397,7 @@ def EquipCheck4():
             stat_amount_list = stat_amount_str.strip().split('/')
             stat_count = len(stat_amount_list)#스탯개수
 
-            allStatNameStr = i2s.getStringFromImg2(ms.captureSomeBox("equipStatNameBox"), 'kor+eng').strip()
+            allStatNameStr = i2s.getStringFromImg2(ms.captureSomeBox("equipStatNameBox"), lang_code).strip()
             #allStatNameStr = allStatNameStr.replace('\n','/')
             tempList = allStatNameStr.split('\n')
             normal_stat_name_list = []
@@ -394,11 +409,11 @@ def EquipCheck4():
                 tempName = re.sub(r'[\d@]', ' ', statName).strip()
 
                 tempName = change_stat_name(tempName)
-                if tempName.endswith('인') or tempName.endswith('트'):
+                if tempName.endswith('인') or tempName.endswith('트') or '增傷' in tempName or '保' in tempName:
                     special_stat_type_list.append(tempName)
                     special_stat_check = 1
                 elif special_stat_check == 0 :
-                    if '최소' in tempName :
+                    if '최소' in tempName or '最小' in tempName :
                         continue
                     else:
                         normal_stat_name_list.append(tempName)
@@ -430,7 +445,6 @@ def EquipCheck4():
             #     #f.write('\n'.join(finalStr))    
             #     f.write(finalStr)   
             # 
-        equipType = 1 if curItemID < 400000 else 2 
         mergeImg.MergeImg_Equip(itemNum,equipType,merge_path,isSolo=True)
             
         #mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)

@@ -1820,6 +1820,7 @@ class WindowClass(QMainWindow, form_class) :
             df = pd.DataFrame(data)
             df.set_index('key', inplace=True)
             df.to_csv(cache_path, sep='\t', encoding='utf-16')
+            print(f"exporting cache successfully!")
         except Exception as e:
             print(f"Error exporting cache: {e}")
         # data = {}

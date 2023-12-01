@@ -17,4 +17,4 @@ def translateTW2KR(targetStr, _srcCode = 'zh-tw', _destCode = 'ko') :
     return result.text
 
 if __name__ == "__main__" : 
-    print(translateTW2KR("成空"))
+    print(translateTW2KR("成功"))

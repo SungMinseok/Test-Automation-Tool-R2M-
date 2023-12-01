@@ -208,7 +208,7 @@ def hardcoreQuestCheck():
     ms.ResetFirst()
     #ms.Command("flowcompleteequest 1120250")
     #sleep(1)
-    ms.Move(ms.acceptQuestInNavigation1)    
+    ms.Move(ms.acceptQuestInNavigation2)    
     sleep(0.2)
     ms.Move(ms.acceptQuestBtn)
     ms.Command("flowremovequest "+lines[len(lines)-1])
@@ -225,7 +225,7 @@ def hardcoreQuestCheck():
         ms.Command("cleanupinventory")
 
         ms.captureSomeBox2("questCheckBox",path+"/"+lines[i]+"_0") #퀘스트 사이드 팝업창
-        ms.Move(ms.acceptQuestInNavigation1)    
+        ms.Move(ms.acceptQuestInNavigation2)    
         sleep(1)
         ms.captureSomeBox2("questCheckBox",path+"/"+lines[i]+"_1") #퀘스트 네비게이션
         sleep(0.2)
@@ -312,6 +312,6 @@ def quest_string_check():
 
 
 if __name__ == "__main__" : 
-    questCheck()
-    #hardcoreQuestCheck()
+    #questCheck()
+    hardcoreQuestCheck()
     #quest_reward_check()

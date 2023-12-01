@@ -1,3 +1,69 @@
+date=2023-11-30 17:42:58
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 326, in <lambda>
+    self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
+  File "D:\R2A\R2A.py", line 1485, in translateImg
+    self.popUp("번역",tl.translateTW2KR(targetStr))
+  File "D:\R2A\translate.py", line 11, in translateTW2KR
+    result = translator.translate(targetStr,src = _srcCode, dest= _destCode)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 182, in translate
+    data = self._translate(text, dest, src, kwargs)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 78, in _translate
+    token = self.token_acquirer.do(text)
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 194, in do
+    self._update()
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 62, in _update
+    code = self.RE_TKK.search(r.text).group(1).replace('var ', '')
+AttributeError: 'NoneType' object has no attribute 'group'
+
+
+────────────────────────────────────────
+date=2023-11-30 17:42:20
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 326, in <lambda>
+    self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
+  File "D:\R2A\R2A.py", line 1485, in translateImg
+    self.popUp("번역",tl.translateTW2KR(targetStr))
+  File "D:\R2A\translate.py", line 11, in translateTW2KR
+    result = translator.translate(targetStr,src = _srcCode, dest= _destCode)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 182, in translate
+    data = self._translate(text, dest, src, kwargs)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 78, in _translate
+    token = self.token_acquirer.do(text)
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 194, in do
+    self._update()
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 62, in _update
+    code = self.RE_TKK.search(r.text).group(1).replace('var ', '')
+AttributeError: 'NoneType' object has no attribute 'group'
+
+
+────────────────────────────────────────
+date=2023-11-30 17:42:12
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 326, in <lambda>
+    self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
+  File "D:\R2A\R2A.py", line 1485, in translateImg
+    self.popUp("번역",tl.translateTW2KR(targetStr))
+  File "D:\R2A\translate.py", line 11, in translateTW2KR
+    result = translator.translate(targetStr,src = _srcCode, dest= _destCode)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 182, in translate
+    data = self._translate(text, dest, src, kwargs)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 78, in _translate
+    token = self.token_acquirer.do(text)
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 194, in do
+    self._update()
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 62, in _update
+    code = self.RE_TKK.search(r.text).group(1).replace('var ', '')
+AttributeError: 'NoneType' object has no attribute 'group'
+
+
+────────────────────────────────────────
 date=2023-11-23 11:40:53
 user=mssung
 
