@@ -1,7 +1,7 @@
 ITEM_SLOT_COUNT = 15
 CUSTOM_CMD_SLOT_COUNT = 20
 ITEM_CHECK_BOX_COUNT = 26
-DATA_SLOT_COUNT = 12 
+#DATA_SLOT_COUNT = 12 
 app_type = 0
 target_app_pos_txt_file = f'target_app_pos.txt'
 import os
@@ -108,9 +108,9 @@ class WindowClass(QMainWindow, form_class) :
         self.auto_cache_save_timer.start(300000)  # 300000 밀리초 = 5분
 
         self.dateTimeEdit_app_starttime.setDateTime(app_starttime)
-        # self.unlock_screen_timer = QTimer(self)#check_autoCacheSave
-        # self.unlock_screen_timer.timeout.connect(lambda : ms.Click(ms.r2a_app_pos))
-        # self.unlock_screen_timer.start(5000)  # 300000 밀리초 = 5분
+        self.unlock_screen_timer = QTimer(self)#check_autoCacheSave
+        self.unlock_screen_timer.timeout.connect(self.stop_lock_screen)
+        self.unlock_screen_timer.start(300000)  # 300000 밀리초 = 5분
 
 #region Main UI
         file_dict = ms.get_recent_file_list(os.getcwd())
@@ -219,12 +219,12 @@ class WindowClass(QMainWindow, form_class) :
         itemFileName = f"./data/아이템_{today}.csv"
 
         try:
-            df_item = pd.read_csv(itemFileName)
+            df_item = pd.read_csv(itemFileName, encoding= 'utf-16',sep='\t')
             print('아이템 파일 로드 성공...')
         except FileNotFoundError:
             print('아이템 파일 캐시 생성 중...(1분 미만 소요)')
-            df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3,23])
-            df_item.to_csv(itemFileName, index=False)
+            df_item = pd.read_excel("./data/아이템.xlsx", engine="openpyxl", usecols=[0, 1, 2, 3,8,23])
+            df_item.to_csv(itemFileName, index=False, encoding= 'utf-16',sep='\t')
     
         # 이전 날짜의 아이템 파일 삭제
         for file in os.listdir("./data"):
@@ -495,9 +495,12 @@ class WindowClass(QMainWindow, form_class) :
         '''
         TAB - DATA
         '''    
-        for i in range(0,DATA_SLOT_COUNT) :
-            getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
-            getattr(self, f'btn_findData_openDir_{i}').clicked.connect(lambda _, x=i : self.데이터폴더열기(x))
+        for i in range(0,999) :
+            try:
+                getattr(self, f'btn_findData_openFile_{i}').clicked.connect(lambda _, x=i : self.데이터파일열기(x))
+                getattr(self, f'btn_findData_openDir_{i}').clicked.connect(lambda _, x=i : self.데이터폴더열기(x))
+            except:
+                break
             
 #endregion
 
@@ -1082,16 +1085,23 @@ class WindowClass(QMainWindow, form_class) :
             # df = df.fillna('')
             # df = df.T.to_dict()
             for i in range(1,ITEM_SLOT_COUNT):
+                #try:
+                val0 = df[i-1]['value0']
+                val1 = df[i-1]['value1']
                 try:
-                    val0 = df[i-1]['value0']
-                    val1 = df[i-1]['value1']
                     getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
+                except:
+                    getattr(self, f'input_additem_itemid_{i}').setText(str(val0))
+
+                try:
                     getattr(self, f'input_additem_amount_{i}').setText(str(int(val1)))
-                except Exception as e:
-                    #print(e)
-                    
-                    getattr(self, f'input_additem_itemid_{i}').setText('')
-                    getattr(self, f'input_additem_amount_{i}').setText('')
+                except:
+                    getattr(self, f'input_additem_amount_{i}').setText(str(val1))
+                # except Exception as e:
+                #     #print(e)
+                #     pass
+                    #getattr(self, f'input_additem_itemid_{i}').setText('')
+                    #getattr(self, f'input_additem_amount_{i}').setText('')
                 
                     #continue
             getattr(self, f'input_{preset_type}_preset').setText(preset_name)
@@ -1934,7 +1944,9 @@ class WindowClass(QMainWindow, form_class) :
     #         await self.scedules()
     #         await asyncio.sleep(1)  # 5분(300초) 대기 후 다시 실행
 
-
+    def stop_lock_screen(self):
+        if self.check_unlockscreen.isChecked():
+            ms.Click(ms.r2a_app_pos)
 
 
 

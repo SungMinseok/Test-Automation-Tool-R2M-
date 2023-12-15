@@ -1,5 +1,5 @@
 import msdata as ms
-import R2A
+#import R2A
 import time
 def 직과금결제_미러로이드():
     #input("유료상점>재화>다이아4000 최우측 슬롯에 위치 후 아무 키나 누르세요.")
@@ -42,7 +42,7 @@ if __name__ == "__main__" :
 
     ms.appX, ms.appY, ms.appW, ms.appH = 145,33,1194,677
     print(ms.appX)
-    R2A.currentAppName = "SM-N971N"
+    #R2A.currentAppName = "SM-N971N"
 
     for i in range(0,1):
         직과금결제_미러로이드()

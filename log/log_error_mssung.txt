@@ -1,3 +1,64 @@
+date=2023-12-08 11:45:12
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 526, in optimizeCurrentAppPos
+    a = pag.getWindowsWithTitle(currentAppName)[0]
+IndexError: list index out of range
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-12-04 14:41:39
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 326, in <lambda>
+    self.btn_img2str_2.clicked.connect(lambda : self.translateImg(0))
+  File "D:\R2A\R2A.py", line 1485, in translateImg
+    self.popUp("廓羲",tl.translateTW2KR(targetStr))
+  File "D:\R2A\translate.py", line 11, in translateTW2KR
+    result = translator.translate(targetStr,src = _srcCode, dest= _destCode)
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 182, in translate
+    else:
+  File "C:\Python39\lib\site-packages\googletrans\client.py", line 78, in _translate
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 194, in do
+    a %= 1000000  # int(1E6)
+  File "C:\Python39\lib\site-packages\googletrans\gtoken.py", line 62, in _update
+    # this will be the same as python code after stripping out a reserved word 'var'
+AttributeError: 'NoneType' object has no attribute 'group'
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-12-04 10:34:31
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1350, in executeMultiCommand
+    ,startTime.strftime('%m-%d %H:%M:%S')
+NameError: name 'startTime' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-12-04 10:34:18
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1350, in executeMultiCommand
+    ,startTime.strftime('%m-%d %H:%M:%S')
+NameError: name 'startTime' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
+date=2023-12-04 10:34:08
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1350, in executeMultiCommand
+    ,startTime.strftime('%m-%d %H:%M:%S')
+NameError: name 'startTime' is not defined
+
+
+式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式
 date=2023-11-30 17:42:58
 user=mssung
 

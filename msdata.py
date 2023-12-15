@@ -1396,6 +1396,7 @@ def get_directory_of_latest_file(source_path, target_file):
                 modified_time = datetime.fromtimestamp(os.path.getmtime(file_path))
                 if modified_time > latest_time:
                     latest_file = file_path
+                    latest_time = modified_time
 
         if latest_file:
             return os.path.dirname(latest_file)  # Return the directory of the latest file
