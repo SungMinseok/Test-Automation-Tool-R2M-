@@ -378,6 +378,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_item_1.clicked.connect(lambda : self.set_check_box_state("check_item_",999,0,start_num=1))
         
         self.btn_item_preset_save.clicked.connect(lambda : self.save_preset('item'))
+        #self.comboBox_item_preset.activated.connect(lambda : self.save_preset('item'))
         self.comboBox_item_preset.currentTextChanged.connect(lambda : self.load_preset('item'))
     #btn_item_preset_3
         self.btn_item_preset_2.clicked.connect(lambda : self.add_preset_bookmark('item'))
@@ -980,7 +981,11 @@ class WindowClass(QMainWindow, form_class) :
         #     QStyleHintReturnVariant
 
         
-    def save_preset(self, preset_type : str, preset_name = "") :
+    def save_preset(self, preset_type : str, preset_name = "", reload = True) :
+        '''
+        reload 트루이면 저장 후 콤보박스 갱신(수동 저장 시)
+        '''
+        print(f'save preset {preset_type=} {preset_name=}')
         data = {}
         if preset_name == "":
             preset_name = getattr(self, f'input_{preset_type}_preset').text()
@@ -1021,10 +1026,14 @@ class WindowClass(QMainWindow, form_class) :
 
         df = pd.DataFrame(data).T
         pm.save_preset(f'{preset_type}_{preset_name}', df)
-        self.applyPresetList()
+        if reload :
+            self.applyPresetList()
 
     def load_preset(self, preset_type : str, preset_name = "") :
         
+        previous_preset_name = getattr(self, f'input_{preset_type}_preset').text()
+        if previous_preset_name != "":
+            self.save_preset(preset_type,previous_preset_name,reload=False) 
         # dump_preset_name = getattr(self, f'input_{preset_type}_preset').text()
         # if dump_preset_name != "" :
         #     self.save_preset(preset_type, dump_preset_name)
@@ -2003,17 +2012,21 @@ class ExceptionHandler:
 #if __name__ == "__main__" :
     #QApplication : 프로그램을 실행시켜주는 클래스
 #try:
-app = QApplication(sys.argv) 
+        
+# app = QApplication(sys.argv) 
+# myWindow = WindowClass() 
+# myWindow.show()
+# sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
+# sys.exit(app.exec_()) 
 
-#WindowClass의 인스턴스 생성
-myWindow = WindowClass() 
 
-#프로그램 화면을 보여주는 코드
-myWindow.show()
-#프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-#app.exec_()
-sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
-sys.exit(app.exec_()) 
-# except Exception as e:
-    #     msg = traceback.format_exc()
-    #     make_log(msg,auto_open=True)
+def starter():
+    
+    app = QApplication(sys.argv) 
+    myWindow = WindowClass() 
+    myWindow.show()
+    sys.excepthook = ExceptionHandler(sys.excepthook)  # Override the exception hook
+    sys.exit(app.exec_()) 
+
+if __name__ == "__main__" :
+    starter()

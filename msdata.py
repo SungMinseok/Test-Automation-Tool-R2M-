@@ -262,6 +262,7 @@ centerUpPos=[0.5,0.4]
 commandPos=[0.8803,0.7329]#230714
 executePos=[0.99,0.758]
 executePos_mirroid=[0.9156,0.8068]
+executePos_mirroid_2=[0.9648,0.7297]
 okPos=[0.583,0.63]
 cancelPos=[0.423,0.63]
 appUpPos=[0.019,-0.026]
@@ -398,6 +399,7 @@ logoutBtn = [0.5868,0.6035]
 selectCharacterNameBox = [0.1082*appW+appX,0.0299*appH+appY,0.1223*appW,0.0599*appH]#왼쪽위X,왼쪽위Y,가로,세로
 box_select_character = [0.1134,0.0348,0.1184,0.0584]
 box_webview_x = [0.8917,0.1093,0.0392,0.0609]
+btn_webview_x = [0.9167,0.1366]
 
 #네비게이션
 acceptQuestInNavigation = [0.2593,0.3005]
@@ -459,6 +461,18 @@ quest_category_btn_1 = [0.105,0.313]
 quest_category_btn_2 = [0.105,0.4087]
 
 r2a_app_pos = [1.05,-0.02]
+
+#길드도감등록
+guild_collection_put_btn_0 = [0.8978,0.4894]
+guild_collection_put_btn_1 = [0.8978,0.6224]
+guild_collection_put_btn_2 = [0.8978,0.7478]
+guild_collection_put_btn_3 = [0.8978,0.8738]
+guild_collection_item_btn_0 = [0.5532,0.4894]
+guild_collection_item_btn_1 = [0.5532,0.6224]
+guild_collection_item_btn_2 = [0.5532,0.7478]
+guild_collection_item_btn_3 = [0.5532,0.8738]
+guild_collection_check_btn = [0.5798,0.6273]
+
 
 #endregion
 
@@ -565,6 +579,19 @@ def DragDown(des):
 def DragToByPos(startPos, endPos, _duration = 1):
     pag.moveTo(startPos[0]*appW + appX, startPos[1]*appH + appY)
     pag.dragTo(endPos[0]*appW + appX, endPos[1]*appH + appY,duration = _duration,button='left')
+
+def DragFrom(startPos, xOffset, yOffset, duration = 1):
+    '''
+    startPos = [x,y]'''
+    pag.moveTo(startPos[0]*appW + appX, startPos[1]*appH + appY)
+    pag.drag(xOffset,yOffset, duration)
+    sleep(duration*0.8)
+    #print("RM")
+    pag.click()
+    #pag.moveTo(startPos[0]*appW + appX, startPos[1]*appH + appY)
+    #pag.dragRel(0, -280, duration, button='left')
+    #pag.dragTo(endPos[0]*appW + appX, endPos[1]*appH + appY,duration = duration,button='left')
+
 def Capture(fileName,showDate = True):
     sleep(0.1)
     if showDate :
@@ -663,15 +690,22 @@ def captureSomeBox2(boxName : str,resultPath):
     pag.screenshot(resultJPGFileName, region=(globals()[boxName][0],globals()[boxName][1],globals()[boxName][2],globals()[boxName][3]))
     return resultJPGFileName
 
-def captureSomeBox3(xRatio,yRatio,wRatio,hRatio):
+def captureSomeBox3(xRatio,yRatio,wRatio,hRatio,dir="",name=""):
+    '''
+    name = .jpg포함해야함'''
     timestr = time.strftime("%Y%m%d_%H%M%S")
-    resultJPGFileName = f"./screenshot/temp/{timestr}.jpg"
+    if dir == "" and name == "":
+        result_path = f"./screenshot/temp/{timestr}.jpg"
+    elif name == "":
+        result_path = os.path.join(dir,f"{timestr}.jpg")
+    else :
+        result_path = os.path.join(dir,name)
     #current_app_pos_info = 
     #print(boxName)
     #pag.screenshot(resultJPGFileName, region=(getattr(self, boxName)[0],getattr(self,boxName)[1],getattr(self,boxName)[2],getattr(self,boxName)[3]))
-    pag.screenshot(resultJPGFileName, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
+    pag.screenshot(result_path, region=(xRatio*appW+appX,yRatio*appH+appY,wRatio*appW,hRatio*appH))
     #[0.154*appW+appX,0.935*appH+appY,0.074*appW,0.049*appH]
-    return resultJPGFileName
+    return result_path
 def captureSomeBox4(ratio_list,resultPath):
 
     """
@@ -714,7 +748,7 @@ def Command(command, delay = 0):
     if delay == 0:
         temp_len = len(command)
         print(f'{temp_len}')
-        delay = temp_len / 100
+        delay = temp_len / 100 if currentPlayer == Player.LDPlayer else temp_len / 50 * 1.1
 
     try :
         command =command.replace('\n','')
@@ -741,9 +775,11 @@ def Command(command, delay = 0):
 
     elif currentPlayer == Player.Mirroid :    
 
-        sleep(0.4)
+        #sleep(0.4)
+        sleep(1) #2024-01-09
         Click(joy_cmd_pos)
-        sleep(0.2)
+        #sleep(0.2)
+        sleep(1) #2024-01-09
 
 
         pag.typewrite(command)
@@ -753,7 +789,7 @@ def Command(command, delay = 0):
         sleep(0.2)
         Click(executePos_mirroid)
         sleep(0.1)
-        Click(executePos)
+        Click(executePos_mirroid_2)
 
 def inputCommand(command):
     sleep(waitTime)
@@ -1425,7 +1461,10 @@ def save_df_to_excel(output_file_name, df, autoOpen = True , combine = True):
     #print(f"Data saved to {output_file_name}")
 
     if autoOpen : 
-        os.startfile(output_file_name)
+        try:
+            os.startfile(output_file_name)
+        except:
+            print(f'경로오류 실행불가 : {output_file_name}')
 
 def get_last_modified_date(file_path):
     '''

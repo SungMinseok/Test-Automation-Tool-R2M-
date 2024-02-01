@@ -70,14 +70,14 @@ def EquipCheck():
     #print("└" + "┘".rjust(107,'─'))
     #print("┌" + "┐".rjust(107,'─'))
     print("장비 타입")
-    print("[1]무기/방어구(최대+13강)\n[2]장신구(최대+9강)\n[3]영혼무기(최대+13강)")
+    print("[1]무기/방어구(최대+13강)\n[2]장신구(최대+9강)\n[3]영혼무기(최대+13강)\n[4]영혼부여효과")
     
     ms.PrintUB()
     print("[0]테스트메뉴")
     ms.PrintUB()
     #print("└" + "┘".rjust(107,'─'))
     global equipType
-    equipType = int(ms.InputNum(3))
+    equipType = input('>: ')#int(ms.InputNum(3))
     ms.clear()
     if equipType==0:
         ms.TestMenu()
@@ -165,74 +165,111 @@ def EquipCheck1():
         
 
 def EquipCheck2():
-   
-    waitTime = 0.01
-    waitTime2 = 0.2
-    ms.PrintUB()
-    fileName = input("2txt 파일명 입력(기본 : 장비수치)([0]돌아가기) : ")
-    if fileName =="0":
-        EquipCheck()
-    elif fileName =="":
-        fileName = "장비수치"
-
-    try :
-        with open(fileName +".txt") as f:
-            lines = f.read().splitlines()
-    except : 
-        EquipCheck2()
-
-    ms.clear()
+    if equipType == '4' :
     
-    loopCount = 1
-    for itemNum in lines:
-        print("실행 중... (예상 소요 시간 : 알 수 없음)")
-        print(str(loopCount) + "/" + str(len(lines)))
+        with open("장비수치.txt") as f:
+            lines = f.read().splitlines()
 
-        extraPath = path
+        for i, itemNum in enumerate(lines):
+            print("실행 중... (예상 소요 시간 : 알 수 없음)")
+            print(str(i) + "/" + str(len(lines)))
 
-#장비생성
-        ms.ResetFirst()
-        ms.Command("cleanupinventory")
+            extraPath = path
+    #장비생성
+            ms.ResetFirst()
+            ms.Command("cleanupinventory")
 
-        cmdStr= "additems"
-        for j in range(0,14):
-            cmdStr += " " + str(int(itemNum)+j)
-        ms.Command(cmdStr,1)
-        sleep(0.01)
-#인벤열기 >
-        ms.Move(ms.menuPos1)
-        sleep(ms.waitTime)
+            ms.Command(f'additem {itemNum} 1',1)
+            sleep(0.01)
+    #인벤열기 >
+            ms.Move(ms.menuPos1)
+            sleep(ms.waitTime)
         
-        for i in range(0,14):
-            if equipType == 2 and i == 10:
-                break
-            
-            ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
+            ms.Move(ms.invenBtn0)
             ms.Move(ms.invenBtnDown2)
             sleep(1.3)
-            #equipStatNameList = img2str.getKorTextFromImg(ms.captureSomeBox(ms.equipStatNameBox))
-            #equipStatAmountList = img2str.getNumberFromImg(ms.captureSomeBox(ms.equipStatAmountBox))
-            ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_0")
-    #설명창 위로밀기 > 대기 후 스샷1 > 
-            ms.Move(ms.invenDesPos)
-            ms.DragUp(ms.invenDesPos)
-            ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_1")
-    #추가정보클릭 > 대기후스샷2 > x버튼
-            ms.Move(ms.invenAddDesPos)
-            sleep(0.1)
-            ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_2")
-            if equipType == 3 :
-                ms.Move(ms.invenSoulBtn)
-                ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_3")
-                ms.Move(ms.invenExitBtn)
-            else :
-                
-                ms.Move(ms.invenExitBtn)
-        mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)
+            ms.Move(ms.invenSoulBtn)
+            ms.CaptureInvenDes(f'{extraPath}/{str(int(itemNum)+i)}_soul')
+            ms.Move(ms.invenExitBtn)
 
+
+
+
+
+
+
+
+
+
+
+    else:
+        waitTime = 0.01
+        waitTime2 = 0.2
+        ms.PrintUB()
+        fileName = input("2txt 파일명 입력(기본 : 장비수치)([0]돌아가기) : ")
+        if fileName =="0":
+            EquipCheck()
+        elif fileName =="":
+            fileName = "장비수치"
+
+        try :
+            with open(fileName +".txt") as f:
+                lines = f.read().splitlines()
+        except : 
+            EquipCheck2()
+
+        ms.clear()
+        
+        loopCount = 1
+        for itemNum in lines:
+            print("실행 중... (예상 소요 시간 : 알 수 없음)")
+            print(str(loopCount) + "/" + str(len(lines)))
+
+            extraPath = path
+
+    #장비생성
+            ms.ResetFirst()
+            ms.Command("cleanupinventory")
+
+            cmdStr= "additems"
+            for j in range(0,14):
+                cmdStr += " " + str(int(itemNum)+j)
+            ms.Command(cmdStr,1)
+            sleep(0.01)
+    #인벤열기 >
+            ms.Move(ms.menuPos1)
+            sleep(ms.waitTime)
             
-        #print("스샷 경로 : "+extraPath)
-        loopCount = loopCount +1
+            for i in range(0,14):
+                if equipType == 2 and i == 10:
+                    break
+                
+                ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
+                ms.Move(ms.invenBtnDown2)
+                sleep(1.3)
+                #equipStatNameList = img2str.getKorTextFromImg(ms.captureSomeBox(ms.equipStatNameBox))
+                #equipStatAmountList = img2str.getNumberFromImg(ms.captureSomeBox(ms.equipStatAmountBox))
+                ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_0")
+        #설명창 위로밀기 > 대기 후 스샷1 > 
+                ms.Move(ms.invenDesPos)
+                ms.DragUp(ms.invenDesPos)
+                ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_1")
+        #추가정보클릭 > 대기후스샷2 > x버튼
+                ms.Move(ms.invenAddDesPos)
+                sleep(0.1)
+                ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_2")
+                if equipType == 3 :
+                    ms.Move(ms.invenSoulBtn)
+                    ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_3")
+                    ms.Move(ms.invenExitBtn)
+                else :
+                    
+                    ms.Move(ms.invenExitBtn)
+            mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)
+
+                
+            #print("스샷 경로 : "+extraPath)
+            loopCount = loopCount +1
 
 def EquipCheck3():
     """한장만 찍기"""
@@ -320,13 +357,14 @@ def EquipCheck3():
 def EquipCheck4():
     """
     인벤토리 내 장비 수치 스크린샷+숫자인식 > 텍스트 파일생성
+    isFull : false : 첫 장만 병합, true : 전부 병합0~2
     """
     ms.PrintUB()
     fileName = "장비수치.txt"
     #while fileName == "" :
     isFileOpen = input("txt 파일명 입력(기본 : 장비수치)([0]돌아가기)([1]파일열기) : ")
         #isFileOpen = input('1 입력 시 각인.txt 파일 오픈(각인석 id 미입력 시 자동 축각)')
-    
+    isFull = True if input('정보도 다 찍으려면 1 입력')=='1' else False
     if isFileOpen =="0":
         EquipCheck()
     elif isFileOpen == '1':
@@ -433,8 +471,27 @@ def EquipCheck4():
 
             
             ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_0")
-            ms.Move(ms.invenExitBtn)
+            
+            if isFull == False:
+                ms.Move(ms.invenExitBtn)
 
+            if isFull :
+        #설명창 위로밀기 > 대기 후 스샷1 > 
+                ms.Move(ms.invenDesPos)
+                ms.DragUp(ms.invenDesPos)
+                ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_1")
+        #추가정보클릭 > 대기후스샷2 > x버튼
+                ms.Move(ms.invenAddDesPos)
+                sleep(0.1)
+                ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_2")
+                # if equipType == 3 :
+                #     ms.Move(ms.invenSoulBtn)
+                #     ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_3")
+                #     ms.Move(ms.invenExitBtn)
+                # else :
+                    
+                #     ms.Move(ms.invenExitBtn)
+                ms.Move(ms.invenExitBtn)
 
             data = [[str(curItemID),'/'.join(normal_stat_list),'/'.join(special_stat_list),'/'.join(special_stat_type_list),stat_amount_str]]
             columns=['ID','normal_stat','special_stat','special_type','only_amount']
@@ -445,7 +502,8 @@ def EquipCheck4():
             #     #f.write('\n'.join(finalStr))    
             #     f.write(finalStr)   
             # 
-        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path,isSolo=True)
+        isSolo = True if isFull == False else False
+        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path,isSolo)
             
         #mergeImg.MergeImg_Equip(itemNum,equipType,extraPath)
 

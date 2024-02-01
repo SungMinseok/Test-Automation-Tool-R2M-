@@ -53,7 +53,7 @@ def MergeImg_Equip(_itemNum,_equipType,_extraPath,isSolo = False):
         else :
             mergev = cv2.vconcat([mergeh0,mergeh1])
 
-        imwrite(_extraPath+"/Merge/"+str(_itemNum)+"_merge_"+str(k)+'.jpg', mergev)
+        imwrite(_extraPath+"_"+str(_itemNum)+"_"+str(k)+'.jpg', mergev)
 
         
 def MergeImg_Item(_itemNum,_extraPath,_modeNum):

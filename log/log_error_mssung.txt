@@ -1,3 +1,27 @@
+date=2024-01-26 00:31:16
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1247, in get_item_by_class
+    sc.캐릭터아이템모음생성(class_name,txt_list)
+  File "D:\R2A\setclass.py", line 498, in 캐릭터아이템모음생성
+    if int(line) >= 7000 and int(line) < 8000 :
+ValueError: invalid literal for int() with base 10: '7053,행운 최상급'
+
+
+────────────────────────────────────────
+date=2023-12-28 15:14:14
+user=mssung
+
+Traceback (most recent call last):
+  File "D:\R2A\R2A.py", line 1247, in get_item_by_class
+    sc.캐릭터아이템모음생성(class_name,txt_list)
+  File "D:\R2A\setclass.py", line 498, in 캐릭터아이템모음생성
+    if int(line) >= 7000 and int(line) < 8000 :
+ValueError: invalid literal for int() with base 10: '7005,숙련'
+
+
+────────────────────────────────────────
 date=2023-12-08 11:45:12
 user=mssung
 

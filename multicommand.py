@@ -882,10 +882,11 @@ def 카드먹기_반복():
     for i in range(0,int(count)):
         맨뒤캐릭터접속()
         ms.sleep(8)
-        for i in range(0,4):
+        for i in range(0,15):
             if 'x' in i2s.extract_text_from_image(ms.captureSomeBox5(ms.box_webview_x,app_pos),'eng') :
+                ms.Click(ms.btn_webview_x)
                 break
-            ms.sleep(1)
+            ms.sleep(1.5)
         카드먹기_라이브()
 
 
@@ -963,10 +964,19 @@ def find_text_coordinates():
 
 
 
+def 상자자동사용설정리스트확인():
+    
+
+    ms.captureSomeBox
+    ms.DragFrom([0.7286,0.6027],0,-75,1)
+
+    
 
 
+    #ms.sleep(1.8)
 
 
+    #ms.DragFrom([0.7286,0.6027],0,-308,0.5)
 
 
 
@@ -997,13 +1007,18 @@ def execute_function_by_index(index):
         print("Invalid index. Please select a valid option.")
         
 if __name__ == "__main__":
-    #import R2A
-    #app_pos = R2A.app_pos_by_r2a
-    app_pos, app_type = ms.get_target_app_pos()
-    print(app_pos, app_type)
-    ms.appX, ms.appY, ms.appW, ms.appH = app_pos[0],app_pos[1],app_pos[2],app_pos[3]
-    ms.플레이어변경(app_type)
+    options = input('[0]LD [1]MIR\n>: ')
 
+    # app_pos, app_type = ms.get_target_app_pos()
+    # print(app_pos, app_type)
+    # ms.appX, ms.appY, ms.appW, ms.appH = app_pos[0],app_pos[1],app_pos[2],app_pos[3]
+    # ms.플레이어변경(app_type)
+    if options == '0':
+        ms.appX, ms.appY, ms.appW, ms.appH = 0,33,1428,805
+        ms.플레이어변경('LDPlayer')
+    elif options == '1':
+        ms.appX, ms.appY, ms.appW, ms.appH = 145,33,1194,677
+        ms.플레이어변경('Mirroid')
     while True:
         display_menu()
         user_input = input("Enter the index of the function to execute (or 'q' to quit): ")

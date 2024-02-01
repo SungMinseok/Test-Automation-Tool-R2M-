@@ -36,13 +36,13 @@ makerText = "made by sms"
 desText = "  " + "이미지 인식 후 텍스트 파일로 저장"
 warnText= "  " + "테스트 전 장착한 장비를 모두 해제하고, 인벤토리 내부 슬롯을 최상단으로 맞추세요."
 
+path = "./screenshot/ProbTest"+ time.strftime("_%Y%m%d")
+if not os.path.isdir(path):                                                           
+    os.mkdir(path)
 
 def ProbTest():
     global path, mergePath
     
-    path = "./screenshot/ProbTest"+ time.strftime("_%Y%m%d")
-    if not os.path.isdir(path):                                                           
-        os.mkdir(path)
     
 
     ms.SetMainUI(nameText,verText,dateText,makerText,desText,warnText)
@@ -1160,6 +1160,111 @@ def probTest_spotEnchant():#221020
     print("전체종료시각 : ",ms.GetCurrentTime())
 ###############
 
+def 길드도감등록():
+    #print("--------------------------------------------------------------") 
+    print("auto_guildcollection.txt에 아이템 ID, 위치(0~3) 입력\n")   
+    #print("--------------------------------------------------------------")
+    #회당 실행시간
+    consumed_time = 3.7
+
+
+    nation_code = input("0:KR, 1:TW")
+    open_file_check = input('텍스트파일열기 1 입력 :')
+    if open_file_check == '1' :
+        os.startfile('auto_guildcollection.txt')
+
+    lang_code = 'kor' if nation_code == "0" else 'chi_tra'
+    find_str = '성공' if nation_code == "0" else '成功'
+
+    #itemID = input('itemID: ')
+    #position = input('position(0~3): ')
+
+    contentPath = path + "/GuildCollection"
+    if not os.path.isdir(contentPath):                                                           
+        os.mkdir(contentPath)      
+
+    output_file_name = fr'{contentPath}/결과_{time.strftime("%y%m%d_%H%M%S")}.xlsx'
+
+    count = int(input("실행횟수(1~) : "))
+    
+    with open("auto_guildcollection.txt") as f1:
+        lines = f1.read().splitlines()
+
+    print("전체 실행횟수 : " + str(len(lines)))
+    print("전체 예상 종료 시각 : " + str(ms.GetElapsedTime((10+count *consumed_time )* float(len(lines)))))
+
+
+    for i, line in enumerate(lines):
+        data = []
+        try:
+            itemID, position = line.split(',')
+        except :
+            itemID = line
+            position = i
+        print("3초 후 시작합니다..")
+        sleep(3)
+        print("실행 중... (예상 종료 시각 : "+ms.GetElapsedTime(10+count *consumed_time) +")")
+        #텍스트는 어차피 결과 쌓으면되니까 메인에 생성, 스크린샷은 아이템 폴더 내 내부로
+        #txtName = contentPath+"/"+str(itemLines[i])
+        #resultTxtFileName = contentPath+"/result.txt"
+        ms.Command(f"cleanupinventory")
+
+        #extraPath = extraPath + "/"+ itemLines[i] + time.strftime("_%H%M")
+        extraPath = fr'{contentPath}/{itemID}_pos_{position}'#contentPath + "/"+ itemLines[i]
+        if not os.path.isdir(extraPath):                                                           
+            os.mkdir(extraPath)  
+        else :#있을경우 삭제하고 다시생성(스샷 덮어쓰기가 안되서...0719)
+            shutil.rmtree(extraPath)                                                           
+            os.mkdir(extraPath)  
+            
+        executed_count = 0
+
+    #장비생성
+        #ms.ResetFirst()
+        #ms.Command("cleanupinventory")
+
+
+        for j in range(0,count):
+            print(f'{j+1}/{count}', end='\r')
+            
+            ms.Command(f"additem {itemID} 1")
+            
+            sleep(0.1)
+            ms.Move(getattr(ms, 'guild_collection_item_btn_{}'.format(position)))
+            sleep(0.1)
+            ms.Move(getattr(ms, 'guild_collection_put_btn_{}'.format(position)))
+
+            sleep(0.3)
+            ms.Move(ms.guild_collection_check_btn)
+
+            ms.Move(ms.centerPos)         
+            sleep(1.5)     
+
+            ms.CaptureReinforceResult(extraPath+"/"+str(j))
+            resultText = img2str.getStringFromImg(extraPath+"/"+str(j)+".jpg",lang_code)
+            if resultText.find(find_str) != -1 :
+                #passCount = passCount + 1
+                break
+            else:
+                executed_count += 1
+
+
+            sleep(0.3)       
+            ms.Move(ms.guild_collection_check_btn)
+
+        #data.append([itemLines[i],scrollLines[i],cardNameText,result_item_text,enchantPrice,passCount,count,f'{round(passCount/count*100,3)}%'])
+        data = [[itemID,position,executed_count]]
+        columns=['itemID', 'position', 'executed_count']
+        result_df = pd.DataFrame(data, columns=columns)
+        
+        ms.save_df_to_excel(output_file_name,result_df)
+        #result_df = pd.DataFrame(data, columns=['재료장비ID', '영혼석ID', '변신명', '결과명','비용', '성공횟수','총횟수','성공률'])
+
+        #result_df.to_excel(output_file_name, index=False)
+
+    os.startfile(os.path.abspath(output_file_name))
+    #EnchantSoul()
+    
 def save_df_to_excel(output_file_name, df):
     if os.path.exists(output_file_name):
         # 파일이 이미 존재하면 기존 내용을 불러옵니다
@@ -1174,5 +1279,48 @@ def save_df_to_excel(output_file_name, df):
     print(f"Data saved to {output_file_name}")
 
 
-if __name__ == "__main__" : 
-    ProbTest()
+import inspect
+
+def display_menu():
+    functions = [func for func in globals() if callable(globals()[func]) and inspect.isfunction(globals()[func])]
+
+    print("Menu:")
+    for i, func_name in enumerate(functions, start=1):
+        if func_name != 'display_menu' and  func_name != 'execute_function_by_index': 
+            print(f"[{i}] {func_name}")
+
+def execute_function_by_index(index):
+    functions = [func for func in globals() if callable(globals()[func]) and inspect.isfunction(globals()[func])]
+
+    if 1 <= index <= len(functions):
+        selected_func_name = functions[index - 1]
+        selected_func = globals()[selected_func_name]
+        selected_func()
+    else:
+        print("Invalid index. Please select a valid option.")
+
+if __name__ == "__main__":
+    options = input('[0]LD [1]MIR\n>: ')
+
+    # app_pos, app_type = ms.get_target_app_pos()
+    # print(app_pos, app_type)
+    # ms.appX, ms.appY, ms.appW, ms.appH = app_pos[0],app_pos[1],app_pos[2],app_pos[3]
+    # ms.플레이어변경(app_type)
+    if options == '0':
+        ms.appX, ms.appY, ms.appW, ms.appH = 0,33,1428,805
+        ms.플레이어변경('LDPlayer')
+    elif options == '1':
+        ms.appX, ms.appY, ms.appW, ms.appH = 145,33,1194,677
+        ms.플레이어변경('Mirroid')
+    while True:
+        display_menu()
+        user_input = input("Enter the index of the function to execute (or 'q' to quit): ")
+
+        if user_input.lower() == 'q':
+            break
+
+        try:
+            index = int(user_input)
+            execute_function_by_index(index)
+        except ValueError:
+            print("Invalid input. Please enter a number.")

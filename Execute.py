@@ -37,4 +37,4 @@ except FileNotFoundError as e :
 
 '''패치노트여부'''
 import R2A
-
+R2A.starter()

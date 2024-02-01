@@ -62,10 +62,10 @@ def ItemInfoCheck():
 
 
     #global path, mergePath
-    path = "./screenshot/아이템 정보 확인"+ time.strftime("_%m%d")
+    path = fr'./screenshot/item_info_check_{time.strftime("_%y%m%d")}'
     if not os.path.isdir(path):                                                           
         os.mkdir(path)
-    mergePath = path + "/Merge"
+    mergePath = os.path.join(path , "Merge")
     if not os.path.isdir(mergePath):                                                           
         os.mkdir(mergePath)      
 
@@ -94,15 +94,25 @@ def ItemInfoCheck():
 #장비생성
         ms.ResetFirst()
         ms.Command("cleanupinventory")
-        ms.CommandOpen()
-        pag.typewrite("additems ")
+        #ms.CommandOpen()
+        #pag.typewrite("additems ")
+        
         for j in range(0,15):
             try :
                 temp = lines[i*15+j]
             except : 
                 temp = ""
             pag.typewrite(str(temp)+" ")
-        ms.CommandClose()
+        
+        temp_0 = "additems"
+        temp_1 = ""
+        for j in range(0,15):
+            temp_1 += f' {lines[i*15+j]}'
+
+        cmd = f'{temp_0}{temp_1}'
+        
+        ms.Command(cmd,1)
+        #ms.CommandClose()
         sleep(0.01)
 #인벤열기 >
         ms.Move(ms.menuPos1)
@@ -288,3 +298,8 @@ def ItemInfoCheck():
 # #장신구 : 50초, 무기  : 64초
 
 # #ItemInfoCheck()
+        
+if __name__ == "__main__" : 
+    ItemInfoCheck()
+    #EquipCheck3()
+    #EquipCheck()
