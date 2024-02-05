@@ -1527,7 +1527,7 @@ def get_target_app_pos():
 
 
 
-def read_patch_notes(file_path):
+def read_patch_notes(file_path, count = 5):
     try:
         # Read the Excel file
         df = pd.read_excel(file_path)
@@ -1538,7 +1538,7 @@ def read_patch_notes(file_path):
         filtered_df = df[df['isNotice'] == True]
 
         # Display the top 3 rows from the filtered DataFrame
-        top_3_updates = filtered_df.head(5)
+        top_3_updates = filtered_df.head(count)
 
         # Print the result
         #print(top_3_updates)

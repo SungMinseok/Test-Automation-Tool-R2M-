@@ -749,6 +749,10 @@ def ReinforceEquipment_Detail():
     print("장비강화상세.txt")   
     print("아이템ID,주문서ID,확률업(on:1/off:0)")       
     print(ms.PrintUB())
+    
+    contentPath = path + "/장비강화상세"
+    if not os.path.isdir(contentPath):                                                           
+        os.mkdir(contentPath) 
 
     path_result = path + "/result_reinforce_detail"
     path_resultTxtFile = path_result + "/result" + time.strftime("_%Y%m%d") + ".txt"
@@ -772,6 +776,7 @@ def ReinforceEquipment_Detail():
 
     print("총 예상 종료 시간 : "+ms.GetElapsedTime((10+ count * 108)*len(lines)) )
     print("itemID,scrollID,isEnchanted,isBlessed,isKept,isSafe")
+    output_file_name = fr'{contentPath}/결과_{time.strftime("%y%m%d_%H%M%S")}.xlsx'
 
     for k in range(1,len(lines)):
 
@@ -937,27 +942,30 @@ def ReinforceEquipment_Detail():
             passCountArray = np.array([passCount])
             passProbArray = np.round(passCountArray/totalCount*100,2)
 
+        data = [[itemID,    scrollID,   isEnchanted,        isBlessed,      isKept,     isSafe,totalCount,'|'.join(map(str,passCountArray)),'|'.join(map(str,passProbArray))]]
+        columns=['아이템ID','주문서ID', '강화포인트사용여부', '축복주문서여부','보존여부', '안전강화여부','총횟수','성공횟수','성공률']
+        result_df = pd.DataFrame(data, columns=columns)
+        ms.save_df_to_excel(output_file_name,result_df)
 
+        # testResultText =\
+        #     '\n'\
+        #     +str(datetime.now())\
+        #     +"|"+str(itemID)\
+        #     +"|"+str(scrollID)\
+        #     +"|"+str(isEnchanted)\
+        #     +"|"+str(isBlessed)\
+        #     +"|"+str(isKept)\
+        #     +"|"+str(isSafe)\
+        #     +"|"+str(totalCount)\
+        #     +"|"+str('|'.join(map(str,passCountArray)))\
+        #     +"|"+str('|'.join(map(str,passProbArray)))
 
-        testResultText =\
-            '\n'\
-            +str(datetime.now())\
-            +"|"+str(itemID)\
-            +"|"+str(scrollID)\
-            +"|"+str(isEnchanted)\
-            +"|"+str(isBlessed)\
-            +"|"+str(isKept)\
-            +"|"+str(isSafe)\
-            +"|"+str(totalCount)\
-            +"|"+str(' / '.join(map(str,passCountArray)))\
-            +"|"+str(' / '.join(map(str,passProbArray)))
+        # if not os.path.isfile(path_resultTxtFile):                                                           
+        #     with open(path_resultTxtFile,'a',encoding='utf-8') as tx:
+        #         tx.write("날짜|itemID|scrollID|isEnchanted|isBlessed|isKept|isSafe|totalCount|passCount|passProb")    
 
-        if not os.path.isfile(path_resultTxtFile):                                                           
-            with open(path_resultTxtFile,'a',encoding='utf-8') as tx:
-                tx.write("날짜|itemID|scrollID|isEnchanted|isBlessed|isKept|isSafe|totalCount|passCount|passProb")    
-
-        with open(path_resultTxtFile,'a',encoding='utf-8') as tx:
-            tx.write(testResultText)
+        # with open(path_resultTxtFile,'a',encoding='utf-8') as tx:
+        #     tx.write(testResultText)
             
 
     

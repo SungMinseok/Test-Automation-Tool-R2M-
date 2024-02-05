@@ -266,6 +266,8 @@ class WindowClass(QMainWindow, form_class) :
         #■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
         '''패치노트'''
         try: 
+            patch_show_count = 5
+
             last_starttime_str = self.import_cache_all([QDateTimeEdit,'dateTimeEdit_app_starttime'])
             last_starttime = QDateTime.fromString(last_starttime_str, Qt.ISODate)
             patch_note_check = self.import_cache_all([QCheckBox,'check_option_1'])
@@ -275,8 +277,9 @@ class WindowClass(QMainWindow, form_class) :
             print(f'{patch_note_check=}')
 
             if patch_note_check.lower() == 'true' or ( patch_note_check.lower() == 'false' and is_next_day): 
-                x, patch_see_again = self.popup2(des_text=
-                                            f"업데이트 일자 : {last_modified_date}\n\n최신 업데이트 항목 10개\n\n{ms.read_patch_notes('release_note_R2A.xlsx')}", popup_type='patchnote')
+                x, patch_see_again = self.popup2(
+                    window_name='패치노트',
+                    des_text=f"업데이트 배포 일자 : {last_modified_date}\n\n최신 업데이트 항목 {patch_show_count}개\n\n{ms.read_patch_notes('release_note_R2A.xlsx',patch_show_count)}", popup_type='patchnote')
             
                 self.check_option_1.setChecked(not patch_see_again)
         except:
@@ -1544,8 +1547,8 @@ class WindowClass(QMainWindow, form_class) :
 
     #Functions━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    def setFilePath(self,target):
-        path = QtWidgets.QFileDialog.getOpenFileName(self)
+    def setFilePath(self,target,filter = ""):
+        path = QtWidgets.QFileDialog.getOpenFileName(self,filter=('*.txt'))
         if path != "" :
             target.setText(path[0])
 
@@ -1592,12 +1595,12 @@ class WindowClass(QMainWindow, form_class) :
 
         return x
     
-    def popup2(self, des_text = "", popup_type = ''):
+    def popup2(self, des_text = "", popup_type = '', window_name = ''):
 
         msg = QtWidgets.QMessageBox()  
         #msg.setGeometry(1470,58,300,2000)
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
-        
+        msg.setWindowTitle(window_name)
         if popup_type == "":
             msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
             msg.setText(des_text)
@@ -1605,13 +1608,15 @@ class WindowClass(QMainWindow, form_class) :
         elif popup_type == 'patchnote' :
                         # Create a checkbox
             checkbox = QtWidgets.QCheckBox("오늘은 그만 보기", msg)
+            checkbox1 = QtWidgets.QCheckBox("영원히 그만 보기", msg)
             #msg.setStandardButtons(QtWidgets.QMessageBox.Open | QtWidgets.QMessageBox.Cancel)
             msg.setStandardButtons(QtWidgets.QMessageBox.Cancel)
 
             msg.setCheckBox(checkbox)
+            msg.setCheckBox(checkbox1)
             msg.setText(des_text)
             #print(checkbox.isChecked())
-            return msg.exec_(), checkbox.isChecked()
+            return msg.exec_(), checkbox.isChecked(),checkbox1.isChecked()
 
             #msg.setStandardButtons(QtWidgets.QMessageBox.checkBox | QtWidgets.QMessageBox.Cancel)
 
