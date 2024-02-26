@@ -104,6 +104,7 @@ appX, appY, appW, appH = 0,33,1428,805
 #region mouse position
 joyPos=[0.1092,0.805]
 joy_cmd_pos = [0.1092,0.7429]
+cmd_input_ok_btn = [0.951,0.9391]
 
 menuPos0=[0.773,0.043]
 menuPos1=[0.82,0.043]
@@ -759,8 +760,9 @@ def Command(command, delay = 0):
     sleep(0.1)
     
     Click(joyPos)
+    sleep(0.1)
     pag.hotkey('z','x','c','v')
-    #sleep(0.1)
+    sleep(0.1)
     if currentPlayer == Player.LDPlayer :    
         Click(joy_cmd_pos)
         sleep(0.2)
@@ -771,6 +773,7 @@ def Command(command, delay = 0):
         #sleep(0.1)   
         Click(joy_cmd_pos)
         sleep(0.1)
+        Click(cmd_input_ok_btn)
         Click(executePos)
 
     elif currentPlayer == Player.Mirroid :    
@@ -1200,10 +1203,11 @@ def findAllValInDataFrame(df :DataFrame, refCol : str, refVal : str, indexCol : 
             tempDf = df.copy()
             tempDf.set_index(indexCol, inplace = True)
         resultText=tempDf[tempDf[refCol].str.contains(refVal)]
+        id_list = tempDf['mID']
         #print(resultText[0])
         return resultText#"success"
-    except :
-        return "아이템 없음"
+    except Exception as e:
+        return f"{e}"
 
 
 
@@ -1485,7 +1489,7 @@ def get_last_modified_date(file_path):
         return "파일을 찾을 수 없음"
 
 # .py 파일을 모두 찾아내는 함수
-def get_recent_file_list(directory):
+def get_recent_file_list(directory, ext = '.py'):
     '''
     os.getcwd()
 
@@ -1499,24 +1503,21 @@ def get_recent_file_list(directory):
     def find_py_files(directory):
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if file.endswith('.py'):
+                if file.endswith(ext):
                     yield os.path.join(root, file)
 
-    # .py 파일 중에서 수정 날짜가 최신인 순으로 정렬
+    # 파일 중에서 수정 날짜가 최신인 순으로 정렬
     py_files = list(find_py_files(current_directory))
     py_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
 
     file_dict = {}
 
-    # 최신 수정 날짜를 가진 .py 파일 출력
+    # 최신 수정 날짜를 가진 파일 출력
     for file in py_files:
         modified_time = os.path.getmtime(file)
         modified_date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(modified_time))
-        #print(f"{file}: {modified_date}")
         file_dict[file] = modified_date
 
-    #print(list(file_dict.keys())[0])
-    #print(list(file_dict.values())[0])
     return file_dict
     
 def get_target_app_pos():
@@ -1537,15 +1538,7 @@ def read_patch_notes(file_path, count = 5):
         # Assuming 'isNotice' is a column in your DataFrame
         filtered_df = df[df['isNotice'] == True]
 
-        # Display the top 3 rows from the filtered DataFrame
         top_3_updates = filtered_df.head(count)
-
-        # Print the result
-        #print(top_3_updates)
-
-
-        # Get the top 3 rows
-        #top_3_updates = df.head(10)
 
         result = []
 
@@ -1553,10 +1546,6 @@ def read_patch_notes(file_path, count = 5):
         for _, row in top_3_updates.iterrows():
             result.append(f"[{row['Date'].strftime('%y-%m-%d')}] {row['Update']}")
             
-            # print(f"\n{row['Date']}")
-            # print(row['Update'])
-        #print('\n'.join(result))    
-        #print()
         return '\n'.join(result)
 
     except Exception as e:

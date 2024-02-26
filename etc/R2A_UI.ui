@@ -770,7 +770,7 @@ font : bold</string>
        <string notr="true">background-color: rgb(245, 245,245);</string>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -1473,7 +1473,7 @@ font: bold</string>
                 <number>-1</number>
                </property>
                <property name="maxVisibleItems">
-                <number>15</number>
+                <number>40</number>
                </property>
                <property name="insertPolicy">
                 <enum>QComboBox::InsertAtBottom</enum>
@@ -6173,7 +6173,7 @@ font : bold</string>
                 <number>-1</number>
                </property>
                <property name="maxVisibleItems">
-                <number>15</number>
+                <number>40</number>
                </property>
                <property name="insertPolicy">
                 <enum>QComboBox::InsertAtBottom</enum>

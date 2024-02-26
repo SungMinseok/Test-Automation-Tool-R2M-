@@ -633,10 +633,10 @@ class WindowClass(QMainWindow, form_class) :
         self.popUp("결과",str(result),"searchItem")
 
     def searchItemAll(self):
-        targetName = self.input_itemName_all.text()  
+        targetName = self.input_itemName_all.text().replace('+','')
 
         result = ms.findAllValInDataFrame(df_item,"mName",targetName,"mID")
-        self.popUp("결과",str(result))
+        self.popUp("결과",str(result),type='searchItem')
 
     def additemGoods(self) :
         multi.autoAddItem(ms.searchItemByName("", self.comboBox_goods.currentText()),self.input_goods_count.text())
@@ -1286,7 +1286,10 @@ class WindowClass(QMainWindow, form_class) :
             file_name = temp_0    
             if not os.path.isfile(temp_0) : 
                 print(f'No File ... : {txt_name}')
-                return
+                with open(f"{temp_0}", "w") as file:
+                    pass
+
+                    #return
         else :
             file_name = temp_1   
 
@@ -1566,10 +1569,10 @@ class WindowClass(QMainWindow, form_class) :
     #     except :
     #         self.popUp("실패","경로 오류!\n")
 
-    def popUp(self,titleText="",desText ="",type = "about"):
+    def popUp(self,titleText="",desText ="",type = "about",btn=''):
         #if type == "about" :
         msg = QtWidgets.QMessageBox()  
-        msg.setGeometry(1520,28,400,2000)
+        #msg.setGeometry(1520,28,400,2000)
 
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
@@ -1593,6 +1596,7 @@ class WindowClass(QMainWindow, form_class) :
             if x == QtWidgets.QMessageBox.Ok and desText.isnumeric():
                 multi.autoAddItem(desText,"1")
 
+
         return x
     
     def popup2(self, des_text = "", popup_type = '', window_name = ''):
@@ -1601,6 +1605,7 @@ class WindowClass(QMainWindow, form_class) :
         #msg.setGeometry(1470,58,300,2000)
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         msg.setWindowTitle(window_name)
+        msg.setWindowFlags(msg.windowFlags() | Qt.WindowStaysOnTopHint)
         if popup_type == "":
             msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
             msg.setText(des_text)
@@ -1608,15 +1613,15 @@ class WindowClass(QMainWindow, form_class) :
         elif popup_type == 'patchnote' :
                         # Create a checkbox
             checkbox = QtWidgets.QCheckBox("오늘은 그만 보기", msg)
-            checkbox1 = QtWidgets.QCheckBox("영원히 그만 보기", msg)
+            #checkbox1 = QtWidgets.QCheckBox("영원히 그만 보기", msg)
             #msg.setStandardButtons(QtWidgets.QMessageBox.Open | QtWidgets.QMessageBox.Cancel)
             msg.setStandardButtons(QtWidgets.QMessageBox.Cancel)
 
             msg.setCheckBox(checkbox)
-            msg.setCheckBox(checkbox1)
+            #msg.setCheckBox(checkbox1)
             msg.setText(des_text)
             #print(checkbox.isChecked())
-            return msg.exec_(), checkbox.isChecked(),checkbox1.isChecked()
+            return msg.exec_(), checkbox.isChecked()#,checkbox1.isChecked()
 
             #msg.setStandardButtons(QtWidgets.QMessageBox.checkBox | QtWidgets.QMessageBox.Cancel)
 
