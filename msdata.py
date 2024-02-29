@@ -100,6 +100,7 @@ def getBoxPos(x,y,w,h):
 
 appX, appY, appW, appH = 1,1,1,1
 appX, appY, appW, appH = 0,33,1428,805
+#appX, appY, appW, appH = 145,33,1194,677
 
 #region mouse position
 joyPos=[0.1092,0.805]
