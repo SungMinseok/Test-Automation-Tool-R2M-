@@ -11,5 +11,15 @@ install/
 .upload.log
 __pycache__
 cache
-data
+
+#data - confidential
+data/*.xlsx
+data/*.csv
+data/character/*.txt
+data/character/item/*.txt
+data/character/skill/*.txt
+data/csv/
+data/etc/
+data/preset/
+data/items/
 data_backup
