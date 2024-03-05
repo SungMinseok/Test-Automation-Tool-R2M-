@@ -1,6 +1,5 @@
 Lib/
 Include/
-Scripts/
 pyvenv.cfg
 resource/
 upload.log
@@ -23,3 +22,6 @@ data/etc/
 data/preset/
 data/items/
 data_backup
+
+#txt
+*.txt
