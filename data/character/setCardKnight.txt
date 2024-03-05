@@ -1,3 +1,0 @@
-addtransformcard 301 1
-addtransformcard 5 1
-addservantcard 52 1

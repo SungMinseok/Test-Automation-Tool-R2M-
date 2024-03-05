@@ -1,2 +1,0 @@
-#콤마로 구분 slotEnchantType(0:장비,1:매터리얼),scrollType(0:일반,1:고대),slotNum(슬롯번호),testCount(최소실행횟수) ex) 0,1,5 : 장비 슬롯강화,고대 적용,5번슬롯
-0,1
