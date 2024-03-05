@@ -11,3 +11,5 @@ install/
 .upload.log
 __pycache__
 cache
+data
+data_backup
