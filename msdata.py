@@ -1204,7 +1204,7 @@ def findAllValInDataFrame(df :DataFrame, refCol : str, refVal : str, indexCol : 
             tempDf = df.copy()
             tempDf.set_index(indexCol, inplace = True)
         resultText=tempDf[tempDf[refCol].str.contains(refVal)]
-        id_list = tempDf['mID']
+        #id_list = tempDf['mID']
         #print(resultText[0])
         return resultText#"success"
     except Exception as e:

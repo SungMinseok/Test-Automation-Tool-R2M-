@@ -10,3 +10,4 @@ pkgs/
 install/
 .upload.log
 __pycache__
+cache

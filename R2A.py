@@ -636,7 +636,8 @@ class WindowClass(QMainWindow, form_class) :
         targetName = self.input_itemName_all.text().replace('+','')
 
         result = ms.findAllValInDataFrame(df_item,"mName",targetName,"mID")
-        self.popUp("결과",str(result),type='searchItem')
+        #self.popUp("결과",str(result),type='searchItem')
+        self.popUp("결과",str(result))
 
     def additemGoods(self) :
         multi.autoAddItem(ms.searchItemByName("", self.comboBox_goods.currentText()),self.input_goods_count.text())
