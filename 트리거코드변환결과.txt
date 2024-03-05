@@ -1,8 +1,0 @@
-trigger.current_directory = 현재디렉토리반환()
-trigger.result_directory = 결과저장디렉토리생성("quick_slot_ban")
-trigger.lines = 대상파일읽기및리스트반환(f'{current_directory}/퀵슬롯제한대상.txt')
-trigger.결과물명 = f'{result_directory}/result.txt'
-trigger.
-for i in range(0, 2):
-            trigger.명령어입력("2")
-            trigger.명령어입력("3")
