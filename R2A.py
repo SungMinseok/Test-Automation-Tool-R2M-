@@ -1573,6 +1573,7 @@ class WindowClass(QMainWindow, form_class) :
     def popUp(self,titleText="",desText ="",type = "about",btn=''):
         #if type == "about" :
         msg = QtWidgets.QMessageBox()  
+        msg.setWindowFlags(msg.windowFlags() | Qt.WindowStaysOnTopHint)
         #msg.setGeometry(1520,28,400,2000)
 
         msg.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)

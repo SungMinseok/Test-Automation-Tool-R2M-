@@ -10,6 +10,7 @@ install/
 .upload.log
 __pycache__
 cache
+.vscode
 
 #data - confidential
 data/*.xlsx
