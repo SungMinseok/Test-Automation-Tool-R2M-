@@ -763,7 +763,7 @@ def Command(command, delay = 0):
     Click(joyPos)
     sleep(0.1)
     pag.hotkey('z','x','c','v')
-    sleep(0.1)
+    sleep(0.5)
     if currentPlayer == Player.LDPlayer :    
         Click(joy_cmd_pos)
         sleep(0.2)
