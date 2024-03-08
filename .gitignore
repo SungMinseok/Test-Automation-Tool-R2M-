@@ -11,6 +11,11 @@ install/
 __pycache__
 cache
 .vscode
+*.bat
+*.py
+!Scripts/*.py
+*.pptx
+release_note_R2A.xlsx
 
 #data - confidential
 data/*.xlsx
@@ -24,5 +29,13 @@ data/preset/
 data/items/
 data_backup
 
+*.jpg
+
+
 #txt
 *.txt
+
+
+
+##저장소 삭제
+#git rm --cached -r PATH
