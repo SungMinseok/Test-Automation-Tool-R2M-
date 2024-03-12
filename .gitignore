@@ -16,7 +16,7 @@ cache
 !Scripts/*.py
 *.pptx
 release_note_R2A.xlsx
-
+!requirements.txt
 #data - confidential
 data/*.xlsx
 data/*.csv
@@ -39,3 +39,6 @@ data_backup
 
 ##저장소 삭제
 #git rm --cached -r PATH
+
+##강제 추가
+#git add -f PATH
