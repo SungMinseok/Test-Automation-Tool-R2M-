@@ -1,3 +1,4 @@
+wheel
 certifi==2024.2.2
 chardet==3.0.4
 colorama==0.4.6
@@ -18,7 +19,7 @@ openpyxl==3.1.2
 packaging==24.0
 pandas==2.2.1
 pillow==10.2.0
-PyAutoGUI==0.9.52
+PyAutoGUI==0.9.54
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
 pyperclip==1.8.2
