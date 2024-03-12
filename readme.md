@@ -1,8 +1,6 @@
-<img src="autoBtnBox.jpg" />
+## 테스트 자동화 툴 프로젝트 (R2M)
 
-
-
-## GitHub 테스트 자동화툴 프로젝트
+<img src="etc/title.jpg" />
 
 ### 목차
 
