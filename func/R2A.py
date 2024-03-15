@@ -14,6 +14,7 @@ import subprocess
 import importlib
 import pandas as pd
 import pyautogui as pag
+import shutil
 #import clipboard as cb
 #currentAppName = ""
 
@@ -116,7 +117,7 @@ class WindowClass(QMainWindow, form_class) :
         file_dict = ms.get_recent_file_list(os.getcwd())
         last_modified_date = list(file_dict.values())[0]
 
-        self.setWindowTitle(f"R2A 5.0 | {last_modified_date}")
+        self.setWindowTitle(f"R2A 5.9 | {last_modified_date}")
         #self.statusLabel = QLabel(self.statusbar)
 
         self.setGeometry(1470,28,400,400)
@@ -505,6 +506,19 @@ class WindowClass(QMainWindow, form_class) :
                 getattr(self, f'btn_findData_openDir_{i}').clicked.connect(lambda _, x=i : self.데이터폴더열기(x))
             except:
                 break
+
+        self.btn_document_4.clicked.connect(lambda : self.최신데이터문서들가져오기(
+            self.input_dataSourcePath.text(),
+            self.input_document_0.text(),
+            self.input_document_1.text(),
+            
+            ))
+        
+        self.btn_document_0.clicked.connect(lambda : self.setFilePath(self.input_document_0))
+        self.btn_document_2.clicked.connect(lambda : self.setDirectoryPath(self.input_document_1))
+            
+        self.btn_document_1.clicked.connect(lambda : self.파일열기(self.input_document_0.text()))
+        self.btn_document_3.clicked.connect(lambda : self.파일열기(self.input_document_1.text()))
             
 #endregion
 
@@ -1544,6 +1558,21 @@ class WindowClass(QMainWindow, form_class) :
         folder_path = ms.get_directory_of_latest_file(source_folder,file_name)
 
         self.파일열기(f'{folder_path}')
+
+    def 최신데이터문서들가져오기(self, source_path, txt_file, result_path):
+        #source_folder = self.input_dataSourcePath.text()
+        #file_name = getattr(self, f'input_findData_{slotNum}').text()
+        #source_path = os.path.join(source_folder,file_name)
+
+        with open(txt_file, "r", encoding='utf-8') as file:        
+            documents_list = file.read().splitlines()
+
+        for doc in documents_list :
+            folder_path = ms.get_latest_file_in_directory(source_path,f'{doc}.xlsx')
+            shutil.copyfile(folder_path,os.path.join(result_path,f'{doc}.xlsx'))
+
+        print("최신데이터문서들가져오기 완료")
+        #self.파일열기(f'{folder_path}')
 
 
 
