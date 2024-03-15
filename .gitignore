@@ -34,7 +34,8 @@ data_backup
 #txt
 *.txt
 
-
+backup
+pkg
 
 ##저장소 삭제
 #git rm --cached -r PATH
