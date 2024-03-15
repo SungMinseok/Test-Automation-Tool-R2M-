@@ -411,9 +411,6 @@ font : bold</string>
         <property name="text">
          <string>인벤비우기</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -446,9 +443,6 @@ font : bold</string>
         </property>
         <property name="text">
          <string>골드 1억</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
         </property>
        </widget>
       </item>
@@ -483,9 +477,6 @@ font : bold</string>
         <property name="text">
          <string>다이아 10만</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -519,9 +510,6 @@ font : bold</string>
         <property name="text">
          <string>카던1접속</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -554,9 +542,6 @@ font : bold</string>
         </property>
         <property name="text">
          <string>카던2접속</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
         </property>
        </widget>
       </item>
@@ -595,9 +580,6 @@ font : bold</string>
         <property name="text">
          <string>동섭 전접속</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -630,9 +612,6 @@ font : bold</string>
         </property>
         <property name="text">
          <string>타섭 전접속</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
         </property>
        </widget>
       </item>
@@ -667,9 +646,6 @@ font : bold</string>
         <property name="text">
          <string>맨 뒤 접속</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -703,9 +679,6 @@ font : bold</string>
         <property name="text">
          <string>카드먹기</string>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
-        </property>
        </widget>
       </item>
       <item>
@@ -738,9 +711,6 @@ font : bold</string>
         </property>
         <property name="text">
          <string>-</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+`</string>
         </property>
        </widget>
       </item>
@@ -1118,9 +1088,6 @@ font: bold</string>
             <property name="text">
              <string>복사 C2</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+2</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -1367,9 +1334,6 @@ font: bold</string>
             <property name="text">
              <string>생성 C3</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+3</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -1560,9 +1524,6 @@ font: bold</string>
                <property name="text">
                 <string>즐찾등록</string>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -1604,9 +1565,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string>삭제</string>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -1654,9 +1612,6 @@ font: bold</string>
                <property name="text">
                 <string>폴더열기</string>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -1698,9 +1653,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string>파일열기</string>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -1879,9 +1831,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -1923,9 +1872,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -1969,9 +1915,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -2014,9 +1957,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -2058,9 +1998,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -2175,9 +2112,6 @@ font: bold</string>
             <property name="text">
              <string>비우기</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -2219,9 +2153,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>일괄체크</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
             </property>
            </widget>
           </item>
@@ -2265,9 +2196,6 @@ font: bold</string>
             <property name="text">
              <string>일괄해제</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -2309,9 +2237,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
             </property>
            </widget>
           </item>
@@ -6257,9 +6182,6 @@ font: bold</string>
                <property name="text">
                 <string>즐찾등록</string>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -6301,9 +6223,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string>삭제</string>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -6351,9 +6270,6 @@ font: bold</string>
                <property name="text">
                 <string>폴더열기</string>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -6395,9 +6311,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string>파일열기</string>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -6546,9 +6459,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
                <property name="checkable">
                 <bool>false</bool>
                </property>
@@ -6594,9 +6504,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -6638,9 +6545,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -6684,9 +6588,6 @@ font: bold</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -6728,9 +6629,6 @@ font: bold</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+C</string>
                </property>
               </widget>
              </item>
@@ -6781,9 +6679,6 @@ font: bold</string>
             <property name="text">
              <string>비우기</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -6825,9 +6720,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>일괄체크</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
             </property>
            </widget>
           </item>
@@ -6871,9 +6763,6 @@ font: bold</string>
             <property name="text">
              <string>일괄해제</string>
             </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -6915,9 +6804,6 @@ font: bold</string>
             </property>
             <property name="text">
              <string>실행</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+C</string>
             </property>
            </widget>
           </item>
@@ -7081,7 +6967,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F1</string>
+             <string>Alt+1</string>
             </property>
            </widget>
           </item>
@@ -7245,7 +7131,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F2</string>
+             <string>Alt+2</string>
             </property>
            </widget>
           </item>
@@ -7409,7 +7295,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F3</string>
+             <string>Alt+3</string>
             </property>
            </widget>
           </item>
@@ -7588,7 +7474,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F4</string>
+             <string>Alt+4</string>
             </property>
            </widget>
           </item>
@@ -7752,7 +7638,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F5</string>
+             <string>Alt+5</string>
             </property>
            </widget>
           </item>
@@ -7916,7 +7802,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F6</string>
+             <string>Alt+6</string>
             </property>
            </widget>
           </item>
@@ -8080,7 +7966,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F7</string>
+             <string>Alt+7</string>
             </property>
            </widget>
           </item>
@@ -8244,7 +8130,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F8</string>
+             <string>Alt+8</string>
             </property>
            </widget>
           </item>
@@ -8408,7 +8294,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F9</string>
+             <string>Alt+9</string>
             </property>
            </widget>
           </item>
@@ -8572,7 +8458,7 @@ font: bold</string>
              <string>실행 (F1)</string>
             </property>
             <property name="shortcut">
-             <string>F10</string>
+             <string>Alt+0</string>
             </property>
            </widget>
           </item>
