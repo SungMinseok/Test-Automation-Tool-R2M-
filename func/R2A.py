@@ -1,4 +1,4 @@
-ITEM_SLOT_COUNT = 15
+ITEM_SLOT_COUNT = 17#15 240425
 CUSTOM_CMD_SLOT_COUNT = 20
 ITEM_CHECK_BOX_COUNT = 26
 #DATA_SLOT_COUNT = 12 
@@ -135,15 +135,15 @@ class WindowClass(QMainWindow, form_class) :
 
         '''단축키■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■'''
 
-        # for i in range(1, ITEM_SLOT_COUNT):
-        #     button_name = f'btn_additem_execute_{i}'
-        #     if hasattr(self, button_name):
-        #         #shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
-        #         button = getattr(self, button_name)
-        #         if i <= 12 :
-        #             button.setText(f"생성 F{i}")
-        #         else : 
-        #             button.setText(f"생성")
+        for i in range(1, ITEM_SLOT_COUNT):
+            button_name = f'btn_additem_execute_{i}'
+            if hasattr(self, button_name):
+                #shortcut = QShortcut(QKeySequence(Qt.Key_F1 + i), self)
+                button = getattr(self, button_name)
+                if i <= 12 :
+                    button.setText(f"생성 F{i}")
+                else : 
+                    button.setText(f"생성")
 
                 #shortcut.activated.connect(button.click)
 
@@ -350,10 +350,11 @@ class WindowClass(QMainWindow, form_class) :
         
         self.btn_subbtn_7.clicked.connect(multi.맨뒤캐릭터접속)#카드먹기_라이브
         self.btn_subbtn_8.clicked.connect(multi.카드먹기_라이브)#카드먹기_라이브
-    
+            
         '''
         [Tab] - ITEM ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
         '''
+#region 아이템
         #아이템 검색■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         self.btn_searchItemName_all.clicked.connect(self.searchItemAll)
@@ -366,7 +367,6 @@ class WindowClass(QMainWindow, form_class) :
             if i != 0 :
                 getattr(self, f'btn_additem_bookmark_{i}').clicked.connect(lambda _, x=i: self.아이템북마크추가(x))
         getattr(self, f'btn_additem_bookmark_0').clicked.connect(lambda _, x=i : self.아이템북마크제거(x))
-        
 
         #0~13강 생성■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
@@ -391,7 +391,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_item_preset_0.clicked.connect(lambda : self.파일열기(os.path.join(self.input_preset_path.text(),\
                                                                               f'preset_item_{self.comboBox_item_preset.currentText()}.csv')))
         self.btn_item_preset_1.clicked.connect(lambda : self.파일열기(self.input_preset_path.text()))
+#endregion
         
+#region 커스텀
         '''
         [Tab] - Custom ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
         '''
@@ -417,6 +419,9 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_cmd_2.clicked.connect(lambda : self.set_check_box_state("check_cmd_",999,0))
         
         self.btn_item_preset_3.clicked.connect(lambda : self.delete_preset("item"))
+
+#endregion
+#region 커맨드
         
         '''
         [Tab] - Command ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
@@ -636,6 +641,7 @@ class WindowClass(QMainWindow, form_class) :
     '''
     Functions - ITEM ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
     '''
+#region 아이템 관련 함수
 
     def searchItem(self):
         itemType = self.comboBox_itemType.currentText()  
@@ -942,10 +948,22 @@ class WindowClass(QMainWindow, form_class) :
         for i in range(0,ITEM_SLOT_COUNT):
             getattr(self, f'input_additem_itemid_{i}').setText('')
             getattr(self, f'input_additem_amount_{i}').setText('')
-        
 
+    def execute_checked_items(self):
+        for i in range(1,ITEM_SLOT_COUNT):
+            if not getattr(self, f'check_item_{i}').isChecked() :
+                continue
+
+            cmd_str = self.comboBox_itemcmd.currentText()
+            item_id = getattr(self, f'input_additem_itemid_{i}').text()
+            item_amount = getattr(self, f'input_additem_amount_{i}').text()
+            #getattr(self, f'input_additem_itemid_{i}').setText('')
+            self.executeCommand(f'{cmd_str} {item_id} {item_amount}')
+
+        
+#endregion
 #▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
-#PRESET
+#region 프리셋 관련 함수
 
     def applyPresetList(self) :
         preset_item_list = []

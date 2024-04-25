@@ -134,7 +134,7 @@ def EquipCheck1():
         sleep(ms.waitTime)
         
         for i in range(0,14):
-            if equipType == 2 and i == 10:
+            if equipType == 2 and i == 10 and equipType != 4:
                 break
     #첫번째 클릭 > 상세 클릭> 대기후스샷0> 
             ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
@@ -149,7 +149,7 @@ def EquipCheck1():
             ms.Move(ms.invenAddDesPos)
             ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_2")
 
-            if equipType == 3 :
+            if equipType == 3 or equipType == 4:
                 ms.Move(ms.invenSoulBtn)
                 ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_3")
                 ms.Move(ms.invenExitBtn)
@@ -513,6 +513,160 @@ def EquipCheck4():
         #        tx.write("날짜|영혼부여대상장비ID|영혼석ID|전용변신이름|영혼부여비용|성공횟수|총횟수|성공률")    
 
         #print("스샷 경로 : "+extraPath)
+        loopCount = loopCount +1
+    print(f"총 실제 소요 시간 : {ms.GetConsumedTime(start_time)}")
+
+def EquipCheck_영혼부여효과만():
+    """
+    인벤토리 내 장비 수치 스크린샷+숫자인식 > 텍스트 파일생성
+    isFull : false : 첫 장만 병합, true : 전부 병합0~2
+    """
+    ms.PrintUB()
+    fileName = "장비수치.txt"
+    #while fileName == "" :
+    isFileOpen = input("txt 파일명 입력(기본 : 장비수치)([0]돌아가기)([1]파일열기) : ")
+        #isFileOpen = input('1 입력 시 각인.txt 파일 오픈(각인석 id 미입력 시 자동 축각)')
+    isFull = True if input('정보도 다 찍으려면 1 입력')=='1' else False
+    if isFileOpen =="0":
+        EquipCheck()
+    elif isFileOpen == '1':
+        os.startfile(fileName)
+
+    #lang_check = input('[0]국내 [1]대만')
+    lang_code = 'kor+eng' if input('[0]국내 [1]대만') == "0" else 'chi_tra'
+
+    with open(fileName) as f:
+        lines = f.read().splitlines()
+    # if fileName =="0":
+    #     EquipCheck()
+    # elif fileName =="":
+    #     fileName = "장비수치"
+    # try :
+    #     with open(fileName +".txt") as f:
+    #         lines = f.read().splitlines()
+    # except : 
+    #     EquipCheck4()
+
+    ms.clear()
+    
+    loopCount = 1
+    resultTxtFileName = f'{path}/equipCheckResult_{time.strftime("_%y%m%d_%H%M%S")}.txt'
+    output_file_name = f'{path}/EquipCheck_Result{time.strftime("_%y%m%d_%H%M%S")}.xlsx'
+    merge_path = fr'{path}\merge_{time.strftime("%y%m%d_%H%M%S")}'
+        
+    if not os.path.isdir(merge_path):                                                           
+        os.mkdir(merge_path)   
+
+    #print(f"3초 후 시작합니다...")
+    #ms.sleep(3)
+    how_time = 44 * len(lines)
+    start_time = datetime.now()
+    print(f"총 예상 소요 시간 : {ms.GetElapsedTime(how_time)}\n총 예상 종료 시각 : {ms.GetElapsedTime(how_time)}")
+    for itemNum in lines:
+        print(str(loopCount) + "/" + str(len(lines)))
+        itemCount = 14 if int(itemNum) < 400000 or int(itemNum) >= 500000 else 10
+        equipType = 1 if int(itemNum) < 400000 or int(itemNum) >= 500000 else 2 
+
+        totalList = [str]
+        totalList.clear()
+        #장비생성
+        ms.ResetFirst()
+        ms.Command("cleanupinventory")
+
+        cmdStr= "additems"
+        for j in range(0,itemCount):
+            cmdStr += " " + str(int(itemNum)+j)
+        ms.Command(cmdStr,1)
+        sleep(0.01)
+
+
+        #인벤열기 
+        ms.Click(ms.menuPos1,0.3)
+        
+
+        curItemID = 0
+
+        for i in range(0,itemCount):
+            data = []
+            curItemID = int(itemNum) + i
+            ms.Move(getattr(ms, 'invenBtn{}'.format(i)))
+            ms.Move(ms.invenBtnDown2)
+            sleep(1.3)
+            targetStr = i2s.getNumbersInColumnFromImg_0(ms.captureSomeBox("equipStatAmountBox")).strip()
+            stat_amount_str = f"{format_stats_ingame(targetStr,curItemID)}"
+            stat_amount_list = stat_amount_str.strip().split('/')
+            stat_count = len(stat_amount_list)#스탯개수
+
+            allStatNameStr = i2s.getStringFromImg2(ms.captureSomeBox("equipStatNameBox"), lang_code).strip()
+            #allStatNameStr = allStatNameStr.replace('\n','/')
+            tempList = allStatNameStr.split('\n')
+            normal_stat_name_list = []
+            special_stat_type_list = [] #슬레인/프로텍트 타입명
+            special_stat_name_list = [] #슬레인/프로텍트 타입명
+            special_stat_check = 0 #1로 바꾸면 그때부터 슬레인/프로텍트 능력치
+            for statName in tempList :
+
+                tempName = re.sub(r'[\d@]', ' ', statName).strip()
+
+                tempName = change_stat_name(tempName)
+                if tempName.endswith('인') or tempName.endswith('트') or '增傷' in tempName or '保' in tempName:
+                    special_stat_type_list.append(tempName)
+                    special_stat_check = 1
+                elif special_stat_check == 0 :
+                    if '최소' in tempName or '最小' in tempName :
+                        continue
+                    else:
+                        normal_stat_name_list.append(tempName)
+                elif special_stat_check == 1 :
+                    special_stat_name_list.append(tempName)
+
+            normal_stat_count = len(normal_stat_name_list)
+            normal_stat_list = []
+            special_stat_list = []
+
+            for j in range(0,stat_count):
+                if j < normal_stat_count :
+                    normal_stat_list.append(f'{normal_stat_name_list[j]}{stat_amount_list[j]}')
+                else:
+                    special_stat_list.append(f'{special_stat_name_list[j-normal_stat_count]}{stat_amount_list[j]}')
+
+
+            
+            ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_0")
+            
+            if isFull == False:
+                ms.Move(ms.invenExitBtn)
+
+            if isFull :
+        #설명창 위로밀기 > 대기 후 스샷1 > 
+                ms.Move(ms.invenDesPos)
+                ms.DragUp(ms.invenDesPos)
+                ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_1")
+        #추가정보클릭 > 대기후스샷2 > x버튼
+                ms.Move(ms.invenAddDesPos)
+                sleep(0.1)
+                ms.CaptureInvenDes(merge_path+"/"+str(int(itemNum)+i)+"_2")
+                # if equipType == 3 :
+                #     ms.Move(ms.invenSoulBtn)
+                #     ms.CaptureInvenDes(extraPath+"/"+str(int(itemNum)+i)+"_3")
+                #     ms.Move(ms.invenExitBtn)
+                # else :
+                    
+                #     ms.Move(ms.invenExitBtn)
+                ms.Move(ms.invenExitBtn)
+
+            data = [[str(curItemID),'/'.join(normal_stat_list),'/'.join(special_stat_list),'/'.join(special_stat_type_list),stat_amount_str]]
+            columns=['ID','normal_stat','special_stat','special_type','only_amount']
+            result_df = pandas.DataFrame(data,columns=columns)
+            ms.save_df_to_excel(output_file_name,result_df,autoOpen=False)
+
+            # with open(resultTxtFileName,'a',encoding='utf-8') as f:
+            #     #f.write('\n'.join(finalStr))    
+            #     f.write(finalStr)   
+            # 
+        isSolo = True if isFull == False else False
+        mergeImg.MergeImg_Equip(itemNum,equipType,merge_path,isSolo)
+            
         loopCount = loopCount +1
     print(f"총 실제 소요 시간 : {ms.GetConsumedTime(start_time)}")
 
