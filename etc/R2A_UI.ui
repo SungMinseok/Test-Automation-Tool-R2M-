@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>445</width>
-    <height>1243</height>
+    <height>1245</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -2256,7 +2256,7 @@ font: bold</string>
              <string/>
             </property>
             <property name="tristate">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>

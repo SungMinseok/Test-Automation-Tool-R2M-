@@ -1132,9 +1132,11 @@ class WindowClass(QMainWindow, form_class) :
             # df = df.fillna('')
             # df = df.T.to_dict()
             for i in range(1,ITEM_SLOT_COUNT):
-                #try:
-                val0 = df[i-1]['value0']
-                val1 = df[i-1]['value1']
+                try:
+                    val0 = df[i-1]['value0']
+                    val1 = df[i-1]['value1']
+                except:
+                    continue
                 try:
                     getattr(self, f'input_additem_itemid_{i}').setText(str(int(val0)))
                 except:
