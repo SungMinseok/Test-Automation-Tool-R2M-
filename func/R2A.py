@@ -354,7 +354,7 @@ class WindowClass(QMainWindow, form_class) :
         '''
         [Tab] - ITEM ▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨
         '''
-#region 아이템
+#region 아이템 상호작용
         #아이템 검색■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■#
 
         self.btn_searchItemName_all.clicked.connect(self.searchItemAll)
@@ -419,6 +419,8 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_cmd_2.clicked.connect(lambda : self.set_check_box_state("check_cmd_",999,0))
         
         self.btn_item_preset_3.clicked.connect(lambda : self.delete_preset("item"))
+        
+        self.btn_item_2.clicked.connect(self.execute_checked_items)
 
 #endregion
 #region 커맨드
