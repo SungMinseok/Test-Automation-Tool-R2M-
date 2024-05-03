@@ -208,8 +208,11 @@ class WindowClass(QMainWindow, form_class) :
         global df_tran
         global df_serv
         global df_resource_item
-        df_tran = pd.read_excel("./data/변신 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
-        df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
+        try:
+            df_tran = pd.read_excel("./data/변신 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
+            df_serv = pd.read_excel("./data/서번트 카드.xlsx",engine="openpyxl",usecols=[0,1,2,3])
+        except:
+            pass
         try:
             df_resource_item = pd.read_excel("./data/resource/아이템 리소스.xlsx",engine="openpyxl")
         except :
