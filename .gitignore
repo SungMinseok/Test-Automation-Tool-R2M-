@@ -24,7 +24,6 @@ data/character/item/*.txt
 data/character/skill/*.txt
 data/csv/
 data/etc/
-data/preset/
 data/items/
 data_backup
 data/preset_240417

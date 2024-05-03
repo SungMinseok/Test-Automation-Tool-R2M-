@@ -2,6 +2,9 @@ import os
 import xlrd
 
 import pandas as pd
+real_default_path = './data'
+if not os.path.isdir(real_default_path):                                                           
+    os.mkdir(real_default_path)
 default_path = "./data/preset"
 if not os.path.isdir(default_path):                                                           
     os.mkdir(default_path)
