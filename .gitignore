@@ -17,14 +17,8 @@ cache
 release_note_R2A.xlsx
 !requirements.txt
 #data - confidential
-data/*.xlsx
-data/*.csv
-data/character/*.txt
-data/character/item/*.txt
-data/character/skill/*.txt
+
 data/csv/
-data/etc/
-data/items/
 data_backup
 data/preset_240417
 
@@ -32,7 +26,6 @@ data/preset_240417
 
 
 #txt
-*.txt
 
 backup
 pkg

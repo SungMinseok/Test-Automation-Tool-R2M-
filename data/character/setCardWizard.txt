@@ -1,0 +1,4 @@
+addtransformcard 341 1
+addtransformcard 37 1
+addservantcard 52 1
+addservantcard 50 1
